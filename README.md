@@ -19,3 +19,8 @@ $dbconnection = new PDO("mysql:host=159.253.0.244; dbname=brentca106_imdstagram"
 - PDO
 - htmlspecialchars() voor OUTPUT, INPUT niet extra beveiligen zit in PDO
 - classes gebruiken
+
+## Features verdelen
+- Brent: 1, 4, 7, 10, 13, 17, level 4 één bedenken
+- Ben: 2, 5, 8, 11, 14, level 4 één bedenken
+- Daphné: 3, 6, 9, 12, 15, level 4 één uitwerken
