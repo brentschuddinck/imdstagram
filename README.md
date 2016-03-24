@@ -22,6 +22,6 @@ url database : http://159.253.7.228/phpmyadmin
 - classes gebruiken
 
 ## Features verdelen
-- Brent: 1, 4, 7, 10, 13, 17, level 4
-- Ben: 2, 5, 8, 11, 14, level 4
+- Brent: 1, 4, 7, 10, 13, 16, level 4
+- Ben: 2, 5, 8, 11, 14,17 level 4
 - Daphné: 3, 6, 9, 12, 15, level 4
