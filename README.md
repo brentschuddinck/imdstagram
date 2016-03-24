@@ -10,6 +10,7 @@ Ontwikkelaars:
 ## Connecteren met online database
 Om gemakkelijk te werken, werd gekozen om meteen een online database te gebruiken. Om connectie te maken via PDO:
 $dbconnection = new PDO("mysql:host=159.253.0.244; dbname=brentca106_imdstagram", "brentca106_imdst", "gvqQpiGqo#(5)");
+url database : http://159.253.7.228/phpmyadmin
 
 ## Conventies
 - OOP programmeren
