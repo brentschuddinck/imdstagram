@@ -5,7 +5,7 @@ class Db
 
     public static function getInstance(){
         if(is_null(self::$conn)){
-            self::$conn = new PDO("mysql:host=159.253.0.244; dbname=brentca106_imdstagram", "brentca106_imdst", "gvqQpiGqo#(5)");
+            self::$conn = new PDO("mysql:host=178.62.241.17; dbname=imdstagram", "imdstagram", "[lavfte{gqwedzsrjme7xsmXU");
         }
         return self::$conn;
     }
