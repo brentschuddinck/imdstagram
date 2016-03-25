@@ -1,2 +1,8 @@
 User-agent: *
-Disallow: /
+Disallow: /logout.php
+Disallow: /inc/
+Disallow: /img/uploads/
+Disallow: /error/
+Disallow: /classes/
+Disallow: /ajax/
+Disallow: /account
