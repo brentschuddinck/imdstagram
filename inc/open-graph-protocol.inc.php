@@ -1,4 +1,5 @@
 <!-- start open graph protocol -->
+<!-- indien profielpagina gedeeld wordt, kan kan eventueel de image, etc aangepast worden aan de profielgegevens van de gebruiker -->
 
     <!-- Facebook -->
     <meta property="og:title" content="" />
