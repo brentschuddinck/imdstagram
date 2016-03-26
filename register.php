@@ -29,13 +29,11 @@ if(isset($_POST['registreer']) && !empty($_POST['registreer'])){
         $user->setMSEmailadres($emailadres);
         $user->setMSWachtwoord($wachtwoord);
         $user->Registreer();
-        $feedback = "Yeah! Je account is aangemaakt. <a href='login.php'>Log hier in</a>.";
+        $success = "Yeah! Je account is aangemaakt. <a href='login.php'>Log hier in</a>.";
 
     } catch(Exception $e) {
-        $feedback = $e->getMessage();
+        $error = $e->getMessage();
     }
-
-    echo $feedback;
 
 }
 ?><!doctype html>
@@ -49,8 +47,8 @@ if(isset($_POST['registreer']) && !empty($_POST['registreer'])){
 <body>
 
 <section>
+    <a href="#">Log in met Facebook</a>
     <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-
         <label for="naam">Voor- en familienaam</label>
         <input type="text" name="naam" id="naam" placeholder="Voor- en familienaam" required autofocus title="Vul je voor- en familienaam in.">
 
@@ -65,6 +63,15 @@ if(isset($_POST['registreer']) && !empty($_POST['registreer'])){
 
         <input type="submit" name="registreer" value="Registreren">
 
+        <?php
+            if(!empty($success))
+            {
+                echo "<div class='feedback success'>$success</div>";
+            }else if(!empty($error)){
+                echo "<div class='feedback error'>$error</div>";
+            }
+        ?>
+        <div>Bij het aanmaken van een IMDstagram account ga je akkoord met de <a href="#">voorwaarden</a>.</div>
     </form>
 </section>
 <?php include_once('inc/footer.inc.php'); ?>

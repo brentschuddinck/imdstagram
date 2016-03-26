@@ -10,6 +10,7 @@ class User{
     private $m_sWachtwoord;
 
 
+
     //setters
 
     public function setMSVoornaamFamilienaam($m_sVoornaamFamilienaam)
@@ -82,9 +83,7 @@ class User{
         $statement->bindValue(":password", $this->m_sWachtwoord, PDO::PARAM_STR);
 
         //statement uitvoeren
-        if($statement->execute()){
-
-        }else{
+        if(!$statement->execute()){
             throw new Exception('Ow... er is iets foutgelopen. Je account is niet aangemaakt. Probeer het later opnieuw.');
         }
 
