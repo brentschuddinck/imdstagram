@@ -63,7 +63,7 @@ class Validation
         }else if (strlen($p_sGebruikersnaam) > 25) {
             return "Gebruikersnaam is te lang. Gebruikersnaam mag niet langer dan 25 tekens zijn.";
         } else if (strlen($p_sGebruikersnaam) < 2) {
-            return "Gebruikersnaam is te kort. Gebruikersnaam moet moet minstens 2 tekens groot zijn.";
+            return "Gebruikersnaam is te kort. Gebruikersnaam moet moet minstens 2 tekens lang zijn.";
         } else if (preg_match('/[^a-z_\-0-9]/i', $p_sGebruikersnaam)) {
             //reguliere expressie controleert of gebruikersnaam enkel letters a-z, cijfer, _ of - bevat. Indien niet, toon error.
             return "Gebruikersnaam ongeldig. Gebruikersnaam mag enkel letters, cijfers, _ of - bevatten.";
