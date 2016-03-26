@@ -8,9 +8,9 @@ Ontwikkelaars:
 - Daphné Van Belle
 
 ## Connecteren met online database
-Om gemakkelijk te werken, werd gekozen om meteen een online database te gebruiken. Om connectie te maken via PDO:
+- Om gemakkelijk te werken, werd gekozen om meteen een online database te gebruiken. Om connectie te maken via PDO:
 $dbconnection = new PDO("mysql:host=178.62.241.17; dbname=imdstagram", "imdstagram", "[lavfte{gqwedzsrjme7xsmXU");
-url database : http://178.62.241.17/phpmyadmin
+- url database : http://178.62.241.17/phpmyadmin
 
 ## Conventies
 - OOP programmeren
@@ -25,3 +25,6 @@ url database : http://178.62.241.17/phpmyadmin
 - Brent: 1, 4, 7, 10, 13, 16, level 4
 - Ben: 2, 5, 8, 11, 14,17 level 4
 - Daphné: 3, 6, 9, 12, 15, level 4
+
+## Nieuwe PHP file aanmaken
+- Helemaal bovenaan sessiecontrole.php includen op elke standaard PHP pagina.
