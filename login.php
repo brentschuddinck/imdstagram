@@ -67,7 +67,7 @@
 
 
             <div class="form-group">
-                <input type="text" name="gebruikeremail" id="gebruikeremail" class="form-control login-field"
+                <input type="email" name="gebruikeremail" id="gebruikeremail" class="form-control login-field"
                        value="<?php echo isset($_POST['gebruikeremail']) ? $_POST['gebruikeremail'] : '' ?>"
                        placeholder="E-mailadres" required
                        title="Vul je e-mailadres in." autofocus>
