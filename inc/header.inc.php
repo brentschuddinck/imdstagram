@@ -1,17 +1,11 @@
 <!-- start header -->
 <header>
-    <nav>
-        <div id="logo"><a href="/index.php">IMDstagram</a></div>
-        <!-- start search
-            <form action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
-                <label for="search">Zoeken</label>
-                <input type="search" name="search" placeholder="Zoeken">
-            </form>
-            einde search -->
-        <ul>
-            <li><a href="#">Meldingen</a></li>
-            <li><a href="#">Profiel</a></li>
-        </ul>
+    <nav class="navbar navbar-inverse navbar-lg navbar-embossed navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.php">IMDstagram</a>
+            </div>
+        </div>
     </nav>
 </header>
 <!-- einde header -->
