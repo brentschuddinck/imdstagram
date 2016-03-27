@@ -77,7 +77,7 @@ class Validation
         if(empty($p_sWachtwoord)){
             return "Wachtwoord is niet ingevuld.";
         }else if (strlen($p_sWachtwoord) < 6) {
-            return "Wachtwoord te kort. Wachwoord moet minstens 6 tekens lang zijn.";
+            return "Wachtwoord te kort. Wachtwoord moet minstens 6 tekens lang zijn.";
         }
     }
 
