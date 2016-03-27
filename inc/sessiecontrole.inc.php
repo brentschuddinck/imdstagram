@@ -9,13 +9,30 @@ session_start();
 *
 * Indien login niet succesvol is, dan wordt gebruiker naar login.php gestuurd tenzij hij zelf op login.php of register.php is
 */
+
+//$_SESSION['login']['loggedin']=1;
+//$_SESSION['login']['gebruikersnaam'] = "brentschuddinck";
+//$_SESSION['login']['profielfoto']= "profile-picture_brentschuddinck_1459066448.jpg";
+//$_SESSION['login']['profielfoto']= "default.png";
+//$_SESSION['login']['naam']= "Brent Schuddinck";
+
+
 $huidige_pagina = basename($_SERVER['PHP_SELF']);
-if(isset($_SESSION['login']['loggedin']) && $_SESSION['login']['loggedin']=1){
+
+if(isset($_SESSION['login']) && $sessieLoggedin=1){
+    //makkelijk oproepen vanaf andere pagina's die sessiecontrole includen
+    /*$sessie = $_SESSION['login'];
+    $sessieNaam = 'login';
+    $sessieLoggedin = $_SESSION['login']['loggedin'];
+    $sessieGebruikersnaam = $_SESSION['login']['gebruikersnaam'];
+    $sessieProfielfoto = $_SESSION['login']['profielfoto'];
+    $sessieVoornaamFamilienaam = $_SESSION['login']['naam'];*/
+
     if ($huidige_pagina == 'login.php' || $huidige_pagina == 'register.php') {
-        header('location: index.php');
+        header('location: /imdstagram/index.php');
         //live site: header('location: /index.php');
     }
 }else if ($huidige_pagina != 'login.php' && $huidige_pagina != 'register.php') {
-    header('location: login.php');
+    header('location: /imdstagram/login.php');
     // live site: header('location: /login.php');
 }
