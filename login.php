@@ -20,7 +20,7 @@
     }else if(isset($_POST['gebruikeremail']) && empty($_POST['gebruikeremail'])){
         $errorMessage = "<div class=\"text-danger message\"><p>vul je e-mail adres in.</p></div>";
     }else if(isset($_POST['wachtwoord']) && empty($_POST['wachtwoord'])){
-        $errorMessage = "<div class=\"text-danger message\"><p>vul je wachtwoord adres in.</p></div>";
+        $errorMessage = "<div class=\"text-danger message\"><p>vul je wachtwoord in.</p></div>";
     }
 
 
