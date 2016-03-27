@@ -11,11 +11,6 @@
         try {
             if ($userLogin->canLogin()) {
                 $_SESSION['login']['loggedin'] = 1;
-                //gebruikersnaam, profielfoto ophalen (indien leeg = default.png) en naam opvragen uit db en in sessie stoppen
-                //$_SESSION['login']['gebruikersnaam'] = "brentschuddinck";
-                //$_SESSION['login']['profielfoto']= "profile-picture_brentschuddinck_1459066448.jpg";
-                //$_SESSION['login']['profielfoto']= "default.png";
-                //$_SESSION['login']['naam']= "Brent Schuddinck";
                 include_once('inc/sessiecontrole.inc.php');
             }
         }catch (Exception $e){
@@ -25,7 +20,7 @@
     }else if(isset($_POST['gebruikeremail']) && empty($_POST['gebruikeremail'])){
         $errorMessage = "<div class=\"text-danger message\"><p>Vul je e-mailadres in.</p></div>";
     }else if(isset($_POST['wachtwoord']) && empty($_POST['wachtwoord'])){
-        $errorMessage = "<div class=\"text-danger message\"><p>Vul je wachtwoord in.</p></div>";
+        $errorMessage = "<div class=<\"text-danger message\"><p>Vul je wachtwoord in.</p></div>";
     }
 
 
@@ -73,7 +68,7 @@
 
             <div class="form-group">
                 <input type="email" name="gebruikeremail" id="gebruikeremail" class="form-control login-field"
-                       value="<?php echo isset($_POST['gebruikeremail']) ? $_POST['gebruikeremail'] : '' ?>"
+                       value="<?php echo isset($_POST['gebruikeremail']) ? htmlspecialchars($_POST['gebruikeremail']) : '' ?>"
                        placeholder="E-mailadres" required
                        title="Vul je e-mailadres in." autofocus>
                 <label class="login-field-icon fui-user" for="gebruikeremail"><span class="labeltext">Gebruikersnaam of e-mailadres</span></label>
@@ -82,8 +77,10 @@
 
             <div class="form-group">
                 <input type="password" name="wachtwoord" id="wachtwoord" class="form-control login-field" placeholder="Wachtwoord" required title="Vul je wachtwoord in.">
-                <label class="labeltext login-field-icon fui-lock" for="wachtwoord">Wachtwoord<span class="labeltext">Wachtwoord</span></label>
+                <label class="login-field-icon fui-lock" for="wachtwoord"><span class="labeltext">Wachtwoord</span></label>
             </div>
+
+
 
             <input type="submit" name="login" value="Inloggen" class="btn btn-primary btn-lg btn-block">
 

@@ -21,7 +21,7 @@
 
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="profielfoto mini" src="/imdstagram/img/uploads/profile-pictures/<?php print htmlspecialchars($sessieProfielfoto); ?>" alt="Profielfoto van <?php print htmlspecialchars($sessieGebruikersnaam); ?>"><?php print htmlspecialchars($sessieGebruikersnaam); ?> <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="profielfoto mini" src="/imdstagram/img/uploads/profile-pictures/<?php print htmlspecialchars($sessieProfielfoto); ?>" alt="Profielfoto van <?php print htmlspecialchars($sessieVoornaamFamilienaam); ?>"><?php print htmlspecialchars($sessieGebruikersnaam); ?> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/imdstagram/index.php">Photo wall</a></li>
                             <li><a href="/imdstagram/account/profile.php?user=<?php print htmlspecialchars($sessieGebruikersnaam); ?>">Mijn profiel</a></li>

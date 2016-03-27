@@ -90,6 +90,8 @@ class User{
 
     }
 
+
+    //kan er ingelogd worden
     public function canLogin(){
 
 
@@ -113,9 +115,21 @@ class User{
 
                 // check dat het ingegeven wachtwoord van de gebruiker overeenkomt met het wachtwoord in de databank
                 if(password_verify($this->m_sWachtwoord, $hash)){
-                    session_start();
+
+                    //error session already started voorkomen
+                    if(empty($_SESSION)){
+                        session_start();
+                    }
+
                     $_SESSION['login']['gebruikersnaam'] = $userRow['username'];
                     $_SESSION['login']['profielfoto'] = $userRow['profile_picture'];
+
+                    if(empty($_SESSION['login']['profielfoto'])){
+                        $_SESSION['login']['profielfoto'] = "default.png";
+                    }
+
+                    $_SESSION['login']['email'] = $userRow['email'];
+                    $_SESSION['login']['naam'] = $userRow['full_name'];
                     return true;
                 }else{
                     throw new Exception("Het ingevoerde wachtwoord komt niet overeen met het opgegeven e-mailadres.");
