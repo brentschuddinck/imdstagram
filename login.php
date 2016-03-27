@@ -16,7 +16,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
     <meta name="description" content="Login met je IMDstagram account.">
     <?php include_once('inc/style.inc.php'); ?>
 </head>
-<body class="registration">
+<body class="template welcome">
 
 <div class="container">
     <?php include_once('inc/header.inc.php'); ?>
@@ -56,7 +56,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             <div class="form-group">
                 <input type="password" name="wachtwoord" id="wachtwoord" class="form-control login-field"
                        placeholder="Wachtwoord" required title="Kies een wachtwoord van minimaal 6 tekens.">
-                <label class="login-field-icon fui-eye" for="wachtwoord"><span
+                <label class="login-field-icon fui-lock" for="wachtwoord"><span
                         class="labeltext">Wachwoord</span></label>
             </div>
 
