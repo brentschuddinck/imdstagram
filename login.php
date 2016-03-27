@@ -31,16 +31,6 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
         <form class="login-form" action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
 
 
-            <?php
-            //toon succesboodschap of errorboodschap
-            if (!empty($successMessage)) {
-                echo $successMessage;
-            } else if (!empty($errorMessage)) {
-                echo $errorMessage;
-            }
-            ?>
-
-
             <!-- start login met facebook -->
 
             <!--<div class="form-group">

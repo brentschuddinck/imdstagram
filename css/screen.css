@@ -40,17 +40,19 @@ h1, h2, h3, h4, h5, h6, .navbar-brand{
     display: none;
 }
 
+.message{
+    margin-bottom: 10px;
+    display: block;
+}
+
+.message.title{
+    font-weight: bold;
+}
 
 
 @media screen and (min-width: 760px) {
     .registration {
         padding-top: 100px;
-    }
-
-    .intro{
-        /*display: block;*/
-        /*background: url("../img/assets/hero.svg") no-repeat center 250px;
-        height: 100vh;*/
     }
 
     .hide-on-mobile{

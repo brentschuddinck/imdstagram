@@ -42,14 +42,14 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             $user->setMSGebruikersnaam($gebruikersnaam);
             $user->setMSWachtwoord($wachtwoordHash);
             $user->Registreer();
-            $successMessage = "<div class=\"text-success\">Yeah! Je account is aangemaakt. <a href='login.php'>Log hier in</a>.</div>";
+            $successMessage = "<div class=\"text-success message\">Yeah! Je account is aangemaakt. <a href='login.php'>Log hier in</a>.</div>";
 
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
         }
     } else {
         //niet alle velden zijn juist ingevuld
-        $errorMessage = "<div class=\"login-form text-danger\">Controleer volgende velden:";
+        $errorMessage = "<div class=\"login-form text-danger message\"><span class='message title'>Oeps... controleer volgende velden:</span>";
         foreach ($errors as $error) {
             $errorMessage .= "<li>$error</li>";
         }
