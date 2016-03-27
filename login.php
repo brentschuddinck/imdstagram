@@ -44,7 +44,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
 
 
             <div class="form-group">
-                <input type="text" name="naam" id="naam" class="form-control login-field"
+                <input type="text" name="gebruikeremail" id="gebruikeremail" class="form-control login-field"
                        value="<?php if (!empty($errorMessage)) {
                            echo htmlspecialchars($gebruikeremail);
                        } ?>" placeholder="Gebruikersnaam of e-mailadres" required
