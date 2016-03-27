@@ -28,3 +28,9 @@ $dbconnection = new PDO("mysql:host=178.62.241.17; dbname=imdstagram", "imdstagr
 
 ## Nieuwe PHP file aanmaken
 - Helemaal bovenaan sessiecontrole.php includen op elke standaard PHP pagina.
+
+## Sessiewaarden
+Ik denk dat het een goed idee dat wanenner de gebruiker ingelogd wordt, er eenmalig waarden uit db in sessie gestopt worden voor onderstaande zaken. Op die manier moet niet bij elke pagina dezelfde query uitgevoerd worden. Mijn code is ingesteld op (dummycode):
+- $_SESSION['login']['loggedin'] = 1 //de gebruiker is geldig ingelogd
+- $_SESSION['login']['gebruikersnaam'] = $gebruikersnaam //de gebruikersnaam van de ingelogde gebruiker
+- $_SESSION['login']['profielfoto'] = $profielfoto //naam profielfoto
