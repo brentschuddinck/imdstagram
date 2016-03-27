@@ -11,6 +11,7 @@
         try {
             if ($userLogin->canLogin()) {
                 $_SESSION['login']['loggedin'] = 1;
+                //gebruikersnaam, profielfoto ophalen (indien leeg = default.png) en naam opvragen uit db en in sessie stoppen
                 //$_SESSION['login']['gebruikersnaam'] = "brentschuddinck";
                 //$_SESSION['login']['profielfoto']= "profile-picture_brentschuddinck_1459066448.jpg";
                 //$_SESSION['login']['profielfoto']= "default.png";
