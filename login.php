@@ -11,6 +11,10 @@
         try {
             if ($userLogin->canLogin()) {
                 $_SESSION['login']['loggedin'] = 1;
+                //$_SESSION['login']['gebruikersnaam'] = "brentschuddinck";
+                //$_SESSION['login']['profielfoto']= "profile-picture_brentschuddinck_1459066448.jpg";
+                //$_SESSION['login']['profielfoto']= "default.png";
+                //$_SESSION['login']['naam']= "Brent Schuddinck";
                 include_once('inc/sessiecontrole.inc.php');
             }
         }catch (Exception $e){
@@ -18,9 +22,9 @@
             $errorMessage = "<div class=\"text-danger message\"><p>$errorException</p></div>";
         }
     }else if(isset($_POST['gebruikeremail']) && empty($_POST['gebruikeremail'])){
-        $errorMessage = "<div class=\"text-danger message\"><p>vul je e-mail adres in.</p></div>";
+        $errorMessage = "<div class=\"text-danger message\"><p>Vul je e-mailadres in.</p></div>";
     }else if(isset($_POST['wachtwoord']) && empty($_POST['wachtwoord'])){
-        $errorMessage = "<div class=\"text-danger message\"><p>vul je wachtwoord in.</p></div>";
+        $errorMessage = "<div class=\"text-danger message\"><p>Vul je wachtwoord in.</p></div>";
     }
 
 
