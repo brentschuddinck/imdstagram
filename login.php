@@ -1,6 +1,6 @@
 <?php
-    session_start();
-    include_once('classes/User.class.php');
+include_once('inc/sessiecontrole.inc.php');
+include_once('classes/User.class.php');
 
     if(!empty($_POST['gebruikeremail']) && !empty($_POST['wachtwoord'])){
 

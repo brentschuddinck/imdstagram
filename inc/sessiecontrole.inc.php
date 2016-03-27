@@ -18,12 +18,13 @@ $huidige_pagina = basename($_SERVER['PHP_SELF']);
 
 if(isset($_SESSION['login']['loggedin']) && $_SESSION['login']['loggedin']==1){
 
-    include_once('session-var.inc.php');
-
     if ($huidige_pagina == 'login.php' || $huidige_pagina == 'register.php') {
         header('location: /imdstagram/index.php');
         //live site: header('location: /index.php');
     }
+
+    include_once('session-var.inc.php');
+
 }else if ($huidige_pagina != 'login.php' && $huidige_pagina != 'register.php') {
     header('location: /imdstagram/login.php');
     // live site: header('location: /login.php');
