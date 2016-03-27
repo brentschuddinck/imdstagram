@@ -1,8 +1,8 @@
 
 @font-face {
   font-family: 'Flat-UI-Icons';
-  src: url('../fonts/glyphicons/flat-ui-icons-regular.eot');
-  src: url('../fonts/glyphicons/flat-ui-icons-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons/flat-ui-icons-regular.woff') format('woff'), url('../fonts/glyphicons/flat-ui-icons-regular.ttf') format('truetype'), url('../fonts/glyphicons/flat-ui-icons-regular.svg#flat-ui-icons-regular') format('svg');
+  src: url('/imdstagram/fonts/glyphicons/flat-ui-icons-regular.eot');
+  src: url('/imdstagram/fonts/glyphicons/flat-ui-icons-regular.eot?#iefix') format('embedded-opentype'), url('/imdstagram/fonts/glyphicons/flat-ui-icons-regular.woff') format('woff'), url('/imdstagram/fonts/glyphicons/flat-ui-icons-regular.ttf') format('truetype'), url('/imdstagram/fonts/glyphicons/flat-ui-icons-regular.svg#flat-ui-icons-regular') format('svg');
 }
 [class^="fui-"],
 [class*="fui-"] {

@@ -36,7 +36,7 @@
     <meta name="description" content="Login met je IMDstagram account.">
     <?php include_once('inc/style.inc.php'); ?>
 </head>
-<body class="registration">
+<body class="template welcome">
 
 <div class="container">
     <?php include_once('inc/header.inc.php'); ?>
@@ -80,10 +80,8 @@
 
 
             <div class="form-group">
-                <input type="password" name="wachtwoord" id="wachtwoord" class="form-control login-field"
-                       placeholder="Wachtwoord" required title="Vul je wachtwoord in.">
-                <label class="login-field-icon fui-eye" for="wachtwoord"><span
-                        class="labeltext">Wachwoord</span></label>
+                <input type="password" name="wachtwoord" id="wachtwoord" class="form-control login-field" placeholder="Wachtwoord" required title="Vul je wachtwoord in.">
+                <label class="labeltext login-field-icon fui-lock" for="wachtwoord">Wachtwoord<span class="labeltext">Wachtwoord</span></label>
             </div>
 
             <input type="submit" name="login" value="Inloggen" class="btn btn-primary btn-lg btn-block">

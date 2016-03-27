@@ -1,5 +1,5 @@
 <?php
-//include_once('inc/sessiecontrole.inc.php');
+include_once('inc/sessiecontrole.inc.php');
 
 //autoload classes
 spl_autoload_register(function ($class_name) {
@@ -65,11 +65,11 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
     <meta name="description" content="Maak een nieuw IMDstagram account aan.">
     <?php include_once('inc/style.inc.php'); ?>
 </head>
-<body class="registration">
+<body class="template welcome">
 
 <div class="container">
     <?php include_once('inc/header.inc.php'); ?>
-    <div class="col-md-7 intro"></div>
+    <div class="col-md-7"></div>
     <section class="col-md-5">
 
 
@@ -136,7 +136,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             <div class="form-group">
                 <input type="password" name="wachtwoord" id="wachtwoord" class="form-control login-field"
                        placeholder="Wachtwoord" required title="Kies een wachtwoord van minimaal 6 tekens.">
-                <label class="login-field-icon fui-eye" for="wachtwoord"><span class="labeltext">Wachwoord</span></label>
+                <label class="login-field-icon fui-lock" for="wachtwoord"><span class="labeltext">Wachwoord</span></label>
             </div>
 
             <!-- formulier verzenden -->
