@@ -14,8 +14,9 @@ include_once('inc/sessiecontrole.inc.php');
 <?php include_once('inc/header.inc.php'); ?>
 
 
-<!-- start tijdlijn -->
-<!-- einde tijdlijn -->
+<!-- start photowall -->
+
+<!-- einde photowall -->
 
 
 <?php include_once('inc/footer.inc.php'); ?>

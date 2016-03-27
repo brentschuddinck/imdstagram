@@ -1,5 +1,5 @@
 <?php
-include_once('inc/sessiecontrole.inc.php');
+//include_once('inc/sessiecontrole.inc.php');
 
 //autoload classes
 spl_autoload_register(function ($class_name) {
@@ -28,7 +28,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
 
 
     //probeer account te registreren als er geen errors in array $errors zitten
-    if(count($errors) == 0){
+    if (count($errors) == 0) {
 
         //wachtwoord hashen. Hier plaatsen, anders telkens hashen als invoer niet correct is.
         $hashOpties = ['cost' => 12];
@@ -42,15 +42,15 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             $user->setMSGebruikersnaam($gebruikersnaam);
             $user->setMSWachtwoord($wachtwoordHash);
             $user->Registreer();
-            $successMessage = "<div class='feedback success'>Yeah! Je account is aangemaakt. <a href='login.php'>Log hier in</a>.</div>";
+            $successMessage = "<div class=\"text-success\">Yeah! Je account is aangemaakt. <a href='login.php'>Log hier in</a>.</div>";
 
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $errorMessage = $e->getMessage();
         }
-    }else{
+    } else {
         //niet alle velden zijn juist ingevuld
-        $errorMessage = "<div class=\"feedback error\">Controleer volgende velden:";
-        foreach($errors as $error){
+        $errorMessage = "<div class=\"login-form text-danger\">Controleer volgende velden:";
+        foreach ($errors as $error) {
             $errorMessage .= "<li>$error</li>";
         }
         $errorMessage .= "</div>";
@@ -65,41 +65,92 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
     <meta name="description" content="Maak een nieuw IMDstagram account aan.">
     <?php include_once('inc/style.inc.php'); ?>
 </head>
-<body>
+<body class="registration">
 
-<section>
-    <a href="#">Log in met Facebook</a>
-    <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-        <label for="email">E-mailadres</label>
-        <input type="email" name="email" id="email" placeholder="r@student.thomasmore.be" required autofocus
-               title="Vul je Thomas More e-mailadres in." value="<?php if(!empty($errorMessage)){echo htmlspecialchars($emailadres);} //vult gebruikersinvoer opnieuw in zodat gebruiker bij fout niet het hele formulier opnieuw moet invullen?>">
+<div class="container">
+    <?php include_once('inc/header.inc.php'); ?>
+    <div class="col-md-7 intro"></div>
+    <section class="col-md-5">
 
-        <label for="naam">Voor- en familienaam</label>
-        <input type="text" name="naam" id="naam" placeholder="Voor- en familienaam" required
-               title="Vul je voor- en familienaam in." value="<?php if(!empty($errorMessage)){echo htmlspecialchars($voornaamfamilienaam);} ?>">
 
-        <label for="gebruikersnaam">Gebruikersnaam</label>
-        <input type="text" name="gebruikersnaam" id="gebruikersnaam" placeholder="Gebruikersnaam" required
-               title="Vul een gebruikersnaam in." value="<?php if(!empty($errorMessage)){echo htmlspecialchars($gebruikersnaam);} ?>">
+        <h1>Registreren</h1>
+        <p>Maak een account aan om inspirerende foto's van je IMD collega's te bekijken en je creativiteit een boost te
+            geven.</p>
 
-        <label for="wachtwoord">Wachtwoord</label>
-        <input type="password" name="wachtwoord" id="wachtwoord" placeholder="Wachtwoord" required
-               title="Kies een wachtwoord van minimaal 6 tekens.">
 
-        <input type="submit" name="registreer" value="Registreren">
 
-        <?php
+
+        <form class="login-form" action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
+
+
+            <?php
             //toon succesboodschap of errorboodschap
-            if(!empty($successMessage)){
+            if (!empty($successMessage)) {
                 echo $successMessage;
-            }else if(!empty($errorMessage)){
+            } else if (!empty($errorMessage)) {
                 echo $errorMessage;
             }
-        ?>
+            ?>
 
-        <div>Bij het aanmaken van een IMDstagram account ga je akkoord met de <a href="#">voorwaarden</a>.</div>
-    </form>
-</section>
+
+            <!-- start facebook registratie -->
+
+            <!--<div class="form-group">
+                <input name="fblogin" id="fblogin" value="Login met Facebook" class="btn btn-primary btn-lg btn-block">
+                <label class="login-field-icon fui-facebook" for="fblogin"></label>
+
+            </div>-->
+
+            <!-- einde facebook registratie -->
+
+
+            <!-- veld email -->
+            <div class="form-group">
+                <input type="email" name="email" class="form-control login-field"
+                       value="<?php if (!empty($errorMessage)) {
+                           echo htmlspecialchars($emailadres);
+                       } ?>" placeholder="r0123456@student.thomasmore.be" id="email" required autofocus
+                       title="Vul je Thomas More e-mailadres in.">
+                <label class="login-field-icon fui-mail" for="email"><span class="labeltext">E-mailadres</span></label>
+            </div>
+
+            <!-- veld naam -->
+            <div class="form-group">
+                <input type="text" name="naam" id="naam" class="form-control login-field"
+                       value="<?php if (!empty($errorMessage)) {
+                           echo htmlspecialchars($voornaamfamilienaam);
+                       } ?>" placeholder="Volledige naam" required title="Vul je volledige naam in.">
+                <label class="login-field-icon fui-user" for="naam"><span class="labeltext">Volledige naam</span></label>
+            </div>
+
+            <!-- veld gebruikersnaam -->
+            <div class="form-group">
+                <input type="text" name="gebruikersnaam" id="gebruikersnaam" class="form-control login-field"
+                       value="<?php if (!empty($errorMessage)) {
+                           echo htmlspecialchars($gebruikersnaam);
+                       } ?>" placeholder="Gebruikersnaam" required title="Vul een gebruikersnaam in.">
+                <label class="login-field-icon fui-user" for="gebruikersnaam"><span class="labeltext">Gebruikersnaam</span></label>
+            </div>
+
+            <!-- veld wachtwoord -->
+            <div class="form-group">
+                <input type="password" name="wachtwoord" id="wachtwoord" class="form-control login-field"
+                       placeholder="Wachtwoord" required title="Kies een wachtwoord van minimaal 6 tekens.">
+                <label class="login-field-icon fui-eye" for="wachtwoord"><span class="labeltext">Wachwoord</span></label>
+            </div>
+
+            <!-- formulier verzenden -->
+            <input type="submit" name="registreer" value="Registreren" class="btn btn-primary btn-lg btn-block">
+
+            <!-- link loginpagina -->
+            <a class="login-link" href="login.php">Heb je al een account? Naar de loginpagina.</a>
+
+
+        </form>
+    </section>
+
+</div>
+
 <?php include_once('inc/footer.inc.php'); ?>
 </body>
 </html>

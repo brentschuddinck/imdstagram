@@ -1,6 +1,9 @@
 <!-- start open graph protocol -->
 <!-- indien profielpagina gedeeld wordt, kan kan eventueel de image, etc aangepast worden aan de profielgegevens van de gebruiker -->
 
+    <!-- favicons -->
+
+
     <!-- Facebook -->
     <meta property="og:title" content="" />
     <meta property="og:type" content="" />
