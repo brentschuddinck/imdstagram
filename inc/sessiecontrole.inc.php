@@ -22,7 +22,7 @@ $_SESSION['login']['naam']= "Brent Schuddinck";
 
 $huidige_pagina = basename($_SERVER['PHP_SELF']);
 
-if(isset($_SESSION['login']) && $sessieLoggedin=1){
+if(isset($_SESSION['login']['loggedin']) && $_SESSION['login']['loggedin']=1){
     //makkelijk oproepen vanaf andere pagina's die sessiecontrole includen
     $sessie = $_SESSION['login'];
     $sessieNaam = 'login';
