@@ -1,5 +1,5 @@
 <?php
-
+include_once('Db.class.php');
 class User{
 
     //membervariabelen
@@ -88,6 +88,46 @@ class User{
             throw new Exception("Ow... je account kan niet worden aangemaakt. Probeer het later opnieuw.");
         }
 
+    }
+
+    public function canLogin(){
+
+
+        if(!empty($this->m_sEmailadres) && !empty($this->m_sWachtwoord)){
+
+            //database connectie
+            $conn = Db::getInstance();
+
+            // gebruiker zoeken die wil inloggen adhv e-mailadres
+            $statement = $conn->prepare("SELECT * FROM user WHERE email = :email");
+            // bind value to parameter :email
+            $statement->bindValue(":email", $this->m_sEmailadres, PDO::PARAM_STR);
+            //execute statement
+            $statement->execute();
+
+            // als we 1 rij terug krijgen = user bestaat
+            if($statement->rowCount() == 1){
+                // fetch row van resultaat, return array met kolomnamen als index
+                $userRow = $statement->fetch(PDO::FETCH_ASSOC);
+                $hash = $userRow['password'];
+
+                // check dat het ingegeven wachtwoord van de gebruiker overeenkomt met het wachtwoord in de databank
+                if(password_verify($this->m_sWachtwoord, $hash)){
+                    session_start();
+                    $_SESSION['login']['gebruikersnaam'] = $userRow['username'];
+                    $_SESSION['login']['profielfoto'] = $userRow['profile_picture'];
+                    return true;
+                }else{
+                    throw new Exception("Het ingevoerde wachtwoord komt niet overeen met het opgegeven e-mailadres.");
+                }
+
+            }else if($statement->rowCount() == 0){
+                // als er geen email in de database overeenkomt(0 rijen), met het ingevulde e-mail adress
+                // (het veld e-mail is in onze database UNIQUE dus we kunnen enkel 1 row of geen row terug krijgen)
+                throw new Exception("Er is geen account geregistreerd met dit e-mail adres. ");
+
+            }
+        }
     }
 
 }

@@ -1,18 +1,34 @@
 <?php
-include_once('inc/sessiecontrole.inc.php');
+    session_start();
+    include_once('classes/User.class.php');
 
-if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
-    //invoervariabelen
-    $gebruikeremail = $_POST['gebruikeremail'];
-    $wachtwoord = $_POST['wachtwoord'];
-}
+    if(!empty($_POST['gebruikeremail']) && !empty($_POST['wachtwoord'])){
+
+        $userLogin = new User();
+        $userLogin->setMSEmailadres($_POST['gebruikeremail']);
+        $userLogin->setMSWachtwoord($_POST['wachtwoord']);
+
+        try {
+            if ($userLogin->canLogin()) {
+                $_SESSION['login']['loggedin'] = 1;
+                include_once('inc/sessiecontrole.inc.php');
+            }
+        }catch (Exception $e){
+            $errorException = $e->getMessage();
+            $errorMessage = "<div class=\"text-danger message\"><p>$errorException</p></div>";
+        }
+    }else if(isset($_POST['gebruikeremail']) && empty($_POST['gebruikeremail'])){
+        $errorMessage = "<div class=\"text-danger message\"><p>vul je e-mail adres in.</p></div>";
+    }else if(isset($_POST['wachtwoord']) && empty($_POST['wachtwoord'])){
+        $errorMessage = "<div class=\"text-danger message\"><p>vul je wachtwoord adres in.</p></div>";
+    }
 
 
 ?><!doctype html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>IMDstagram photowall</title>
+    <title>IMDstagram login</title>
     <meta name="description" content="Login met je IMDstagram account.">
     <?php include_once('inc/style.inc.php'); ?>
 </head>
@@ -31,6 +47,13 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
         <form class="login-form" action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
 
 
+            <?php
+            //toon errorboodschap
+            if (!empty($errorMessage)) {
+                echo $errorMessage;
+            }
+            ?>
+
             <!-- start login met facebook -->
 
             <!--<div class="form-group">
@@ -45,17 +68,16 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
 
             <div class="form-group">
                 <input type="text" name="gebruikeremail" id="gebruikeremail" class="form-control login-field"
-                       value="<?php if (!empty($errorMessage)) {
-                           echo htmlspecialchars($gebruikeremail);
-                       } ?>" placeholder="Gebruikersnaam of e-mailadres" required
-                       title="Vul je gebruikersnaam of e-mailadres in." autofocus>
+                       value="<?php echo isset($_POST['gebruikeremail']) ? $_POST['gebruikeremail'] : '' ?>"
+                       placeholder="E-mailadres" required
+                       title="Vul je e-mailadres in." autofocus>
                 <label class="login-field-icon fui-user" for="gebruikeremail"><span class="labeltext">Gebruikersnaam of e-mailadres</span></label>
             </div>
 
 
             <div class="form-group">
                 <input type="password" name="wachtwoord" id="wachtwoord" class="form-control login-field"
-                       placeholder="Wachtwoord" required title="Kies een wachtwoord van minimaal 6 tekens.">
+                       placeholder="Wachtwoord" required title="Vul je wachtwoord in.">
                 <label class="login-field-icon fui-eye" for="wachtwoord"><span
                         class="labeltext">Wachwoord</span></label>
             </div>
