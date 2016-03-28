@@ -1,5 +1,5 @@
 <?php
-include_once('inc/sessiecontrole.inc.php');
+include('inc/sessiecontrole.inc.php');
 include_once('classes/User.class.php');
 
     if(!empty($_POST['gebruikeremail']) && !empty($_POST['wachtwoord'])){
@@ -11,7 +11,7 @@ include_once('classes/User.class.php');
         try {
             if ($userLogin->canLogin()) {
                 $_SESSION['login']['loggedin'] = 1;
-                include_once('inc/sessiecontrole.inc.php');
+                include('inc/sessiecontrole.inc.php');
             }
         }catch (Exception $e){
             $errorException = $e->getMessage();
