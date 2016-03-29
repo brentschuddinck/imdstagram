@@ -19,7 +19,7 @@ include_once('../inc/sessiecontrole.inc.php');
     <div class="row">
         <div class="col-sm-3 col-md-2"></div>
         <div class="col-sm-6 col-md-8">
-            <h1><?php if(isset($_GET['user']) && $_GET['user'] != $sessieGebruikersnaam){echo "Profiel " . htmlspecialchars($_GET['user']);}else{echo "Mijn profiel";} ?></h1>
+            <h1><?php if(isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['gebruikersnaam']){echo "Profiel " . htmlspecialchars($_GET['user']);}else{echo "Mijn profiel";} ?></h1>
             <article class="thumbnail">
                 <img data-src="holder.js/100%x600" alt="...">
                 <div class="caption">
