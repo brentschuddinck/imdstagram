@@ -116,20 +116,15 @@ class User{
                 // check dat het ingegeven wachtwoord van de gebruiker overeenkomt met het wachtwoord in de databank
                 if(password_verify($this->m_sWachtwoord, $hash)){
 
-                    //error session already started voorkomen
-                    if(empty($_SESSION)){
-                        session_start();
-                    }
-
-                    $_SESSION['login']['gebruikersnaam'] = $userRow['username'];
-                    $_SESSION['login']['profielfoto'] = $userRow['profile_picture'];
-
+                    //basis profielgegevens ophalen uit resultaatrij en toevoegen aan de sessie login
+                    $_SESSION['login']['userid'] = $userRow['user_id']; //sessie_id ophalen
+                    $_SESSION['login']['gebruikersnaam'] = $userRow['username']; //username ophalen
+                    $_SESSION['login']['profielfoto'] = $userRow['profile_picture']; //link profile_picture
                     if(empty($_SESSION['login']['profielfoto'])){
-                        $_SESSION['login']['profielfoto'] = "default.png";
+                        $_SESSION['login']['profielfoto'] = "default.png"; //standaard profielfoto indien veld leeg in db
                     }
-
-                    $_SESSION['login']['email'] = $userRow['email'];
-                    $_SESSION['login']['naam'] = $userRow['full_name'];
+                    //$_SESSION['login']['email'] = $userRow['email']; //emailadres ophalen
+                    //$_SESSION['login']['naam'] = $userRow['full_name']; //volledige naam ophalen
                     return true;
                 }else{
                     throw new Exception("Het ingevoerde wachtwoord komt niet overeen met het opgegeven e-mailadres.");

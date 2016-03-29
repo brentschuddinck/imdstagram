@@ -1,8 +1,11 @@
 <?php
-//error session already started voorkomen
+//sessie starten
 if(empty($_SESSION)){
     session_start();
 }
+
+
+
 /* Voorwaarden succesvol inloggen:
 * - sessie login bestaat en is niet NULL
 * - sessie login met key loggedin is true
@@ -16,16 +19,14 @@ if(empty($_SESSION)){
 
 $huidige_pagina = basename($_SERVER['PHP_SELF']);
 
-if(isset($_SESSION['login']['loggedin']) && $_SESSION['login']['loggedin']==1){
+if (isset($_SESSION['login']['loggedin']) && $_SESSION['login']['loggedin'] == 1) {
 
     if ($huidige_pagina == 'login.php' || $huidige_pagina == 'register.php') {
         header('location: /imdstagram/index.php');
         //live site: header('location: /index.php');
     }
 
-    include_once('session-var.inc.php');
-
-}else if ($huidige_pagina != 'login.php' && $huidige_pagina != 'register.php') {
+} else if ($huidige_pagina != 'login.php' && $huidige_pagina != 'register.php') {
     header('location: /imdstagram/login.php');
     // live site: header('location: /login.php');
 }
