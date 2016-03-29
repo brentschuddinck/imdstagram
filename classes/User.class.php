@@ -120,11 +120,11 @@ class User{
                     $_SESSION['login']['userid'] = $userRow['user_id']; //sessie_id ophalen
                     $_SESSION['login']['gebruikersnaam'] = $userRow['username']; //username ophalen
                     $_SESSION['login']['profielfoto'] = $userRow['profile_picture']; //link profile_picture
+                    $_SESSION['login']['email'] = $userRow['email']; //emailadres ophalen
+                    $_SESSION['login']['naam'] = $userRow['full_name']; //volledige naam ophalen
                     if(empty($_SESSION['login']['profielfoto'])){
                         $_SESSION['login']['profielfoto'] = "default.png"; //standaard profielfoto indien veld leeg in db
                     }
-                    //$_SESSION['login']['email'] = $userRow['email']; //emailadres ophalen
-                    $_SESSION['login']['naam'] = $userRow['full_name']; //volledige naam ophalen
                     return true;
                 }else{
                     throw new Exception("Het ingevoerde wachtwoord komt niet overeen met het opgegeven e-mailadres.");

@@ -28,11 +28,14 @@ h2{
 
 h3, .name-label{
     font-size: 1.8em;
-    margin-bottom: 20px;
 }
 
-p, span, div{
+p, span, div, .checkbox{
     font-size: 1.6rem;
+}
+
+.settings{
+    margin-top: 50px;
 }
 
 
@@ -113,9 +116,34 @@ aside{
 
 
 
+.control-label{
+    font-weight: bold;
+}
 
 
+.lg-together{
+    padding-left: 0;
+    margin-bottom: 10px;
+}
 
+
+.settings input[type='submit']{
+    margin-top: 10px;
+}
+
+.vet{
+    font-weight:bold;
+}
+
+.block-settings{
+    margin-bottom: 50px;
+}
+
+
+.settings .control-label{
+    margin-left: 0;
+    padding-left: 0;
+}
 
 @media screen and (min-width: 760px) {
     .template {

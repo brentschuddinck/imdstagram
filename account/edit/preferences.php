@@ -41,99 +41,228 @@ if (isset($_POST['uploadProfilePicture'])) {
 <div class="container">
     <div class="container-fluid">
         <div class="row-fluid">
-
             <!-- start aside left -->
             <aside class="col-xs-12 col-sm-4 col-md-3">
                 <div class="well sidebar-nav">
                     <ul class="nav nav-list">
-                        <li class="nav-header">Je account</li>
-                        <li><a href="#profiel">Profielinstellingen</a></li>
-                        <li><a href="#wachtwoord">Wachtwoord wijzigen</a></li>
+                        <div class="nav-header">Je account</div>
+                        <li><a href="#profiel">Profiel</a></li>
+                        <li><a href="#wachtwoord">Wachtwoord</a></li>
+                        <li><a href="#privacy">Privacy</a></li>
                         <li><a href="#sluiten">Account sluiten</a></li>
                     </ul>
                 </div><!--/.well -->
             </aside>
             <!-- end aside left -->
 
-            <div class="col-xs-12 col-sm-8 col-md-offset-1 col-md-8">
 
+            <!-- start profiel content blok rechts -->
+            <div class="col-xs-12 col-sm-8 col-md-offset-1 col-md-8 block-settings">
 
                 <!-- start profiel content sectie -->
-                <div class="hero-unit">
-                    <h1>Profiel bewerken</h1>
 
-                    <!-- Start sectie algemene accountinstellingen -->
-                    <section class="profile-section" id="profiel">
+                <h1>Profiel bewerken</h1>
 
-                        <!-- start form profielinstellingen -->
-                        <form action="" method="POST">
-                            <h2>Profielinstellingen</h2>
-                            <!-- start kolom profielfoto -->
-                            <div class="profile-section indent col-xs-12 col-sm-4 col-md-3">
 
-                                <div class="form-group">
+                <!-- Start sectie algemene accountinstellingen -->
+                <section class="settings profile" id="profiel">
 
-                                    <div class="box">
-                                        <img class="profielfoto groot"
-                                             src="/imdstagram/img/uploads/profile-pictures/<?php echo htmlspecialchars($_SESSION['login']['profielfoto']); ?>"
-                                             alt="Profielfoto van <?php echo htmlspecialchars($_SESSION['login']['naam']); ?>">
-                                    </div>
-                                </div>
+                    <!-- start form profielinstellingen -->
+                    <form action="" method="POST">
+                        <h2>Profielinstellingen</h2>
+
+                        <!-- start formuliergroep profielfoto -->
+                        <div class="form-group">
+                            <img class="profielfoto groot"
+                                 src="/imdstagram/img/uploads/profile-pictures/<?php echo htmlspecialchars($_SESSION['login']['profielfoto']); ?>"
+                                 alt="Profielfoto van <?php echo htmlspecialchars($_SESSION['login']['naam']); ?>">
+                        </div>
+                        <!-- einde formuliergroep profielfoto -->
+
+                        <!-- start formuliergroep accountinstellingen -->
+                        <div class="form-group">
+
+                            <!-- Naam  -->
+                            <label for="inputName" class="col-lg-3 control-label">Naam:</label>
+                            <div class="col-lg-9 lg-together">
+                                <input type="text" class="form-control col-lg-9" id="inputName"
+                                       placeholder="Volledige naam"
+                                       value="<?php echo htmlspecialchars($_SESSION['login']['naam']); ?>" disabled>
                             </div>
 
-                            <div class="profile-section indent col-xs-12 col-sm-7 col-sm-offset-1 col-md-8 col-md-offset-1">
-                                <div class="form-group">
-                                    <div class="name-label"><?php echo htmlspecialchars($_SESSION['login']['naam']);?></div>
-
-
-
-                                    <div class="form-group">
-                                        <label for="inputEmail1" class="col-lg-2 control-label">Email</label>
-                                        <div class="col-lg-10">
-                                            <input type="email" class="form-control" id="inputEmail1" placeholder="Email">
-                                        </div>
-                                        <label for="inputEmail1" class="col-lg-2 control-label">Email</label>
-                                        <div class="col-lg-10">
-                                            <input type="email" class="form-control" id="inputEmail1" placeholder="Email">
-                                        </div>
-                                        <label for="inputEmail1" class="col-lg-2 control-label">Email</label>
-                                        <div class="col-lg-10">
-                                            <input type="email" class="form-control" id="inputEmail1" placeholder="Email">
-                                        </div>
-                                        <label for="inputEmail1" class="col-lg-2 control-label">Email</label>
-                                        <div class="col-lg-10">
-                                            <input type="email" class="form-control" id="inputEmail1" placeholder="Email">
-                                        </div>
-                                    </div>
-
-
-
-                                </div>
-
+                            <!-- E-mail -->
+                            <label for="inputEmail" class="col-lg-3 control-label">E-mailadres:</label>
+                            <div class="col-lg-9 lg-together">
+                                <input type="email" class="form-control" id="inputEmail" placeholder="E-mailadres"
+                                       value="<?php echo htmlspecialchars($_SESSION['login']['email']); ?>">
                             </div>
 
-                            <div class="col-xs-12">
-                                <input type="submit" name="bewaarProfielinstellingen" value="Profielinstellingen opslaan" class="btn btn-primary btn-large">
+                            <!-- Username -->
+                            <label for="inputUsername" class="col-lg-3 control-label">Gebruikersnaam:</label>
+                            <div class="col-lg-9 lg-together">
+                                <input type="email" class="form-control" id="inputUsername"
+                                       placeholder="Gebruikersnaam"
+                                       value="<?php echo htmlspecialchars($_SESSION['login']['gebruikersnaam']); ?>">
                             </div>
 
-                        </form>
-                        <!-- einde form profielinstellingen-->
-
-                    </section>
-                    <!-- Einde sectie algemene accountinstellingen  -->
-
-                </div>
-                <!-- einde profiel content sectie -->
+                        </div>
+                        <!-- einde formuliergroep accountinstellingen -->
 
 
-            </div><!--/span-->
-        </div><!--/row-->
+                        <input type="submit" name="wijzigProfielinstellingen" value="Profielinstellingen opslaan"
+                               class="btn btn-primary btn-large">
+
+
+                    </form>
+                    <!-- einde form profielinstellingen-->
+
+                </section>
+                <!-- Einde sectie algemene accountinstellingen  -->
+
+
+
+
+
+
+
+                <!-- Start sectie algemene accountinstellingen -->
+                <section class="settings password" id="wachtwoord">
+
+                    <!-- start form profielinstellingen -->
+                    <form action="" method="POST">
+                        <h2>Wachtwoord wijzigen</h2>
+
+                        <!-- start formuliergroep oud wachtwoord -->
+                        <!-- Oud wachtwoord  -->
+                        <label for="inputOudWachtwoord" class="col-lg-3 control-label">Oud wachtwoord:</label>
+                        <div class="col-lg-9 lg-together">
+                            <input type="password" class="form-control col-lg-9" id="inputOudWachtwoord"
+                                   placeholder="Oud wachtwoord">
+                        </div>
+                        <!-- einde formuliergroep profielfoto -->
+
+                        <!-- start formuliergroep nieuw wachtwoord -->
+                        <div class="form-group">
+
+
+
+                            <!-- Nieuw wachtworod -->
+                            <label for="inputNieuwWachtwoord" class="col-lg-3 control-label">Nieuw wachtwoord:</label>
+                            <div class="col-lg-9 lg-together">
+                                <input type="password" class="form-control col-lg-9" id="inputNieuwWachtwoord"
+                                       placeholder="Nieuw wachtwoord">
+                            </div>
+
+                            <!-- Nieuw wachtwoord herhalen -->
+                            <label for="inputHerhaalNieuwWachtwoord" class="col-lg-3 control-label">Herhaal wachtwoord:</label>
+                            <div class="col-lg-9 lg-together">
+                                <input type="password" class="form-control col-lg-9" id="inputHerhaalNieuwWachtwoord"
+                                       placeholder="Herhaal nieuw wachtwoord">
+                            </div>
+
+                        </div>
+                        <!-- einde formuliergroep accountinstellingen -->
+
+
+                        <input type="submit" name="wijzigWachtwoord" value="Wachtwoord wijzigen" class="btn btn-primary btn-large">
+
+
+                    </form>
+                    <!-- einde form profielinstellingen-->
+
+                </section>
+                <!-- Einde sectie algemene accountinstellingen  -->
+
+
+
+
+
+
+
+                <!-- Start sectie account sluiten -->
+                <section class="settings privacy" id="privacy">
+
+                    <!-- start form account sluiten -->
+                    <form action="" method="POST">
+                        <h2>Privacy</h2>
+
+
+                        <div class="form-group">
+                            <!-- Openbaar profiel  -->
+                            <label class="checkbox" for="checkPrivateAccount">
+                                <input type="checkbox" data-toggle="checkbox" value="" id="checkPrivateAccount">
+                                Maak mijn account priv&eacute;. Alleen geaccepteerde personen kunnen mijn foto's en profiel bekijken.
+                            </label>
+                        </div>
+
+
+
+                        <input type="submit" name="wijzigPrivacy" id="wijzigPrivacy" value="Wijzig privacyvoorkeuren" class="btn btn-primary btn-large">
+
+
+
+                    </form>
+                    <!-- einde form account sluiten-->
+
+                </section>
+                <!-- Einde sectie account sluiten  -->
+
+
+
+
+
+
+
+
+
+
+                <!-- Start sectie account sluiten -->
+                <section class="settings close-account" id="sluiten">
+
+                    <!-- start form account sluiten -->
+                    <form action="" method="POST">
+                        <h2>Account sluiten</h2>
+
+                        <p>IMDstagram niets voor jou? Dan kan je hier je account sluiten. Alle opgeslagen foto's, connecties, commentaren, likes, ... gaan verloren. <span class="vet">Let op: Deze actie kan niet ongedaan gemaakt worden.</span></p>
+
+
+                        <div class="form-group">
+                            <!-- Oud wachtwoord  -->
+                            <label for="inputWachtwoordDelete" class="col-lg-3 control-label">Wachtwoord:</label>
+                            <div class="col-lg-9 lg-together">
+                                <input type="password" class="form-control col-lg-9" id="inputWachtwoordDelete"
+                                       placeholder="Wachtwoord">
+
+                            </div>
+                        </div>
+
+
+
+
+                        <input type="submit" name="deleteAccount" id="deleteAccount" value="Verwijder mijn account" class="btn btn-danger btn-large">
+
+
+
+                    </form>
+                    <!-- einde form account sluiten-->
+
+                </section>
+                <!-- Einde sectie account sluiten  -->
+
+
+
+
+
+
+
+            </div>
+            <!-- einde profiel content sectie -->
+
+
+        </div>
     </div>
 </div>
-
-
 <!-- einde pagina profiel bewerken -->
-
 
 <?php include_once('../../inc/footer.inc.php'); ?>
 </body>
