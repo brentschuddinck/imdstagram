@@ -8,9 +8,11 @@ body{
     -ms-overflow-x: hidden;
     -o-overflow-x: hidden;
     overflow-x: hidden;
+
+    font-size: 1.6rem;
 }
 
-h1, h2, h3, h4, h5, h6, .navbar-brand{
+h1, h2, h3, h4, h5, h6, .navbar-brand, .name-label{
     font-family: "Bree Serif", serif;
 }
 
@@ -20,8 +22,19 @@ h1{
 }
 
 h2{
-    font-size: 1.8em;
+    font-size: 2.2em;
+    margin-bottom: 30px;
 }
+
+h3, .name-label{
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+p, span, div{
+    font-size: 1.6rem;
+}
+
 
 
 /* overriding templates */
@@ -66,6 +79,7 @@ h2{
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
     -o-border-radius: 100%;
+    border-radius: 100%;
 }
 
 .profielfoto.mini{
@@ -77,8 +91,31 @@ h2{
 
 .profielfoto.groot{
     width: 140px;
-
 }
+
+aside{
+    margin-top: 40px;
+    padding: 0;
+    position: fixed;
+}
+
+
+.nav-header{
+    font-weight: bold;
+    font-family: "Bree Serif", Serif;
+    font-size: 2.4rem;
+    margin-bottom: 10px;
+}
+
+.container-fluid{
+    padding: 0;
+}
+
+
+
+
+
+
 
 @media screen and (min-width: 760px) {
     .template {
@@ -88,5 +125,7 @@ h2{
     .hide-on-mobile{
         display: block;
     }
+
+
 
 }

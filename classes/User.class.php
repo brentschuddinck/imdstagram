@@ -124,7 +124,7 @@ class User{
                         $_SESSION['login']['profielfoto'] = "default.png"; //standaard profielfoto indien veld leeg in db
                     }
                     //$_SESSION['login']['email'] = $userRow['email']; //emailadres ophalen
-                    //$_SESSION['login']['naam'] = $userRow['full_name']; //volledige naam ophalen
+                    $_SESSION['login']['naam'] = $userRow['full_name']; //volledige naam ophalen
                     return true;
                 }else{
                     throw new Exception("Het ingevoerde wachtwoord komt niet overeen met het opgegeven e-mailadres.");

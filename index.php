@@ -18,8 +18,8 @@ include_once('inc/sessiecontrole.inc.php');
 <!-- start photowall -->
 <div class="container">
     <div class="row">
-        <div class="col-sm-3 col-md-2"></div>
-        <div class="col-sm-6 col-md-8">
+        <!-- col-xx-offet-x zorgt voor de centrering middening -->
+        <div class="col-sm-6 col-sm-offset-3 col-md-8 col-md-offset-2">
             <h1>Photo wall</h1>
             <article class="thumbnail">
                 <img data-src="holder.js/100%x600" alt="...">
