@@ -26,7 +26,7 @@
                             <li><a href="/imdstagram/account/profile.php?user=<?php print htmlspecialchars($_SESSION['login']['gebruikersnaam']); ?>">Mijn profiel</a></li>
                             <li><a href="#">Volgers</a></li>
                             <li><a href="#">Volgend</a></li>
-                            <div class="divider"></div>
+                            <li class="divider"></li>
                             <li><a href="/imdstagram/account/edit/preferences.php">Profiel bewerken</a></li>
                             <li><a href="/imdstagram/logout.php">Uitloggen</a></li>
                         </ul>

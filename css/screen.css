@@ -1,8 +1,8 @@
 /* standaard styling */
 
-body{
+body {
     font-family: "Arimo", sans-serif;
-    
+
     -webkit-overflow-x: hidden;
     -moz-overflow-x: hidden;
     -ms-overflow-x: hidden;
@@ -12,40 +12,38 @@ body{
     font-size: 1.6rem;
 }
 
-h1, h2, h3, h4, h5, h6, .navbar-brand, .name-label{
+h1, h2, h3, h4, h5, h6, .navbar-brand, .name-label {
     font-family: "Bree Serif", serif;
 }
 
-h1{
-    font-size: 3em;
+h1 {
+    font-size: 2.5em;
     margin-bottom: 40px;
 }
 
-h2{
-    font-size: 2.2em;
+h2 {
+    font-size: 1.8em;
     margin-bottom: 30px;
 }
 
-h3, .name-label{
-    font-size: 1.8em;
+h3, .name-label {
+    font-size: 1.6em;
 }
 
-p, span, div, .checkbox{
+p, span, div, .checkbox {
     font-size: 1.6rem;
 }
 
-.settings{
+.settings {
     margin-top: 50px;
 }
 
-
-
 /* overriding templates */
-.template{
+.template {
     padding-top: 60px;
 }
 
-.template.welcome{
+.template.welcome {
 
     background: url("../img/assets/bg-home/berg.jpg") no-repeat;
 
@@ -58,26 +56,25 @@ p, span, div, .checkbox{
     height: 100vh;
 }
 
-
-.labeltext{
+.labeltext {
     position: absolute;
     text-indent: -9999px;
 }
 
-.hide-on-mobile{
+.hide-on-mobile {
     display: none;
 }
 
-.message{
+.message {
     margin-bottom: 10px;
     display: block;
 }
 
-.message.title{
+.message.title {
     font-weight: bold;
 }
 
-.profielfoto{
+.profielfoto {
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
@@ -85,64 +82,71 @@ p, span, div, .checkbox{
     border-radius: 100%;
 }
 
-.profielfoto.mini{
+.profielfoto.mini {
     width: 30px;
     margin-right: 7px;
     margin-top: -7px;
 
 }
 
-.profielfoto.groot{
+.profielfoto.groot {
     width: 140px;
 }
 
-aside{
+aside {
     margin-top: 40px;
     padding: 0;
     position: fixed;
 }
 
-
-.nav-header{
+.nav-header {
     font-weight: bold;
     font-family: "Bree Serif", Serif;
     font-size: 2.4rem;
     margin-bottom: 10px;
 }
 
-.container-fluid{
+.container-fluid {
     padding: 0;
 }
 
-
-
-.control-label{
+.control-label {
     font-weight: bold;
 }
 
-
-.lg-together{
+.lg-together {
     padding-left: 0;
     margin-bottom: 10px;
 }
 
-
-.settings input[type='submit']{
-    margin-top: 10px;
+.settings input[type='submit'] {
+    margin-top: 15px;
 }
 
-.vet{
-    font-weight:bold;
+.vet {
+    font-weight: bold;
 }
 
-.block-settings{
+.block-settings {
     margin-bottom: 50px;
 }
 
-
-.settings .control-label{
+.settings .control-label {
     margin-left: 0;
     padding-left: 0;
+}
+
+
+.nav-list .active{
+    background-color: #eee;
+}
+
+#inputName:hover{
+    cursor: not-allowed;
+}
+
+.errorbox{
+    padding-bottom: 10px;
 }
 
 @media screen and (min-width: 760px) {
@@ -150,10 +154,27 @@ aside{
         padding-top: 80px;
     }
 
-    .hide-on-mobile{
+    .hide-on-mobile {
         display: block;
     }
 
+    .fixed {
+        position: fixed;
+    }
+
+    .scrollit {
+        float: left;
+    }
+
+    .clearfix {
+        clear: both;
+    }
+
+}
 
 
+@media screen and (min-width: 960px) {
+    .fixed{
+        width: 250px;
+    }
 }
