@@ -1,5 +1,6 @@
 <?php
 include_once('../../inc/sessiecontrole.inc.php');
+include_once('../../inc/feedbackbox.inc.php');
 
 
 if(isset($_POST['wijzigProfielinstellingen'])){
@@ -51,7 +52,7 @@ if(isset($_POST['wijzigProfielinstellingen'])){
         <!-- start formuliergroep profielfoto -->
         <div class="form-group">
             <img class="profielfoto groot"
-                 src="/imdstagram/img/uploads/profile-pictures/<?php echo htmlspecialchars($_SESSION['login']['profielfoto']); ?>"
+                 src="../../img/uploads/profile-pictures/<?php echo htmlspecialchars($_SESSION['login']['profielfoto']); ?>"
                  alt="Profielfoto van <?php echo htmlspecialchars($_SESSION['login']['naam']); ?>">
         </div>
         <!-- einde formuliergroep profielfoto -->

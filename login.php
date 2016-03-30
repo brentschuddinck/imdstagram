@@ -1,5 +1,6 @@
 <?php
 include('inc/sessiecontrole.inc.php');
+include_once('inc/feedbackbox.inc.php');
 include_once('classes/User.class.php');
 
     if(!empty($_POST['gebruikeremail']) && !empty($_POST['wachtwoord'])){
@@ -15,12 +16,13 @@ include_once('classes/User.class.php');
             }
         }catch (Exception $e){
             $errorException = $e->getMessage();
-            $errorMessage = "<div class=\"text-danger message\"><p>$errorException</p></div>";
+            //$errorMessage = "<div class=\"text-danger message\"><p>$errorException</p></div>";
+            $feedback = bouwFeedbackBox("danger", $errorException);
         }
     }else if(isset($_POST['gebruikeremail']) && empty($_POST['gebruikeremail'])){
-        $errorMessage = "<div class=\"text-danger message\"><p>Vul je e-mailadres in.</p></div>";
+        $feedback = bouwFeedbackBox("danger", "Vul je e-mailadres in.");
     }else if(isset($_POST['wachtwoord']) && empty($_POST['wachtwoord'])){
-        $errorMessage = "<div class=<\"text-danger message\"><p>Vul je wachtwoord in.</p></div>";
+        $feedback = bouwFeedbackBox("danger", "Vul je wachtwoord in.");
     }
 
 
@@ -44,15 +46,17 @@ include_once('classes/User.class.php');
         <p>Log in met je IMDstagram account om inspirerende foto's van je IMD collega's te bekijken en je creativiteit een boost te geven.</p>
 
 
-        <form class="login-form" action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
 
+
+        <form class="login-form" action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
 
             <?php
             //toon errorboodschap
-            if (!empty($errorMessage)) {
-                echo $errorMessage;
+            if (!empty($feedback)) {
+                echo $feedback;
             }
             ?>
+
 
             <!-- start login met facebook -->
 

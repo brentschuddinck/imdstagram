@@ -1,6 +1,6 @@
 <?php
 include_once('../../inc/sessiecontrole.inc.php');
-include_once('../../inc/feedbackbox.php');
+include_once('../../inc/feedbackbox.inc.php');
 include_once('../../classes/User.class.php');
 
 if (isset($_POST['wijzigPrivacy'])) {
@@ -41,15 +41,6 @@ if (isset($_POST['wijzigPrivacy'])) {
     }
 
 }
-
-
-//er is op de knop wijzigPrivacy geklikt
-
-//controleer of checkbox aangevinkt staat
-//update record 0/1 in db
-//update sessievariabele
-//toon feedback bij success of fout
-
 
 ?><!doctype html>
 <html lang="nl">

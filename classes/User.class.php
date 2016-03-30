@@ -93,7 +93,7 @@ class User
         $statement->bindValue(":password", $this->m_sWachtwoord, PDO::PARAM_STR);
 
         //statement uitvoeren
-        if ($statement->execute()) {
+        if (!$statement->execute()) {
             //query went OK
         } else {
             throw new Exception("Ow... je account kan niet worden aangemaakt. Probeer het later opnieuw.");
@@ -145,13 +145,13 @@ class User
                     //alles okido
                     return true;
                 } else {
-                    throw new Exception("Het ingevoerde wachtwoord komt niet overeen met het opgegeven e-mailadres.");
+                    throw new Exception("het ingevoerde wachtwoord komt niet overeen met het opgegeven e-mailadres.");
                 }
 
             } else if ($statement->rowCount() == 0) {
                 // als er geen email in de database overeenkomt(0 rijen), met het ingevulde e-mail adress
                 // (het veld e-mail is in onze database UNIQUE dus we kunnen enkel 1 row of geen row terug krijgen)
-                throw new Exception("Er is geen account geregistreerd met dit e-mail adres. ");
+                throw new Exception("er is geen account geregistreerd met dit e-mailadres.");
 
             }
         }
@@ -164,13 +164,12 @@ class User
         //connectie db
         $conn = Db::getInstance();
 
-
         //statement voorbereiden
         $statement = $conn->prepare("UPDATE user SET private = :state WHERE user_id = :userid");
 
         //values binden
-        $statement->bindValue(":state", $this->m_iUserAccountState);
-        $statement->bindValue(":userid", $_SESSION['login']['userid']);
+        $statement->bindValue(":state", $this->m_iUserAccountState, PDO::PARAM_INT);
+        $statement->bindValue(":userid", $_SESSION['login']['userid'], PDO::PARAM_INT);
 
 
         //statement uitvoeren
@@ -180,6 +179,27 @@ class User
             return false;
         }
 
+    }
+
+
+    //kan wachtwoord gewijzigd worden
+    public function canUpdatePassword(){
+        //connectie db
+        $conn = Db::getInstance();
+
+        //statement voorbereiden
+        $statement = $conn->prepare("UPDATE user SET password = :wachtwoord WHERE user_id = :userid");
+
+        //binden
+        $statement->bindValue(":wachtwoord", $this->m_sWachtwoord, PDO::PARAM_STR);
+        $statement->bindValue(":userid", $_SESSION['login']['userid'], PDO::PARAM_STR);
+
+        //statement uitvoeren
+        if ($statement->execute()) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
 

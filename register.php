@@ -1,5 +1,6 @@
 <?php
 include_once('inc/sessiecontrole.inc.php');
+include_once('inc/feedbackbox.inc.php');
 
 //autoload classes
 spl_autoload_register(function ($class_name) {
@@ -42,18 +43,22 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             $user->setMSGebruikersnaam($gebruikersnaam);
             $user->setMSWachtwoord($wachtwoordHash);
             $user->Registreer();
-            $successMessage = "<div class=\"text-success message\">Yeah! Je account is aangemaakt. <a href='login.php'>Log hier in</a>.</div>";
+
+            $feedback = bouwFeedbackBox("success", "Yeah! Je account is aangemaakt. <a href='login.php'>Log hier in</a>");
 
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
+            $feedback = bouwFeedbackBox("danger", $errorMessage);
         }
     } else {
         //niet alle velden zijn juist ingevuld
-        $errorMessage = "<div class=\"login-form text-danger message\"><span class='message title'>Oeps... controleer volgende velden:</span>";
+        $feedbacktekst = "controleer volgende velden:";
+        //li met fouten ophalen
         foreach ($errors as $error) {
-            $errorMessage .= "<li>$error</li>";
+            $feedbacktekst .= "<li>$error</li>";
         }
-        $errorMessage .= "</div>";
+
+        $feedback = bouwFeedbackBox("danger", $feedbacktekst);
     }
 
 }
@@ -84,11 +89,9 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
 
 
             <?php
-            //toon succesboodschap of errorboodschap
-            if (!empty($successMessage)) {
-                echo $successMessage;
-            } else if (!empty($errorMessage)) {
-                echo $errorMessage;
+            //toon errorboodschap
+            if (!empty($feedback)) {
+                echo $feedback;
             }
             ?>
 
