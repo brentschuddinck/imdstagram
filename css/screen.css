@@ -154,6 +154,14 @@ aside {
     margin-bottom: 50px;
 }
 
+textarea{
+    resize: none;
+}
+.postDate{
+    text-align: right;
+    color: #4b6075;
+}
+
 @media screen and (min-width: 760px) {
     .template {
         padding-top: 80px;
