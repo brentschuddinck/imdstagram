@@ -94,9 +94,7 @@ class User
 
         //statement uitvoeren
         if (!$statement->execute()) {
-            //query went OK
-        } else {
-            throw new Exception("Ow... je account kan niet worden aangemaakt. Probeer het later opnieuw.");
+            throw new Exception(" je account is niet geregistreerd. Mogelijk bestaat er al een account met deze gegevens.");
         }
 
     }
@@ -182,25 +180,29 @@ class User
     }
 
 
-    //kan wachtwoord gewijzigd worden
-    public function canUpdatePassword(){
+    public function canUpdatePreferences(){
         //connectie db
         $conn = Db::getInstance();
 
         //statement voorbereiden
-        $statement = $conn->prepare("UPDATE user SET password = :wachtwoord WHERE user_id = :userid");
+        $statement = $conn->prepare("UPDATE user SET email = :email, full_name = :fullname, username = :username WHERE user_id = :userid");
 
-        //binden
-        $statement->bindValue(":wachtwoord", $this->m_sWachtwoord, PDO::PARAM_STR);
-        $statement->bindValue(":userid", $_SESSION['login']['userid'], PDO::PARAM_STR);
+        //values binden
+        $statement->bindValue(":email", $this->m_sEmailadres, PDO::PARAM_STR);
+        $statement->bindValue(":fullname", $this->m_sVoornaamFamilienaam, PDO::PARAM_STR);
+        $statement->bindValue(":username", $this->m_sGebruikersnaam, PDO::PARAM_STR);
+        $statement->bindValue(":userid", $_SESSION['login']['userid'], PDO::PARAM_INT);
+
 
         //statement uitvoeren
-        if ($statement->execute()) {
+        if($statement->execute()){
             return true;
         }else{
-            return false;
+            throw new Exception("door een technisch probleem kunnen we de wijzigingen niet opslaan.");
         }
     }
+
+
 
 
 }

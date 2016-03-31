@@ -58,15 +58,14 @@ class Validation
         //controleer of gebruikersnaam is ingevuld
         if(empty($p_sGebruikersnaam)){
             return "Gebruikersnaam is niet ingevuld.";
-
         //indien gebruikersnaam is ingevuld, controleer of deze niet groter/kleiner is dan toegelaten aantal tekens
         }else if (strlen($p_sGebruikersnaam) > 25) {
             return "Gebruikersnaam is te lang. Gebruikersnaam mag niet langer dan 25 tekens zijn.";
         } else if (strlen($p_sGebruikersnaam) < 2) {
             return "Gebruikersnaam is te kort. Gebruikersnaam moet moet minstens 2 tekens lang zijn.";
-        } else if (preg_match('/[^a-z_\-0-9]/i', $p_sGebruikersnaam)) {
-            //reguliere expressie controleert of gebruikersnaam enkel letters a-z, cijfer, _ of - bevat. Indien niet, toon error.
-            return "Gebruikersnaam ongeldig. Gebruikersnaam mag enkel letters, cijfers, _ of - bevatten.";
+        } else if (!ctype_alnum($p_sGebruikersnaam)) {
+            //reguliere expressie controleert of gebruikersnaam enkel letters a-z, of cijfers bevatten. Indien niet, toon error.
+            return "Gebruikersnaam ongeldig. Gebruikersnaam mag enkel letters of cijfers bevatten.";
         }
     }
 

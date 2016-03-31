@@ -11,7 +11,7 @@ spl_autoload_register(function ($class_name) {
 if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
 
     //invoervariabelen
-    $voornaamfamilienaam = $_POST['naam'];
+    $voornaamfamilienaam = $_POST['naam']; //ucwords zet de eerste letter van elk woord in een hoofdletter
     $emailadres = $_POST['email'];
     $gebruikersnaam = strtolower($_POST['gebruikersnaam']);
     $wachtwoord = $_POST['wachtwoord'];
@@ -24,7 +24,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
     $errors["gebruikersnaam"] = $validation->isGeldigGebruikersnaam($gebruikersnaam);
     $errors["wachtwoord"] = $validation->isGeldigWachtwoord($wachtwoord);
 
-    //verwijder juist ingevulde elemeneten (NULL) uit array
+    //verwijdert juist ingevulde elemeneten (NULL) uit array
     $errors = array_filter($errors);
 
 
@@ -44,7 +44,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             $user->setMSWachtwoord($wachtwoordHash);
             $user->Registreer();
 
-            $feedback = bouwFeedbackBox("success", "Yeah! Je account is aangemaakt. <a href='login.php'>Log hier in</a>");
+            $feedback = bouwFeedbackBox("success", "Je account is aangemaakt. <a href='login.php'>Log hier in</a>.");
 
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
@@ -87,13 +87,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
 
         <form class="login-form" action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
 
-
-            <?php
-            //toon errorboodschap
-            if (!empty($feedback)) {
-                echo $feedback;
-            }
-            ?>
+            <?php if(!empty($feedback)){echo $feedback;} ?>
 
 
             <!-- start facebook registratie -->
@@ -110,7 +104,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             <!-- veld email -->
             <div class="form-group">
                 <input type="email" name="email" class="form-control login-field"
-                       value="<?php if (!empty($errorMessage)) {
+                       value="<?php if (!empty($feedback)) {
                            echo htmlspecialchars($emailadres);
                        } ?>" placeholder="r0123456@student.thomasmore.be" id="email" required autofocus
                        title="Vul je Thomas More e-mailadres in.">
@@ -120,7 +114,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             <!-- veld naam -->
             <div class="form-group">
                 <input type="text" name="naam" id="naam" class="form-control login-field"
-                       value="<?php if (!empty($errorMessage)) {
+                       value="<?php if (!empty($feedback)) {
                            echo htmlspecialchars($voornaamfamilienaam);
                        } ?>" placeholder="Volledige naam" required title="Vul je volledige naam in.">
                 <label class="login-field-icon fui-user" for="naam"><span class="labeltext">Volledige naam</span></label>
@@ -129,7 +123,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             <!-- veld gebruikersnaam -->
             <div class="form-group">
                 <input type="text" name="gebruikersnaam" id="gebruikersnaam" class="form-control login-field"
-                       value="<?php if (!empty($errorMessage)) {
+                       value="<?php if (!empty($feedback)) {
                            echo htmlspecialchars($gebruikersnaam);
                        } ?>" placeholder="Gebruikersnaam" required title="Vul een gebruikersnaam in.">
                 <label class="login-field-icon fui-user" for="gebruikersnaam"><span class="labeltext">Gebruikersnaam</span></label>

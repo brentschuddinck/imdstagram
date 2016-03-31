@@ -16,7 +16,6 @@ include_once('classes/User.class.php');
             }
         }catch (Exception $e){
             $errorException = $e->getMessage();
-            //$errorMessage = "<div class=\"text-danger message\"><p>$errorException</p></div>";
             $feedback = bouwFeedbackBox("danger", $errorException);
         }
     }else if(isset($_POST['gebruikeremail']) && empty($_POST['gebruikeremail'])){

@@ -1,6 +1,8 @@
 <?php
 include_once('../../inc/sessiecontrole.inc.php');
+include_once('../../inc/feedbackbox.inc.php');
 
+    if(isset($_POST['']))
 
 ?><!doctype html>
 <html lang="nl">

@@ -91,6 +91,17 @@ p, span, div, .checkbox {
 
 .profielfoto.groot {
     width: 140px;
+    margin-top: -10px;
+}
+
+.profielfoto.groot:hover, .profielfoto.groot:active{
+    cursor: pointer;
+    -webkit-opacity: 0.5;
+    -moz-opacity: 0.5;
+    -ms-opacity: 0.5;
+    -o-opacity: 0.5;
+    opacity: 0.5;
+
 }
 
 aside {
@@ -141,9 +152,11 @@ aside {
     background-color: #eee;
 }
 
+/* name allowed? Nodig dat dit aanpasbaar is? Volgens Instagram wel. Bijvoorbeeld voor verkorte schrijfwijzes: Brent Schuddinck => Brent S.
+/*
 #inputName:hover{
     cursor: not-allowed;
-}
+}*/
 
 .errorbox{
     padding-bottom: 10px;
@@ -153,6 +166,8 @@ aside {
 .login-form{
     margin-bottom: 50px;
 }
+
+
 
 @media screen and (min-width: 760px) {
     .template {
@@ -182,5 +197,9 @@ aside {
 @media screen and (min-width: 960px) {
     .fixed{
         width: 250px;
+    }
+
+    .label-picture{
+        padding-top: 62px;
     }
 }

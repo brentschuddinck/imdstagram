@@ -15,28 +15,34 @@ function bouwFeedbackBox($p_sFeedbackType, $p_sFeedbackMessage){
 
     switch($p_sFeedbackType){
 
+        //type succes is voor succesboodschappen
         case "success":
-            $errorTitle = "Succes! ";
+            $errorTitle = "Awesome! ";
             break;
 
+        //type info voor infoberichten
         case "info":
             $errorTitle = "Info: ";
             break;
 
+        //type warning voor waarschuwingen
         case "warning":
             $errorTitle = "Opgelet: ";
             break;
 
+        //type danger voor errors, exceptions, problemen en belangrijkse beslissingen
         case "danger":
             $errorTitle = "Oeps... ";
             break;
 
+        //fallback indien geen geldig type gekozen werd. Dan zal warning toegepast worden.
         default:
-            $errorTitle = "Error: ";
+            $errorTitle = "Oeps... ";
             $p_sFeedbackType = "warning";
             break;
     }
 
+    //opmaak van de feedbackbox met inhoud terugkeren.
     $feedback = "<div class=\"errorbox\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><div class=\"alert alert-" . $p_sFeedbackType . "\"><strong>" . $errorTitle ."</strong>" . $p_sFeedbackMessage . "</div></div>";
     return $feedback;
 }
