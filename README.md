@@ -31,11 +31,12 @@ $dbconnection = new PDO("mysql:host=178.62.241.17; dbname=imdstagram", "imdstagr
 
 ## Sessiewaarden
 Ik denk dat het een goed idee dat wanenner de gebruiker ingelogd wordt, er eenmalig waarden uit db in sessie gestopt worden voor onderstaande zaken. Op die manier moet niet bij elke pagina dezelfde query uitgevoerd worden. Mijn code is ingesteld op (dummycode):
-- $_SESSION['login']['loggedin'] = 1 //de gebruiker is geldig ingelogd
-- $_SESSION['login']['gebruikersnaam']; //de gebruikersnaam van de ingelogde gebruiker
-- $_SESSION['login']['profielfoto']; //naam profielfoto
-- $_SESSION['login']['userid'] = 1 //userid van de gebruiker => deze gebruikt voor queries user aangezien id altijd uniek is
-- $_SESSION['login']['private'] = 0  //is account privé 1 of openbaar 0
+- $_SESSION['login']['userid'] //sessie_id ophalen
+- $_SESSION['login']['gebruikersnaam'] //username ophalen
+- $_SESSION['login']['profielfoto']  //link profile_picture
+- $_SESSION['login']['email'] //emailadres ophalen
+- $_SESSION['login']['naam'] //volledige naam ophalen
+- $_SESSION['login']['private'] //accountstatus ophalen 0 = openbaar, 1 = private
 
 ## Feedback tonen via zelf gemaakte feedbackbox
 In het document inc/feedbackbox.inc.php staat uileg hoe je op een heel gemakkelijke manier coole error/succesboodschappen kan tonen. Ik heb de cases zelf geschreven om herhalingen tegen te gaan bij het forumeren van errorberichten.
