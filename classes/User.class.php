@@ -251,8 +251,8 @@ class User
 
                 // check dat het ingegeven wachtwoord van de gebruiker overeenkomt met het wachtwoord in de databank
                 if (password_verify($this->m_sWachtwoord, $hash)) {
-                    //database connectie
-                    $conn = Db::getInstance();
+                    //database connectie (niet nodig omdat: "The connection remains active for the lifetime of that PDO object."
+                    //$conn = Db::getInstance();
 
                     // gebruiker zoeken die wil inloggen adhv e-mailadres
                     $statement = $conn->prepare("UPDATE user SET password = :newpassword WHERE user_id = :userid");
