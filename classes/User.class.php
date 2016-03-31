@@ -11,9 +11,33 @@ class User
     private $m_sEmailadres;
     private $m_sGebruikersnaam;
     private $m_sWachtwoord;
+    private $m_sNieuwWachtwoord;
     private $m_iUserAccountState;
+    private $m_iUserId;
+
 
     //getters en setters
+
+    public function getMSNieuwWachtwoord()
+    {
+        return $this->m_sNieuwWachtwoord;
+    }
+
+    public function setMSNieuwWachtwoord($m_sNieuwWachtwoord)
+    {
+        $this->m_sNieuwWachtwoord = $m_sNieuwWachtwoord;
+    }
+
+
+    public function getMIUserId()
+    {
+        return $this->m_iUserId;
+    }
+
+    public function setMIUserId($m_iUserId)
+    {
+        $this->m_iUserId = $m_iUserId;
+    }
 
 
     public function getMiUserAccountState()
@@ -103,8 +127,6 @@ class User
     //kan er ingelogd worden
     public function canLogin()
     {
-
-
         if (!empty($this->m_sEmailadres) && !empty($this->m_sWachtwoord)) {
 
             //database connectie
@@ -199,6 +221,63 @@ class User
             return true;
         }else{
             throw new Exception("door een technisch probleem kunnen we de wijzigingen niet opslaan.");
+        }
+    }
+
+
+
+
+
+
+
+
+    public function passwordMatch(){
+        if (!empty($this->m_sWachtwoord)) {
+
+            //database connectie
+            $conn = Db::getInstance();
+
+            // gebruiker zoeken die wil inloggen adhv e-mailadres
+            $statement = $conn->prepare("SELECT password FROM user WHERE user_id = :userid");
+
+            // bind value to parameter :userid
+            $statement->bindValue(":userid", $this->m_iUserId, PDO::PARAM_INT);
+
+            //execute statement
+            $statement->execute();
+
+            // als we 1 rij terug krijgen = user bestaat
+            if ($statement->rowCount() == 1) {
+                // fetch row van resultaat, return array met kolomnamen als index
+                $userRow = $statement->fetch(PDO::FETCH_ASSOC);
+                $hash = $userRow['password'];
+
+
+                // check dat het ingegeven wachtwoord van de gebruiker overeenkomt met het wachtwoord in de databank
+                if (password_verify($this->m_sWachtwoord, $hash)) {
+                    //database connectie
+                    $conn = Db::getInstance();
+
+                    // gebruiker zoeken die wil inloggen adhv e-mailadres
+                    $statement = $conn->prepare("UPDATE user SET password = :newpassword WHERE user_id = :userid");
+
+                    // bind value to parameter :userid, :newpassword
+                    $statement->bindValue(":newpassword", $this->m_sNieuwWachtwoord, PDO::PARAM_STR);
+                    $statement->bindValue(":userid", $this->m_iUserId, PDO::PARAM_INT);
+
+                    //execute statement
+                    $statement->execute();
+                    return true;
+                } else {
+                    throw new Exception("het oude opgegeven wachtwoord is niet juist.");
+                }
+
+            } else if ($statement->rowCount() == 0) {
+                // als er geen email in de database overeenkomt(0 rijen), met het ingevulde e-mail adress
+                // (het veld e-mail is in onze database UNIQUE dus we kunnen enkel 1 row of geen row terug krijgen)
+                throw new Exception("door een technisch probleem is het niet mogelijk je account bij te werken. Probeer het later opnieuw. Onze excuses voor dit ongemak.");
+
+            }
         }
     }
 

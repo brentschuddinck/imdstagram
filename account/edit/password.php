@@ -1,8 +1,54 @@
 <?php
 include_once('../../inc/sessiecontrole.inc.php');
 include_once('../../inc/feedbackbox.inc.php');
+include_once('../../classes/Validation.class.php');
+include_once('../../classes/User.class.php');
 
-    if(isset($_POST['']))
+if (isset($_POST['wijzigWachtwoord']) &&
+    !empty($_POST['inputOudWachtwoord']) &&
+    !empty('inputNieuwWachtwoord') &&
+    !empty('inputHerhaalNieuwWachtwoord')
+) {
+
+    //invoervelden zijn netjes ingevuld
+
+    //variabelen
+    $sOudWachtwoord = $_POST['inputOudWachtwoord'];
+    $sNieuwWachtwoord = $_POST['inputNieuwWachtwoord'];
+    $sHerhaalNieuwWachtwoord = $_POST['inputHerhaalNieuwWachtwoord'];
+
+    //eerst kijken of beide passwoorden matchen
+    $validation = new Validation();
+    if ($validation->matchtNieuwWachtwoord($sNieuwWachtwoord, $sHerhaalNieuwWachtwoord)) {
+        //nieuwe wachtwoorden komen overeen
+
+        //daarna kijken of oude wachtwoord klopt
+        $passwordMatch = new User();
+
+        $passwordMatch->setMSWachtwoord($sOudWachtwoord);
+
+        //versleutel nieuw wachtwoord
+        $hashOpties = ['cost' => 12];
+        $wachtwoordHash = password_hash($sNieuwWachtwoord, PASSWORD_DEFAULT, $hashOpties);
+
+        $passwordMatch->setMSNieuwWachtwoord($wachtwoordHash);
+        $passwordMatch->setMIUserId($_SESSION['login']['userid']);
+
+        try {
+            if ($passwordMatch->passwordMatch()) {
+                $feedback = bouwFeedbackBox("success", "Je wachtwoord is gewijzigd.");
+            }
+        }catch (Exception $e) {
+            $errorException = $e->getMessage();
+            $feedback = bouwFeedbackBox("danger", $errorException);
+        }
+
+    } else {
+        $feedback = bouwFeedbackBox("danger", "de nieuwe wachtwoorden komen niet overeen.");
+    }
+
+
+}
 
 ?><!doctype html>
 <html lang="nl">
@@ -31,6 +77,14 @@ include_once('../../inc/feedbackbox.inc.php');
 
     <!-- start form profielinstellingen -->
     <form action="" method="POST">
+
+        <?php
+        //toon errorboodschap
+        if (!empty($feedback)) {
+            echo $feedback;
+        }
+        ?>
+
 
         <!-- start formuliergroep oud wachtwoord -->
         <!-- Oud wachtwoord  -->

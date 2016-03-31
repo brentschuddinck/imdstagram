@@ -38,7 +38,7 @@ function bouwFeedbackBox($p_sFeedbackType, $p_sFeedbackMessage){
         //fallback indien geen geldig type gekozen werd. Dan zal warning toegepast worden.
         default:
             $errorTitle = "Oeps... ";
-            $p_sFeedbackType = "warning";
+            $p_sFeedbackType = "danger";
             break;
     }
 

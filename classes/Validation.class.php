@@ -45,7 +45,7 @@ class Validation
             return "Voor- en familienaam is niet ingevuld.";
 
         //controleer of voor- en familienaam geldig aantal tekens heeft
-        }else if (strlen($p_sVoornaamFamilienaam) < 3) {
+        }else if (strlen($p_sVoornaamFamilienaam) < 3 || !preg_match("~^(?:[\p{L}\p{Mn}\p{Pd}\'\x{2019}]+\s[\p{L}\p{Mn}\p{Pd}\'\x{2019}]+\s?)+$~u", $p_sVoornaamFamilienaam)) {
             return "Voor- en familienaam is ongeldig.";
         }
     }
@@ -79,6 +79,16 @@ class Validation
             return "Wachtwoord te kort. Wachtwoord moet minstens 6 tekens lang zijn.";
         }
     }
+
+
+    public function matchtNieuwWachtwoord($p_sNieuwWachtwoord, $p_sNieuwWachtwoordHerhaal){
+        if($p_sNieuwWachtwoord === $p_sNieuwWachtwoordHerhaal){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 
 
