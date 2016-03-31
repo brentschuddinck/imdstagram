@@ -227,11 +227,7 @@ class User
 
 
 
-
-
-
-
-    public function passwordMatch(){
+    public function updatePassword(){
         if (!empty($this->m_sWachtwoord)) {
 
             //database connectie
@@ -272,7 +268,7 @@ class User
                     throw new Exception("het oude opgegeven wachtwoord is niet juist.");
                 }
 
-            } else if ($statement->rowCount() == 0) {
+            } else {
                 // als er geen email in de database overeenkomt(0 rijen), met het ingevulde e-mail adress
                 // (het veld e-mail is in onze database UNIQUE dus we kunnen enkel 1 row of geen row terug krijgen)
                 throw new Exception("door een technisch probleem is het niet mogelijk je account bij te werken. Probeer het later opnieuw. Onze excuses voor dit ongemak.");

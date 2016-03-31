@@ -17,37 +17,44 @@ if (isset($_POST['wijzigWachtwoord']) &&
     $sNieuwWachtwoord = $_POST['inputNieuwWachtwoord'];
     $sHerhaalNieuwWachtwoord = $_POST['inputHerhaalNieuwWachtwoord'];
 
+
     //eerst kijken of beide passwoorden matchen
     $validation = new Validation();
+    $validation2 = new Validation();
     if ($validation->matchtNieuwWachtwoord($sNieuwWachtwoord, $sHerhaalNieuwWachtwoord)) {
         //nieuwe wachtwoorden komen overeen
 
-        //daarna kijken of oude wachtwoord klopt
-        $passwordMatch = new User();
 
-        $passwordMatch->setMSWachtwoord($sOudWachtwoord);
+        //controleer of nieuw wachtwoord veilig genoeg is
+        if(empty($validation2->isGeldigWachtwoord($sNieuwWachtwoord))){
+            //daarna kijken of oude wachtwoord klopt
+            $passwordMatch = new User();
+            $passwordMatch->setMSWachtwoord($sOudWachtwoord);
 
-        //versleutel nieuw wachtwoord
-        $hashOpties = ['cost' => 12];
-        $wachtwoordHash = password_hash($sNieuwWachtwoord, PASSWORD_DEFAULT, $hashOpties);
+            //versleutel nieuw wachtwoord
+            $hashOpties = ['cost' => 12];
+            $wachtwoordHash = password_hash($sNieuwWachtwoord, PASSWORD_DEFAULT, $hashOpties);
 
-        $passwordMatch->setMSNieuwWachtwoord($wachtwoordHash);
-        $passwordMatch->setMIUserId($_SESSION['login']['userid']);
+            $passwordMatch->setMSNieuwWachtwoord($wachtwoordHash);
+            $passwordMatch->setMIUserId($_SESSION['login']['userid']);
 
-        try {
-            if ($passwordMatch->passwordMatch()) {
-                $feedback = bouwFeedbackBox("success", "Je wachtwoord is gewijzigd.");
+            try {
+                if ($passwordMatch->updatePassword()) {
+                    $feedback = bouwFeedbackBox("success", "Je wachtwoord is gewijzigd.");
+                }
+            }catch (Exception $e) {
+                $errorException = $e->getMessage();
+                $feedback = bouwFeedbackBox("danger", $errorException);
             }
-        }catch (Exception $e) {
-            $errorException = $e->getMessage();
-            $feedback = bouwFeedbackBox("danger", $errorException);
+        }else{
+            $feedback = bouwFeedbackBox("danger", "het nieuwe wachtwoord moet minstens 6 tekens lang zijn.");
         }
 
     } else {
         $feedback = bouwFeedbackBox("danger", "de nieuwe wachtwoorden komen niet overeen.");
     }
-
-
+}else if(isset($_POST['wijzigWachtwoord'])){
+    $feedback = bouwFeedbackBox("danger", "vul een wachtwoord in.");
 }
 
 ?><!doctype html>
