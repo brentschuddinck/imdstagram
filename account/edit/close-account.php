@@ -1,24 +1,37 @@
 <?php
 include_once('../../inc/sessiecontrole.inc.php');
+include_once('../../inc/feedbackbox.inc.php');
+include_once('../../classes/User.class.php');
+include_once('../../classes/Validation.class.php');
 
 
+if (isset($_POST['deleteAccount']) &&
+    !empty($_POST['inputWachtwoordDelete'])
+) {
 
+    //variabelen
+    $sWachtwoord = $_POST['inputWachtwoordDelete'];
+    $iUserId = $_SESSION['login']['userid'];
 
+    //eerst kijken of beide passwoorden matchen
+    $validation = new Validation();
 
+    //daarna kijken of oude wachtwoord klopt
+    $deleteUserAccount = new User();
+    $deleteUserAccount->setMIUserId($iUserId);
+    $deleteUserAccount->setMSWachtwoord($sWachtwoord);
 
-
-
-    if(isset($_POST['deleteAccount'])){
-        //er is op de knop deleteAccount geklikt
-
-
-
-
-        //verifieer of passwoord matcht met database
-        //delete records
-        //update sessie variabele
-        //toon feedback
+    try {
+        if ($deleteUserAccount->deleteAccount()) {
+            $feedback = bouwFeedbackBox("success", "Je account en de daarbij horende gegevens zijn gewist. <a href='/imdstagram/logout.php'>Log uit</a>.");
+            header('location: /imdstagram/logout.php');
+        }
+    } catch (Exception $e) {
+        $errorException = $e->getMessage();
+        $feedback = bouwFeedbackBox("danger", $errorException);
     }
+
+}
 
 
 ?><!doctype html>
@@ -48,6 +61,15 @@ include_once('../../inc/sessiecontrole.inc.php');
 
     <!-- start form account sluiten -->
     <form action="" method="POST">
+
+
+        <?php
+        //toon feedback
+        if (!empty($feedback)) {
+            echo $feedback;
+        }
+        ?>
+
 
         <p>IMDstagram niets voor jou? Dan kan je hier je account sluiten. Alle opgeslagen foto's,
             connecties, commentaren, likes, ... gaan verloren. <span class="vet">Let op: Deze actie kan niet ongedaan gemaakt worden.</span>

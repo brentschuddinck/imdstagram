@@ -228,6 +228,7 @@ class User
 
 
     public function updatePassword(){
+
         if (!empty($this->m_sWachtwoord)) {
 
             //database connectie
@@ -252,7 +253,7 @@ class User
                 // check dat het ingegeven wachtwoord van de gebruiker overeenkomt met het wachtwoord in de databank
                 if (password_verify($this->m_sWachtwoord, $hash)) {
                     //database connectie (niet nodig omdat: "The connection remains active for the lifetime of that PDO object."
-                    //$conn = Db::getInstance();
+                    $conn = Db::getInstance();
 
                     // gebruiker zoeken die wil inloggen adhv e-mailadres
                     $statement = $conn->prepare("UPDATE user SET password = :newpassword WHERE user_id = :userid");
@@ -274,6 +275,60 @@ class User
                 throw new Exception("door een technisch probleem is het niet mogelijk je account bij te werken. Probeer het later opnieuw. Onze excuses voor dit ongemak.");
 
             }
+        }else{
+            throw new Exception("Wachtwoord mag niet leeg zijn");
+        }
+    }
+
+
+
+
+    public function deleteAccount(){
+        if (!empty($this->m_sWachtwoord)) {
+
+            //database connectie
+            $conn = Db::getInstance();
+
+            // gebruiker zoeken die wil inloggen adhv e-mailadres
+            $statement = $conn->prepare("SELECT password FROM user WHERE user_id = :userid");
+
+            // bind value to parameter :userid
+            $statement->bindValue(":userid", $this->m_iUserId, PDO::PARAM_INT);
+
+            //execute statement
+            $statement->execute();
+
+            // als we 1 rij terug krijgen = user bestaat
+            if ($statement->rowCount() == 1) {
+                // fetch row van resultaat, return array met kolomnamen als index
+                $userRow = $statement->fetch(PDO::FETCH_ASSOC);
+                $hash = $userRow['password'];
+
+                // check dat het ingegeven wachtwoord van de gebruiker overeenkomt met het wachtwoord in de databank
+                if (password_verify($this->m_sWachtwoord, $hash)) {
+                    $conn = Db::getInstance();
+
+                    // gebruiker zoeken die wil inloggen adhv e-mailadres
+                    $statement = $conn->prepare("DELETE FROM user WHERE user_id = :userid");
+
+                    // bind value to parameter :userid, :newpassword
+                    $statement->bindValue(":userid", $this->m_iUserId, PDO::PARAM_INT);
+
+                    //execute statement
+                    $statement->execute();
+                    return true;
+                } else {
+                    throw new Exception("het oude opgegeven wachtwoord is niet juist.");
+                }
+
+            } else {
+                // als er geen email in de database overeenkomt(0 rijen), met het ingevulde e-mail adress
+                // (het veld e-mail is in onze database UNIQUE dus we kunnen enkel 1 row of geen row terug krijgen)
+                throw new Exception("door een technisch probleem is het niet mogelijk je account bij te werken. Probeer het later opnieuw. Onze excuses voor dit ongemak.");
+
+            }
+        }else{
+            throw new Exception("wachtwoord mag niet leeg zijn.");
         }
     }
 
