@@ -309,6 +309,7 @@ class User
                     $conn = Db::getInstance();
 
                     // gebruiker zoeken die wil inloggen adhv e-mailadres
+                    //CASCADE zorgt ervoor dat we ook de rijen wissen uit andere tabellen waarin de user_id gekoppeld is
                     $statement = $conn->prepare("DELETE FROM user WHERE user_id = :userid");
 
                     // bind value to parameter :userid, :newpassword

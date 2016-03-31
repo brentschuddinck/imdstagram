@@ -7,9 +7,7 @@ include_once('../../classes/User.class.php');
 
 if (isset($_POST['wijzigProfielinstellingen'])) {
 
-
     //er is op de knop wijzigProfielinstellingen geklikt
-
 
     //invoervariabelen
     $voornaamfamilienaam = $_POST['inputName'];

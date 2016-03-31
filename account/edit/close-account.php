@@ -71,8 +71,7 @@ if (isset($_POST['deleteAccount']) &&
         ?>
 
 
-        <p>IMDstagram niets voor jou? Dan kan je hier je account sluiten. Alle opgeslagen foto's,
-            connecties, commentaren, likes, ... gaan verloren. <span class="vet">Let op: Deze actie kan niet ongedaan gemaakt worden.</span>
+        <p>IMDstagram niets voor jou? Dan kan je hier je account sluiten. Wanneer je dit doet, kan je. <span class="vet">Let op: Deze actie kan niet ongedaan gemaakt worden.</span>
         </p>
 
 
