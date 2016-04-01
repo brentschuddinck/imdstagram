@@ -63,5 +63,39 @@ class Upload
         }
     }
 
+
+    //minify afbeeldingen
+    public function minifyImage($p_sSource, $p_sDestination, $p_iQualityPct)
+    {
+        $info = getimagesize($p_sSource);
+        $image = imagecreatefromjpeg($p_sSource);
+
+        if ($info['mime'] == 'image/jpeg'){
+            $image = imagecreatefromjpeg($p_sSource);
+
+        }elseif ($info['mime'] == 'image/gif'){
+            $image = imagecreatefromgif($p_sSource);
+
+        }elseif ($info['mime'] == 'image/png'){
+            $image = imagecreatefrompng($p_sSource);
+
+        }else{
+            return false;
+        }
+
+        imagejpeg($image, $p_sDestination, $p_iQualityPct);
+
+        return true;
+    }
+
+
+    //controleer bestandsgrootte
+    public function isBestandNietTeGroot($p_HuiidgeGroteInBytes, $p_sMaxBytes){
+        if($p_HuiidgeGroteInBytes <= $p_sMaxBytes){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
 

@@ -18,6 +18,7 @@ if (isset($_POST['btnUploadProfielfoto'])) {
     $nieuweProfielfotoFilename = $_FILES['fileToUpload']['name'];
     $nieuweProfielfotoFiletype = $_FILES['fileToUpload']['type'];
     $nieuweProfielfotoFilesize = $_FILES['fileToUpload']['size']; //bestandsgrootte in bytes => /1024 = KB
+    $maxBytes = 512000; //profielfoto mag max 500KB groot zijn. (500 x 1024)
 
     //haalt bestandsextentie van de foto op (bijvoobeeld: jpg opgelet NIET .jpg maar jpg
     $nieuweProfielfotoFileExtention = pathinfo($nieuweProfielfotoFilename, PATHINFO_EXTENSION);
@@ -32,6 +33,12 @@ if (isset($_POST['btnUploadProfielfoto'])) {
     //valideer op geldige afbeeldingsextentie
 
     $validation = new Validation();
+
+
+    $source_img = 'source.jpg';
+    $destination_img = 'destination .jpg';
+
+
     if($validation->isExtentieAfbeelding($nieuweProfielfotoFiletmp)){
 
         //move upload file naar path met profielfoto's
@@ -42,14 +49,22 @@ if (isset($_POST['btnUploadProfielfoto'])) {
             $uploadProfilePicture = new Upload();
             $uploadProfilePicture->setMSProfilePicture($nieuweProfielfotoNaam);
             $uploadProfilePicture->setMSUserId($userid);
-            $uploadProfilePicture->saveProfilePicture();
-            $uploadProfilePicture->deleteFileFromServer($path, $oudeProfielfoto, $nieuweProfielfotoNaam);
+            if($uploadProfilePicture->isBestandNietTeGroot($nieuweProfielfotoFilesize, $maxBytes)){
+                if($uploadProfilePicture->minifyImage($nieuweProfielfotoPad, $nieuweProfielfotoPad, 60)){
+                    $uploadProfilePicture->saveProfilePicture();
+                    $uploadProfilePicture->deleteFileFromServer($path, $oudeProfielfoto, $nieuweProfielfotoNaam);
+                    //update de sessievariabele
+                    $_SESSION['login']['profielfoto'] = $nieuweProfielfotoNaam;
 
-            //update de sessievariabele
-            $_SESSION['login']['profielfoto'] = $nieuweProfielfotoNaam;
+                    //toon feedback
+                    $feedback = bouwFeedbackBox("success", "Je profielfoto is bijgewerkt.");
+                }else{
+                    $feedback = bouwFeedbackBox("danger", "Je profielfoto kan niet verkleind worden.");
+                }
+            }else{
+                $feedback = bouwFeedbackBox("danger", "Je profielfoto mag niet groter dan 500KB zijn.");
+            }
 
-            //toon feedback
-            $feedback = bouwFeedbackBox("success", "Je profielfoto is bijgewerkt.");
 
         } catch (Exception $e) {
             $exception = $e->getMessage();
