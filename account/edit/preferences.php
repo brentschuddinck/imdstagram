@@ -103,7 +103,7 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
     <form action="" method="POST">
 
         <?php
-        //toon errorboodschap
+        //toon feedback
         if (!empty($feedback)) {
             echo $feedback;
         }
@@ -112,6 +112,7 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
         <!-- start formuliergroep profielfoto -->
         <div class="form-group">
             <img class="profielfoto groot"
+                 title="Wijzig profielfoto" data-placement="right" data-toggle="tooltip"
                  src="../../img/uploads/profile-pictures/<?php echo htmlspecialchars($_SESSION['login']['profielfoto']); ?>"
                  alt="Profielfoto van <?php echo htmlspecialchars($_SESSION['login']['naam']); ?>">
         </div>

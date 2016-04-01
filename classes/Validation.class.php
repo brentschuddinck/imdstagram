@@ -10,11 +10,11 @@ class Validation
     {
 
         //controleer of e-mailadres is ingevuld
-        if(empty($p_sEmailadres)){
+        if (empty($p_sEmailadres)) {
             return "E-mailadres is niet ingevuld.";
 
-        // E-mailadres valideren met FILTER_VALIDATE_EMAIL (ingebouwd, geen gedoe met regex)
-        }else if (filter_var($p_sEmailadres, FILTER_VALIDATE_EMAIL)) {
+            // E-mailadres valideren met FILTER_VALIDATE_EMAIL (ingebouwd, geen gedoe met regex)
+        } else if (filter_var($p_sEmailadres, FILTER_VALIDATE_EMAIL)) {
             //het e-mailformaat is geldig. Kijk nu of het geldige e-mailadres in de lijst met toegestane domeinen voorkomt
 
             //lijst toegestane domeinen
@@ -24,11 +24,11 @@ class Validation
             $explodedEmail = explode('@', $p_sEmailadres);
             $domain = array_pop($explodedEmail);
 
-                //als e-mailadres een geldig formaat heeft, MAAR NIET matcht met toegestane domeinen
-                if (!in_array($domain, $toegestaneDomeinen)) {
-                    //e-mailadres formaat is geldig + matcht met toegestane domeinen
-                    return "E-mailadres is geen geldig Thomas More e-mailadres.";
-                }
+            //als e-mailadres een geldig formaat heeft, MAAR NIET matcht met toegestane domeinen
+            if (!in_array($domain, $toegestaneDomeinen)) {
+                //e-mailadres formaat is geldig + matcht met toegestane domeinen
+                return "E-mailadres is geen geldig Thomas More e-mailadres.";
+            }
 
         } else {
             //e-mailadres formaat is ongeldig
@@ -41,11 +41,11 @@ class Validation
     public function isGeldigVoornaamFamilienaam($p_sVoornaamFamilienaam)
     {
         //controleer of veld voor- en familienaam niet leeg is
-        if(empty($p_sVoornaamFamilienaam)){
+        if (empty($p_sVoornaamFamilienaam)) {
             return "Voor- en familienaam is niet ingevuld.";
 
-        //controleer of voor- en familienaam geldig aantal tekens heeft
-        }else if (strlen($p_sVoornaamFamilienaam) < 3 || !preg_match("~^(?:[\p{L}\p{Mn}\p{Pd}\'\x{2019}]+\s[\p{L}\p{Mn}\p{Pd}\'\x{2019}]+\s?)+$~u", $p_sVoornaamFamilienaam)) {
+            //controleer of voor- en familienaam geldig aantal tekens heeft
+        } else if (strlen($p_sVoornaamFamilienaam) < 3 || !preg_match("~^(?:[\p{L}\p{Mn}\p{Pd}\'\x{2019}]+\s[\p{L}\p{Mn}\p{Pd}\'\x{2019}]+\s?)+$~u", $p_sVoornaamFamilienaam)) {
             return "Voor- en familienaam is ongeldig.";
         }
     }
@@ -56,10 +56,10 @@ class Validation
     {
 
         //controleer of gebruikersnaam is ingevuld
-        if(empty($p_sGebruikersnaam)){
+        if (empty($p_sGebruikersnaam)) {
             return "Gebruikersnaam is niet ingevuld.";
-        //indien gebruikersnaam is ingevuld, controleer of deze niet groter/kleiner is dan toegelaten aantal tekens
-        }else if (strlen($p_sGebruikersnaam) > 25) {
+            //indien gebruikersnaam is ingevuld, controleer of deze niet groter/kleiner is dan toegelaten aantal tekens
+        } else if (strlen($p_sGebruikersnaam) > 25) {
             return "Gebruikersnaam is te lang. Gebruikersnaam mag niet langer dan 25 tekens zijn.";
         } else if (strlen($p_sGebruikersnaam) < 2) {
             return "Gebruikersnaam is te kort. Gebruikersnaam moet moet minstens 2 tekens lang zijn.";
@@ -73,23 +73,35 @@ class Validation
     //valideer veld wachtwoord
     public function isGeldigWachtwoord($p_sWachtwoord)
     {
-        if(empty($p_sWachtwoord)){
+        if (empty($p_sWachtwoord)) {
             return "Wachtwoord is niet ingevuld.";
-        }else if (strlen($p_sWachtwoord) < 6) {
+        } else if (strlen($p_sWachtwoord) < 6) {
             return "Wachtwoord te kort. Wachtwoord moet minstens 6 tekens lang zijn.";
         }
     }
 
 
-    public function matchtNieuwWachtwoord($p_sNieuwWachtwoord, $p_sNieuwWachtwoordHerhaal){
-        if($p_sNieuwWachtwoord === $p_sNieuwWachtwoordHerhaal){
+    public function matchtNieuwWachtwoord($p_sNieuwWachtwoord, $p_sNieuwWachtwoordHerhaal)
+    {
+        if ($p_sNieuwWachtwoord === $p_sNieuwWachtwoordHerhaal) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
 
+    public function isExtentieAfbeelding($p_sNieuweProfielfotoFile)
+    {
+        if (exif_imagetype($p_sNieuweProfielfotoFile) == IMAGETYPE_JPEG ||
+            exif_imagetype($p_sNieuweProfielfotoFile) == IMAGETYPE_PNG ||
+            exif_imagetype($p_sNieuweProfielfotoFile) == IMAGETYPE_GIF
+        ) {
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
 }

@@ -7,6 +7,8 @@ spl_autoload_register(function ($class_name) {
     include 'classes/' . $class_name . '.class.php';
 });
 
+//hulpvariabele om in html input niet opnieuw te tonen bij voltooide registratie
+$accountgemaakt = false;
 
 if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
 
@@ -43,6 +45,8 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             $user->setMSGebruikersnaam($gebruikersnaam);
             $user->setMSWachtwoord($wachtwoordHash);
             $user->Registreer();
+
+            $accountgemaakt = true;
 
             $feedback = bouwFeedbackBox("success", "Je account is aangemaakt. <a href='login.php'>Log hier in</a>.");
 
@@ -104,7 +108,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             <!-- veld email -->
             <div class="form-group">
                 <input type="email" name="email" class="form-control login-field"
-                       value="<?php if (!empty($feedback)) {
+                       value="<?php if (!empty($feedback) && $accountgemaakt === false) {
                            echo htmlspecialchars($emailadres);
                        } ?>" placeholder="r0123456@student.thomasmore.be" id="email" required autofocus
                        title="Vul je Thomas More e-mailadres in.">
@@ -114,7 +118,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             <!-- veld naam -->
             <div class="form-group">
                 <input type="text" name="naam" id="naam" class="form-control login-field"
-                       value="<?php if (!empty($feedback)) {
+                       value="<?php if (!empty($feedback) && $accountgemaakt === false) {
                            echo htmlspecialchars($voornaamfamilienaam);
                        } ?>" placeholder="Volledige naam" required title="Vul je volledige naam in.">
                 <label class="login-field-icon fui-user" for="naam"><span class="labeltext">Volledige naam</span></label>
@@ -123,7 +127,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             <!-- veld gebruikersnaam -->
             <div class="form-group">
                 <input type="text" name="gebruikersnaam" id="gebruikersnaam" class="form-control login-field"
-                       value="<?php if (!empty($feedback)) {
+                       value="<?php if (!empty($feedback) && $accountgemaakt === false) {
                            echo htmlspecialchars($gebruikersnaam);
                        } ?>" placeholder="Gebruikersnaam" required title="Vul een gebruikersnaam in.">
                 <label class="login-field-icon fui-user" for="gebruikersnaam"><span class="labeltext">Gebruikersnaam</span></label>

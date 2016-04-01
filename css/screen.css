@@ -35,7 +35,7 @@ p, span, div, .checkbox {
 }
 
 .settings {
-    margin-top: 50px;
+    margin-top: 0px;
 }
 
 /* overriding templates */
@@ -84,6 +84,7 @@ p, span, div, .checkbox {
 
 .profielfoto.mini {
     width: 30px;
+    height: 30px;
     margin-right: 7px;
     margin-top: -7px;
 
@@ -91,6 +92,7 @@ p, span, div, .checkbox {
 
 .profielfoto.groot {
     width: 140px;
+    height: 140px;
     margin-top: -10px;
 }
 
