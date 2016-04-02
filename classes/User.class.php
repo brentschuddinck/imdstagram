@@ -18,6 +18,17 @@ class User
 
     //getters en setters
 
+    public function getMSProfilePicture()
+    {
+        return $this->m_sProfilePicture;
+    }
+
+    public function setMSProfilePicture($m_sProfilePicture)
+    {
+        $this->m_sProfilePicture = $m_sProfilePicture;
+    }
+
+
     public function getMSNieuwWachtwoord()
     {
         return $this->m_sNieuwWachtwoord;
@@ -158,9 +169,11 @@ class User
                     $_SESSION['login']['naam'] = $userRow['full_name']; //volledige naam ophalen
                     $_SESSION['login']['private'] = $userRow['private']; //accountstatus ophalen 0 = openbaar, 1 = private
 
-                    if (empty($_SESSION['login']['profielfoto'])) {
+                    //indien profielfoto in db leeg of indien de foto niet bestaat op de server, toon dan de default profielfoto
+                    if (empty($_SESSION['login']['profielfoto']) || !file_exists("img/uploads/profile-pictures/" . $_SESSION['login']['profielfoto'])) {
                         $_SESSION['login']['profielfoto'] = "default.png"; //standaard profielfoto indien veld leeg in db
                     }
+
 
                     //alles okido
                     return true;
@@ -195,14 +208,15 @@ class User
         //statement uitvoeren
         if ($statement->execute()) {
             return true;
-        }else{
+        } else {
             return false;
         }
 
     }
 
 
-    public function canUpdatePreferences(){
+    public function canUpdatePreferences()
+    {
         //connectie db
         $conn = Db::getInstance();
 
@@ -217,17 +231,16 @@ class User
 
 
         //statement uitvoeren
-        if($statement->execute()){
+        if ($statement->execute()) {
             return true;
-        }else{
+        } else {
             throw new Exception("door een technisch probleem kunnen we de wijzigingen niet opslaan.");
         }
     }
 
 
-
-
-    public function updatePassword(){
+    public function updatePassword()
+    {
 
         if (!empty($this->m_sWachtwoord)) {
 
@@ -275,15 +288,14 @@ class User
                 throw new Exception("door een technisch probleem is het niet mogelijk je account bij te werken. Probeer het later opnieuw. Onze excuses voor dit ongemak.");
 
             }
-        }else{
+        } else {
             throw new Exception("Wachtwoord mag niet leeg zijn");
         }
     }
 
 
-
-
-    public function deleteAccount(){
+    public function deleteAccount()
+    {
         if (!empty($this->m_sWachtwoord)) {
 
             //database connectie
@@ -319,7 +331,7 @@ class User
                     $statement->execute();
                     return true;
                 } else {
-                    throw new Exception("het oude opgegeven wachtwoord is niet juist.");
+                    throw new Exception("het opgegeven wachtwoord is niet juist.");
                 }
 
             } else {
@@ -328,13 +340,10 @@ class User
                 throw new Exception("door een technisch probleem is het niet mogelijk je account bij te werken. Probeer het later opnieuw. Onze excuses voor dit ongemak.");
 
             }
-        }else{
+        } else {
             throw new Exception("wachtwoord mag niet leeg zijn.");
         }
     }
-
-
-
 
 }
 

@@ -3,6 +3,7 @@ $pagePreference = "preferences.php";
 $pagePassword = "password.php";
 $pagePrivacy = "privacy.php";
 $pageCloseAccount = "close-account.php";
+$pageProfilePicture = "profile-picture.php";
 
 $huidige_pagina = basename($_SERVER['PHP_SELF']);
 ?>
@@ -18,9 +19,12 @@ $huidige_pagina = basename($_SERVER['PHP_SELF']);
                         <li <?php if ($huidige_pagina === $pagePreference) {
                             print "class='active'";
                         } ?>><a href="<?php print $pagePreference; ?>">Algemeen</a></li>
+                        <li <?php if ($huidige_pagina === $pageProfilePicture) {
+                            print "class='active'";
+                        } ?>><a href="<?php print $pageProfilePicture; ?>">Profielfoto</a></li>
                         <li <?php if ($huidige_pagina === $pagePassword) {
                             print "class='active'";
-                        } ?>><a href="<?php print $pagePassword; ?>">Wachtwoord wijzigen</a></li>
+                        } ?>><a href="<?php print $pagePassword; ?>">Wachtwoord</a></li>
                         <li <?php if ($huidige_pagina === $pagePrivacy) {
                             print "class='active'";
                         } ?>><a href="<?php print $pagePrivacy; ?>">Privacy</a></li>

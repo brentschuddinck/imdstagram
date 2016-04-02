@@ -71,14 +71,14 @@ if (isset($_POST['deleteAccount']) &&
         ?>
 
 
-        <p>IMDstagram niets voor jou? Dan kan je hier je account sluiten. Wanneer je dit doet, kan je. <span class="vet">Let op: Deze actie kan niet ongedaan gemaakt worden.</span>
+        <p>IMDstagram niets voor jou? Dan kan je hier je account sluiten. Wanneer je dat doet, zullen alle opgeslagen foto's, connecties, likes, ... gewist worden. Je zal niet meer kunnen inloggen op IMDstagram. <span class="vet">Let op: deze actie kan niet ongedaan gemaakt worden.</span>
         </p>
 
 
         <div class="form-group">
             <!-- Oud wachtwoord  -->
-            <label for="inputWachtwoordDelete" class="col-lg-3 control-label">Wachtwoord:</label>
-            <div class="col-md-9 lg-together">
+            <label for="inputWachtwoordDelete" class="col-lg-12 control-label">Wachtwoord:</label>
+            <div class="col-md-8 lg-together">
                 <input
                     type="password"
                     class="form-control col-lg-9"
@@ -91,12 +91,14 @@ if (isset($_POST['deleteAccount']) &&
             </div>
         </div>
 
+<div class="col-md-12 lg-together">
+    <input type="submit"
+           name="deleteAccount"
+           id="deleteAccount"
+           value="Verwijder mijn account"
+           class="btn btn-danger btn-large">
+</div>
 
-        <input type="submit"
-               name="deleteAccount"
-               id="deleteAccount"
-               value="Verwijder mijn account"
-               class="btn btn-danger btn-large">
 
 
     </form>
