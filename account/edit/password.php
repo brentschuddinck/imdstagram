@@ -144,6 +144,7 @@ if (isset($_POST['wijzigWachtwoord']) &&
         <!-- einde formuliergroep accountinstellingen -->
 
 
+
         <input type="submit"
                name="wijzigWachtwoord"
                value="Wachtwoord wijzigen"

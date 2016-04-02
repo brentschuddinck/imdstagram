@@ -35,20 +35,14 @@ class Upload
     //functies
 
     //oude foto deleten
-    public function deleteFileFromServer($p_sPath, $p_sOldFileName, $p_sNewFileName)
+    public function deleteFileFromServer($p_teWissenFile)
     {
-        //automatisch worden bij saven foto's overschreven (indien zelfde extentie).
-        //als de nieuwe fotonaam verschilt van de oude fotonaam (er zijn dus 2 foto's opgeslagen), dan mag de oude gewist worden
-        if ($p_sOldFileName != $p_sNewFileName) {
-            $imageToRemove = $p_sPath . $p_sOldFileName;
-            unlink($imageToRemove);
-        }
+        unlink($p_teWissenFile);
     }
 
 
     //profielfoto wijzigen
-    public
-    function saveProfilePicture()
+    public function saveProfilePicture()
     {
         // database connectie
         $conn = Db::getInstance();
@@ -57,9 +51,10 @@ class Upload
         $statement->bindValue(":picture", $this->m_sProfilePicture);
         $statement->bindValue(":userid", $this->m_sUserId);
         //execute statement
-        if (!$statement->execute()) {
+        if ($statement->execute()) {
+            return true;
+        } else {
             throw new Exception("Door een technisch probleem kan je profielfoto nu niet bijgewerkt worden. Probeer het later opnieuw. Onze excuses voor dit ongemak.");
-
         }
     }
 
@@ -70,32 +65,73 @@ class Upload
         $info = getimagesize($p_sSource);
         $image = imagecreatefromjpeg($p_sSource);
 
-        if ($info['mime'] == 'image/jpeg'){
+        if ($info['mime'] == 'image/jpeg') {
             $image = imagecreatefromjpeg($p_sSource);
 
-        }elseif ($info['mime'] == 'image/gif'){
+        } elseif ($info['mime'] == 'image/gif') {
             $image = imagecreatefromgif($p_sSource);
 
-        }elseif ($info['mime'] == 'image/png'){
+        } elseif ($info['mime'] == 'image/png') {
             $image = imagecreatefrompng($p_sSource);
 
-        }else{
+        } else {
             return false;
+            //$feedback = "het opgegeven afbeeldingsformaat is niet geldig. Enkel jpg, png en gif-bestanden worden geaccepteerd.";
+            //return $feedback;
         }
 
         imagejpeg($image, $p_sDestination, $p_iQualityPct);
-
         return true;
     }
 
 
     //controleer bestandsgrootte
-    public function isBestandNietTeGroot($p_HuiidgeGroteInBytes, $p_sMaxBytes){
-        if($p_HuiidgeGroteInBytes <= $p_sMaxBytes){
+    public function isBestandNietTeGroot($p_HuidgeGroteInBytes, $p_sMaxBytes)
+    {
+        if ($p_HuidgeGroteInBytes <= $p_sMaxBytes) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //is extentie geldig
+    public function isExtentieGeldig($p_arrGeldigeExtenties, $p_sExtentieBestand)
+    {
+
+        $arrExtenties = $p_arrGeldigeExtenties;
+        $extentieBestand = $p_sExtentieBestand;
+
+        foreach($arrExtenties as $arrExtentie){
+            if($arrExtentie == $extentieBestand){
+                return true;
+            }
+        }
+
+    }
+
+    //is bestandstype geldig. Deze functie dient om te voorkomen dat bijvoorbeeld een script hernoemd wordt naar .jpg om zo toch geupload te kunnen worden
+    public function isTypeGeldig($p_arrGeldigeTypes, $p_sUploadType){
+
+        $arrGeldigeTypes = $p_arrGeldigeTypes;
+        $fileType = $p_sUploadType;
+
+        foreach($arrGeldigeTypes as $arrGeldigeType){
+            if($fileType == $arrGeldigeType){
+                return true;
+            }
+        }
+    }
+
+
+    public function uploadfile($p_sFileTmpName, $p_sFileNewName){
+
+        if(move_uploaded_file($p_sFileTmpName, $p_sFileNewName)){
             return true;
         }else{
             return false;
         }
+
     }
 }
 

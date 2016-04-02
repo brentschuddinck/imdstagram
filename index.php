@@ -1,9 +1,6 @@
 <?php
 include_once('inc/sessiecontrole.inc.php');
 
-echo $_SESSION['login']['profielfoto'];
-echo $_SESSION['login']['userid'];
-
 ?><!doctype html>
 <html lang="nl">
 <head>

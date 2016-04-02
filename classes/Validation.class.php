@@ -91,18 +91,6 @@ class Validation
     }
 
 
-    public function isExtentieAfbeelding($p_sNieuweProfielfotoFile)
-    {
-        if (exif_imagetype($p_sNieuweProfielfotoFile) == IMAGETYPE_JPEG ||
-            exif_imagetype($p_sNieuweProfielfotoFile) == IMAGETYPE_PNG ||
-            exif_imagetype($p_sNieuweProfielfotoFile) == IMAGETYPE_GIF
-        ) {
-            return true;
-        }else{
-            return false;
-        }
-    }
-
 
 }
 

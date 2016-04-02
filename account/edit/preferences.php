@@ -9,6 +9,7 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
 
     //er is op de knop wijzigProfielinstellingen geklikt
 
+
     //invoervariabelen
     $voornaamfamilienaam = $_POST['inputName'];
     $emailadres = $_POST['inputEmail'];
@@ -49,8 +50,9 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
                     $_SESSION['login']['naam'] = $voornaamfamilienaam;
                     $_SESSION['login']['email'] = $emailadres;
                     $_SESSION['login']['gebruikersnaam'] = $gebruikersnaam;
-
                     $feedback = bouwFeedbackBox("success", "De instellingen zijn met succes bijgewerkt.");
+                    //header('location: preferences.php');
+                    //$feedback = bouwFeedbackBox("success", "De instellingen zijn met succes bijgewerkt.");
                 }
 
             } catch (Exception $e) {
@@ -108,16 +110,6 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
             echo $feedback;
         }
         ?>
-
-        <!-- start formuliergroep profielfoto -->
-        <div class="form-group">
-            <img class="profielfoto groot"
-                 title="Wijzig profielfoto" data-placement="right" data-toggle="tooltip"
-                 src="../../img/uploads/profile-pictures/<?php echo htmlspecialchars($_SESSION['login']['profielfoto']); ?>"
-                 alt="Profielfoto van <?php echo htmlspecialchars($_SESSION['login']['naam']); ?>">
-        </div>
-
-        <!-- einde formuliergroep profielfoto -->
 
         <!-- start formuliergroep accountinstellingen -->
         <div class="form-group">
@@ -179,7 +171,6 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
 
         </div>
         <!-- einde formuliergroep accountinstellingen -->
-
 
         <input type="submit"
                name="wijzigProfielinstellingen"

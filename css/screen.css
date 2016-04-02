@@ -96,6 +96,8 @@ p, span, div, .checkbox {
     margin-top: -10px;
 }
 
+
+/*
 .profielfoto.groot:hover, .profielfoto.groot:active{
     cursor: pointer;
     -webkit-opacity: 0.5;
@@ -104,7 +106,7 @@ p, span, div, .checkbox {
     -o-opacity: 0.5;
     opacity: 0.5;
 
-}
+}*/
 
 aside {
     margin-top: 40px;
@@ -136,6 +138,7 @@ aside {
     margin-top: 15px;
 }
 
+
 .vet {
     font-weight: bold;
 }
@@ -153,6 +156,8 @@ aside {
 .nav-list .active{
     background-color: #eee;
 }
+
+
 
 /* name allowed? Nodig dat dit aanpasbaar is? Volgens Instagram wel. Bijvoorbeeld voor verkorte schrijfwijzes: Brent Schuddinck => Brent S.
 /*
