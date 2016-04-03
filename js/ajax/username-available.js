@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     //na keyup, 1s wachten voordat query db wordt uitgevoerd. Zo voorkomen dat bij elke letters direct een query wordt uitgevoerd
     var timer = null;
-    userinput.on("keyup", function (e) {
+    userinput.on("keyup", function(e) {
         clearTimeout(timer);
         timer = setTimeout(checkUsernameAvailable, 1000);
         e.preventDefault();
