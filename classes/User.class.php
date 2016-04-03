@@ -345,6 +345,33 @@ class User
         }
     }
 
+
+
+
+    public function UsernameAvailable()
+    {
+        //database connectie
+        $conn = Db::getInstance();
+
+        // gebruiker zoeken die wil inloggen adhv e-mailadres
+        $statement = $conn->prepare("SELECT username FROM user WHERE username = :username");
+
+        // bind value to parameter :email
+        $statement->bindValue(":username", $this->m_sGebruikersnaam, PDO::PARAM_STR);
+        //execute statement
+        if ($statement->execute()) {
+            //query went ok
+            if ($statement->rowCount() == 0) {
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            throw new Exception("Door een technisch probleem kan de geldigheid van de gebruikersnaam niet gecontroleerd worden. De instellingen zijn niet opgeslagen. Onze excuses voor dit ongemakt.");
+        }
+
+    }
+
 }
 
 ?>

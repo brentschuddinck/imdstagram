@@ -39,12 +39,12 @@ if(isset($_POST['btnUploadProfielfoto'])) {
                     if($isBestandNietTeGroot){
 
 
-
                         //Nieuwe locatie en naam bepalen tmp folder naar uiteindelijke folder
                         $dbFileName = "profile-picture_userid-" . $_SESSION['login']['userid'];
                         $dbFullFileName = $dbFileName . "." . $extentieBestand;
                         $newnameTillId = "../../img/uploads/profile-pictures/" . $dbFileName;
                         $fullNewName =  $newnameTillId . "." . $extentieBestand;
+
 
                         //Kijk of file al bestaat. Profielfoto mag overschreven worden, maar zo kunnen we extra query vermeiden
 

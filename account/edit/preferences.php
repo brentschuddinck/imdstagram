@@ -51,8 +51,6 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
                     $_SESSION['login']['email'] = $emailadres;
                     $_SESSION['login']['gebruikersnaam'] = $gebruikersnaam;
                     $feedback = bouwFeedbackBox("success", "De instellingen zijn met succes bijgewerkt.");
-                    //header('location: preferences.php');
-                    //$feedback = bouwFeedbackBox("success", "De instellingen zijn met succes bijgewerkt.");
                 }
 
             } catch (Exception $e) {
@@ -153,12 +151,12 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
 
             <!-- Username -->
             <label for="inputUsername" class="col-lg-3 control-label">Gebruikersnaam:</label>
-            <div class="col-lg-9 lg-together">
+            <div class="col-lg-9 lg-together" id="available-username">
                 <input type="text"
                        class="form-control"
                        id="inputUsername"
                        name="inputUsername"
-                       title="Kies een gewenste gebruikbersnaam. Enkel letters, cijfers, _ en - zijn toegestaan."
+                       title="Kies een gewenste gebruikbersnaam. Enkel letters en cijfers zijn toegestaan."
                        value="<?php
                        if (!empty($_POST)) {
                            echo htmlspecialchars($gebruikersnaam);
@@ -167,6 +165,7 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
                        }
                        ?>"
                        required>
+                <div class="ajax-feedback msg"></div>
             </div>
 
         </div>
@@ -192,6 +191,11 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
 </div>
 </div>
 
+
 <?php include_once('../../inc/footer.inc.php'); ?>
+
+<!-- ajax script -->
+<script src="../../js/ajax/username-available.js"></script>
+
 </body>
 </html>
