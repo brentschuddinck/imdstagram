@@ -176,6 +176,19 @@ aside {
 
 
 
+.ajax-feedback.error{
+    color: #E74C3C;
+}
+
+.ajax-feedback.available{
+    color: #2ECC71;
+}
+
+.ajax-feedback.msg{
+    display: none;
+}
+
+
 @media screen and (min-width: 760px) {
     .template {
         padding-top: 80px;

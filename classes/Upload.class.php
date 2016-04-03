@@ -59,32 +59,6 @@ class Upload
     }
 
 
-    //minify afbeeldingen
-    public function minifyImage($p_sSource, $p_sDestination, $p_iQualityPct)
-    {
-        $info = getimagesize($p_sSource);
-        $image = imagecreatefromjpeg($p_sSource);
-
-        if ($info['mime'] == 'image/jpeg') {
-            $image = imagecreatefromjpeg($p_sSource);
-
-        } elseif ($info['mime'] == 'image/gif') {
-            $image = imagecreatefromgif($p_sSource);
-
-        } elseif ($info['mime'] == 'image/png') {
-            $image = imagecreatefrompng($p_sSource);
-
-        } else {
-            return false;
-            //$feedback = "het opgegeven afbeeldingsformaat is niet geldig. Enkel jpg, png en gif-bestanden worden geaccepteerd.";
-            //return $feedback;
-        }
-
-        imagejpeg($image, $p_sDestination, $p_iQualityPct);
-        return true;
-    }
-
-
     //controleer bestandsgrootte
     public function isBestandNietTeGroot($p_HuidgeGroteInBytes, $p_sMaxBytes)
     {
