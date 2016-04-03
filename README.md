@@ -1,11 +1,5 @@
 # IMDstagram
 IMDstagram is een applicatie bedoelt voor studenten Interactive Multimedia Design (IMD) aan de Thomas More hogeschool. De applicatie heeft als doel om inspirerende afbeeldingen en video's onder de studenten uit te wisselen. De applicatie werkt zoals het concept van Instagram.
-Clausule: de ontwikkelaars zijn niet verantwoordelijk voor mogelijke schade, fouten, problemen, verlies of verspreiding van gegevens en/of materiaal die voortvloeien uit het gebruik van de applicatie. Het gebruik van de applicatie op eigen risico.
-
-Ontwikkelaars:
-- Brent Schuddinck
-- Ben Witters
-- Daphné Van Belle
 
 ## Connecteren met online database
 - Om gemakkelijk te werken, werd gekozen om meteen een online database te gebruiken. Om connectie te maken via PDO:
