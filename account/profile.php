@@ -19,7 +19,7 @@ else if(!isset($_GET['user'])){
 <head>
     <meta charset="UTF-8">
     <title>IMDstagram tijdlijn</title>
-    <meta name="description" content="Tijdlijn">
+    <meta name="description" class="tijdlijn">
     <?php include_once('../inc/style.inc.php'); ?>
 </head>
 <body class="template">

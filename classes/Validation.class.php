@@ -91,6 +91,21 @@ class Validation
     }
 
 
+    //valideer geldigheid zoekwoord
+    public function isGeldigZoekwoord($p_sZoekwoord)
+    {
+
+        $patroonGeldigZoekwoord = "/\S*#(?:\[[^\]]+\]|\S+)/";
+
+        if(preg_match($patroonGeldigZoekwoord, $p_sZoekwoord)){
+            //geldig
+            return true;
+        }else{
+            //niet geldig
+            return false;
+        }
+    }
+
 
 }
 
