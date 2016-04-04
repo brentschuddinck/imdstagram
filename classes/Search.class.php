@@ -17,4 +17,9 @@ class Search{
 
 
 
+    public function zoekResultaten(){
+
+    }
+
+
 }

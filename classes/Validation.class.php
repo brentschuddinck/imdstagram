@@ -59,8 +59,8 @@ class Validation
         if (empty($p_sGebruikersnaam)) {
             return "Gebruikersnaam is niet ingevuld.";
             //indien gebruikersnaam is ingevuld, controleer of deze niet groter/kleiner is dan toegelaten aantal tekens
-        } else if (strlen($p_sGebruikersnaam) > 25) {
-            return "Gebruikersnaam is te lang. Gebruikersnaam mag niet langer dan 25 tekens zijn.";
+        } else if (strlen($p_sGebruikersnaam) > 20) {
+            return "Gebruikersnaam is te lang. Gebruikersnaam mag niet langer dan 20 tekens zijn.";
         } else if (strlen($p_sGebruikersnaam) < 2) {
             return "Gebruikersnaam is te kort. Gebruikersnaam moet moet minstens 2 tekens lang zijn.";
         } else if (!ctype_alnum($p_sGebruikersnaam)) {

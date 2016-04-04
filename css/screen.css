@@ -192,6 +192,67 @@ aside {
     text-align: center;
 }
 
+.thumbnail{
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+}
+
+/*
+.thumbnail:hover{
+    -webkit-animation: scale 0.3s forwards;
+    -moz-animation: scale 0.3 forwards;
+    -ms-animation: scale 0.3s forwards;
+    -o-animation: scale 0.3s forwards;
+    animation: scale 0.3s forwards;
+}*/
+
+
+.thumbnail.picturelist{
+    border: 0; /* toevoeging cleaner design */
+    margin-bottom: 30px;
+}
+
+.thumbnail.picturelist img{
+    -webkit-border-radius: 4px;
+}
+
+.thumbnail.picturelist:hover, .thumbnail.picturelist:focus, .thumbnail.picturelist:active{
+    -webkit-opacity: 0.7;
+}
+
+
+
+
+/*
+@-webkit-keyframes scale{
+    from {-webkit-transform: scale(1);}
+    to {-webkit-transform: scale(1.05);}
+}
+
+@-moz-keyframes scale{
+    from {-moz-transform: scale(1);}
+    to {-moz-transform: scale(1.05);}
+}
+
+
+@-ms-keyframes scale{
+    from {-ms-transform: scale(1);}
+    to {-ms-transform: scale(1.05);}
+}
+
+@-o-keyframes scale{
+    from {-o-transform: scale(1);}
+    to {-o-transform: scale(1.05);}
+}
+
+@keyframes scale{
+    from {transform: scale(1);}
+    to {transform: scale(1.05);}
+}*/
+
 
 @media screen and (min-width: 760px) {
     .template {
