@@ -6,7 +6,7 @@ include_once('classes/Search.class.php');
 
 if (isset($_GET['search']) && !empty($_GET['search'])) {
 
-    $zoekterm = $_GET['search'];
+    $zoekterm = strtolower($_GET['search']);
 
     //search bestaat en is niet leeg
 
@@ -39,7 +39,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         }
     } else {
         $pageTitle = "Niets gevonden :(";
-        $feedback = bouwFeedbackBox("danger", "het zoekwoord is ongeldig. Alleen #, letters en cijfers zonder spaties zijn toegestaan.");
+        $feedback = bouwFeedbackBox("danger", "het zoekwoord is ongeldig. Alleen #, _, letters en cijfers zonder spaties zijn toegestaan.");
     }
 
 } else {
