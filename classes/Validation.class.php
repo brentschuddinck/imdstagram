@@ -94,10 +94,8 @@ class Validation
     //valideer geldigheid zoekwoord
     public function isGeldigZoekwoord($p_sZoekwoord)
     {
-
-        $patroonGeldigZoekwoord = "/\S*#(?:\[[^\]]+\]|\S+)/";
-
-        if(preg_match($patroonGeldigZoekwoord, $p_sZoekwoord)){
+        
+        if(preg_match("/[+#a-zA-Z0-9]/", $p_sZoekwoord) && !preg_match("/\s/", $p_sZoekwoord)){
             //geldig
             return true;
         }else{
