@@ -11,6 +11,7 @@ if(!empty($_POST['beschrijving']) && !empty($_FILES['foto']['name'])){
     $filename = $_FILES['foto']['name'];
     $filetype = $_FILES['foto']['type'];
     $filesize = $_FILES['foto']['size'];
+    // create unique filename
     $newFileName = $_SESSION['login']['userid'] . '_' . date('d-m-y') . '_' . date('H') . 'u' . date('i') . 'm' . date('s') . 's' . '_' . $filename;
     // path naar folder waar foto opgeslagen zal worden
     $filepath = "img/uploads/post-pictures/" . $newFileName;
