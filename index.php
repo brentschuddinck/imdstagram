@@ -18,7 +18,7 @@ if(!empty($_POST['beschrijving']) && !empty($_FILES['foto']['name'])){
 
 
     // kijken of een geldig afbeeldingsformaat opgeladen is
-    if(exif_imagetype($filetmp) == IMAGETYPE_JPEG || exif_imagetype($filetmp) == IMAGETYPE_PNG){
+    if(exif_imagetype($filetmp) == IMAGETYPE_JPEG || exif_imagetype($filetmp) == IMAGETYPE_PNG || exif_imagetype($filetmp) == IMAGETYPE_GIF){
         $upload = new Upload();
         if($upload->isBestandNietTeGroot($filesize, $maxBytes)){
         move_uploaded_file($filetmp, $filepath);
