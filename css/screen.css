@@ -17,7 +17,7 @@ h1, h2, h3, h4, h5, h6, .navbar-brand, .name-label {
 }
 
 h1 {
-    font-size: 2.5em;
+    font-size: 3em;
     margin-bottom: 40px;
 }
 
@@ -40,7 +40,7 @@ p, span, div, .checkbox {
 
 /* overriding templates */
 .template {
-    padding-top: 60px;
+    padding-top: 40px;
 }
 
 .template.welcome {
@@ -80,17 +80,21 @@ p, span, div, .checkbox {
     -ms-border-radius: 100%;
     -o-border-radius: 100%;
     border-radius: 100%;
+    background-size: cover;
 }
 
 .profielfoto.mini {
+    object-fit: cover;
     width: 30px;
     height: 30px;
+
     margin-right: 7px;
     margin-top: -7px;
 
 }
 
 .profielfoto.groot {
+    object-fit: cover;
     width: 140px;
     height: 140px;
     margin-top: -10px;
@@ -120,6 +124,7 @@ aside {
     font-size: 2.4rem;
     margin-bottom: 10px;
 }
+
 
 .container-fluid {
     padding: 0;
@@ -223,7 +228,9 @@ aside {
     -webkit-opacity: 0.7;
 }
 
-
+.search.nmessages{
+    margin-top: -30px;
+}
 
 
 /*
