@@ -92,10 +92,10 @@ class Validation
 
 
     //valideer geldigheid zoekwoord
-    public function isGeldigZoekwoord($p_sZoekwoord)
+    public function isGeldigHashTag($p_sZoekwoord)
     {
 
-        if(preg_match("/[+#a-zA-Z0-9_]/", $p_sZoekwoord) && !preg_match("/\s/", $p_sZoekwoord) && !preg_match("/[\'\/~`\!@\$%\^&\*\(\)\-\+=\{\}\[\]\|;:\"\<\>,\.\?\\\]/", $p_sZoekwoord)){
+        if(strlen($p_sZoekwoord) > 1 && preg_match("/[+#a-zA-Z0-9_]/", $p_sZoekwoord) && !preg_match("/\s/", $p_sZoekwoord) && !preg_match("/[\'\/~`\!@\$%\^&\*\(\)\-\+=\{\}\[\]\|;:\"\<\>,\.\?\\\]/", $p_sZoekwoord)){
             //geldig
             return true;
         }else{
@@ -103,6 +103,19 @@ class Validation
             return false;
         }
     }
+
+    public function isGeldigZoekwoord($p_sZoekwoord)
+    {
+
+        if(strlen($p_sZoekwoord) > 1 && preg_match("/[+#a-zA-Z0-9_]/", $p_sZoekwoord) && !preg_match("/[\'\/~`\!@\$%\^&\*\(\)\-\+=\{\}\[\]\|;:\"\<\>,\.\?\\\]/", $p_sZoekwoord)){
+            //geldig
+            return true;
+        }else{
+            //niet geldig
+            return false;
+        }
+    }
+
 
 
 }

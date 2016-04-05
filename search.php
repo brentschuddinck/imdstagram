@@ -12,7 +12,15 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
 
     //controleer geldige searchbox invoer
     $validation = new Validation();
-    $isGeldigeZoekterm = $validation->isGeldigZoekwoord($zoekterm);
+
+
+    if($zoekterm[0] === '#'){
+        $isGeldigeZoekterm = $validation->isGeldigHashTag($zoekterm);
+    }else{
+        $isGeldigeZoekterm = $validation->isGeldigZoekwoord($zoekterm);
+    }
+
+
     if ($isGeldigeZoekterm) {
         //zoekwoord is geldig (tekst, cijfers, #, no-white-space)
         //zoeken naar resultaten
@@ -34,14 +42,15 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
                 $aantalUsers = count($arrUsers);
                 $aantalTags = count($arrTags);
                 $aantalLocations = count($arrLocations);
+                $aantalTotaal = $aantalUsers + $aantalTags + $aantalLocations;
 
-                $aantalZoekresultaten = count($arrUsers + $arrTags + $arrLocations); //tel gevonden resultaten (enkel eerste 20 getoond!)
+                $aantalZoekresultaten = $aantalTotaal; //tel gevonden resultaten (enkel eerste 20 getoond!)
                 $aantalZoekresultaten = number_format($aantalZoekresultaten, 0, '.', '.'); //duizendtallen scheiden met punt
 
                 //query toont enkel de eerste 20 resultaten per onderdeel. Indien een van deze de maxima bereikt, toon melding, maar voer toch uit
                 $maxRecords = 20;
-                if($aantalUsers == $maxRecords || $aantalTags == $maxRecords || $aantalLocations == $maxRecords){
-                    $feedback = bouwFeedbackBox("warning", "alleen de eerste " . $maxRecords ." resultaten per onderdeel worden getoond. Mogelijk zijn er meer resultaten beschikbaar. Verfijn je zoekopdracht om gedetailleerde resultaten te bekomen.");
+                if ($aantalUsers == $maxRecords || $aantalTags == $maxRecords || $aantalLocations == $maxRecords) {
+                    $feedback = bouwFeedbackBox("warning", "alleen de eerste " . $maxRecords . " resultaten per onderdeel worden getoond. Mogelijk zijn er meer resultaten beschikbaar. Verfijn je zoekopdracht om gedetailleerde resultaten te bekomen.");
                 }
 
             } else {
@@ -57,7 +66,11 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         }
     } else {
         $pageTitle = "Niets gevonden :(";
-        $feedback = bouwFeedbackBox("danger", "het zoekwoord is ongeldig. Alleen #, _, letters en cijfers zonder spaties zijn toegestaan.");
+        if (strlen($zoekterm) < 2) {
+            $feedback = bouwFeedbackBox("danger", "het zoekwoord moet minstens 2 tekens lang zijn.");
+        } else {
+            $feedback = bouwFeedbackBox("danger", "het zoekwoord is ongeldig. Alleen #, _, letters en cijfers zonder spaties zijn toegestaan.");
+        }
     }
 
 } else {
@@ -82,7 +95,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
 
 
 <!-- start photowall -->
-<div class="container">
+<div class="container search">
     <div class="row">
         <div class="col-sm-3 col-md-2"></div>
         <div class="col-sm-6 col-md-8">
@@ -99,10 +112,55 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
 
 
     <!-- start lijst met zoekresultaten -->
-    <h2>Tags</h2>
-    <h2>Plaatsen</h2>
 
-    <?php if(isset($arrUsers) && !empty($arrUsers)){
+
+    <!-- start resultaten tags -->
+    <?php if (isset($arrTags) && !empty($arrTags)) {
+
+        echo "<h2>Tags</h2>";
+        echo "<div class=\"row img-list\">";
+
+        foreach ($arrTags as $arrItem) {
+            $toonTagName = $arrItem['tag_name'];
+
+            $toonTags = "<article class=\"col-xs-12 col-sm-6 col-md-4\">";
+            $toonTags .= "<a class='thumbnail picturelist' href='/imdstagram/explore/index.php?tag=" . $toonTagName . "'>";
+            $toonTags .= "<div class='vet'>" . $toonTagName . "</div>";
+            //$toonLocaties .= "<img src='img/uploads/profile-pictures/". $toonLocatiesProfilePicture ."' alt='Profielfoto van ". $toonLocatiesFullName ."'>";
+            $toonTags .= "</a></article>";
+            echo $toonTags;
+        }
+        echo "</div>";
+
+    } ?>
+    <!-- einde resultaten tags -->
+
+
+
+    <!-- start resultaten plaatsen -->
+    <?php if (isset($arrLocations) && !empty($arrLocations)) {
+
+        echo "<h2>Locaties</h2>";
+        echo "<div class=\"row img-list\">";
+
+        foreach ($arrLocations as $arrItem) {
+            $toonLocationsName = $arrItem['post_location'];
+
+            $toonLocaties = "<article class=\"col-xs-12 col-sm-6 col-md-4\">";
+            $toonLocaties .= "<a class='thumbnail picturelist' href='/imdstagram/explore/index.php?location=" . $toonLocationsName . "'>";
+            $toonLocaties .= "<div class='vet'>" . $toonLocationsName . "</div>";
+            //$toonLocaties .= "<img src='img/uploads/profile-pictures/". $toonLocatiesProfilePicture ."' alt='Profielfoto van ". $toonLocatiesFullName ."'>";
+            $toonLocaties .= "</a></article>";
+            echo $toonLocaties;
+        }
+        echo "</div>";
+
+    } ?>
+    <!-- einde resultaten plaatsen -->
+
+
+    <!-- start resultaten gebruikers -->
+    <?php if (isset($arrUsers) && !empty($arrUsers)) {
 
         echo "<h2>Personen</h2>";
         echo "<div class=\"row img-list\">";
@@ -113,16 +171,18 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
             $toonUsersProfilePicture = $arrItem['profile_picture'];
 
             $toonUsers = "<article class=\"col-xs-12 col-sm-4 col-md-3\">";
-            $toonUsers .= "<a class=\"thumbnail picturelist\" href='/imdstagram/account/profile.php?user=". $toonUsersGebruikersnaam ."'>";
-            $toonUsers .= "<div class='vet'>". $toonUsersFullName ."</div>";
+            $toonUsers .= "<a class=\"thumbnail picturelist\" href='/imdstagram/account/profile.php?user=" . $toonUsersGebruikersnaam . "'>";
+            $toonUsers .= "<div class='vet'>" . $toonUsersFullName . "</div>";
             $toonUsers .= "<div>" . $toonUsersGebruikersnaam . "</div>";
-            $toonUsers .= "<img src='img/uploads/profile-pictures/". $toonUsersProfilePicture ."' alt='Profielfoto van ". $toonUsersFullName ."'>";
+            $toonUsers .= "<img src='img/uploads/profile-pictures/" . $toonUsersProfilePicture . "' alt='Profielfoto van " . $toonUsersFullName . "'>";
             $toonUsers .= "</a></article>";
             echo $toonUsers;
         }
         echo "</div>";
 
     } ?>
+    <!-- einde resultaten gebruikers -->
+
 
 </div>
 <!-- einde photowall -->

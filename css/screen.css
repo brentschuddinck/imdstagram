@@ -19,7 +19,13 @@ h1, h2, h3, h4, h5, h6, .navbar-brand, .name-label {
 h1 {
     font-size: 3em;
     margin-bottom: 40px;
+    margin-top: 5px;
 }
+
+.preferences h1{
+    margin-top: 40px;
+}
+
 
 h2 {
     font-size: 1.8em;
@@ -215,9 +221,9 @@ aside {
 
 
 .thumbnail.picturelist{
-    /*border: 2px solid #EEEEEE; /* aanpassing cleaner design */
-    border: 0; /* aanpassing cleaner design */
-    margin-bottom: 30px;
+    border: 1px solid #EEEEEE; /* aanpassing cleaner design */
+    /*border: 0;*/ /* aanpassing cleaner design */
+    margin-bottom: 10px;
     text-align: center;
 
 }
@@ -246,6 +252,9 @@ aside {
     margin-top: -30px;
 }
 
+.container.search h2{
+    text-align: center;
+}
 
 
 /*
@@ -276,10 +285,6 @@ aside {
 }*/
 
 
-
-@media screen and (min-width: 400px){
-
-}
 
 
 @media screen and (min-width: 760px) {
@@ -315,7 +320,9 @@ aside {
         display: none;
     }
 
-
+    .container.search h2{
+        text-align: left;
+    }
 
 
 

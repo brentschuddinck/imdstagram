@@ -25,9 +25,9 @@ class Search{
 
         // gebruiker zoeken die wil inloggen adhv e-mailadres
         // aparte statements, joins niet altijd mogelijk aangezien geen overeenkomstige key
-        $statementSearchInUser = $conn->prepare("SELECT username, full_name, profile_picture FROM user WHERE username LIKE concat(:zoekterm, '%') OR full_name LIKE concat(:zoekterm, '%') limit 20");
-        $statementSearchInTag = $conn->prepare("SELECT tag_name FROM tag WHERE tag_name LIKE concat(:zoekterm, '%') limit 20");
-        $statementSearchInLocation = $conn->prepare("SELECT post_location FROM post WHERE post_location LIKE concat(:zoekterm, '%') limit 20");
+        $statementSearchInUser = $conn->prepare("SELECT DISTINCT username, full_name, profile_picture FROM user WHERE username LIKE concat(:zoekterm, '%') OR full_name LIKE concat('%', :zoekterm, '%') limit 20");
+        $statementSearchInTag = $conn->prepare("SELECT DISTINCT tag_name FROM tag WHERE tag_name LIKE concat('%', :zoekterm, '%') limit 20");
+        $statementSearchInLocation = $conn->prepare("SELECT DISTINCT post_location FROM post WHERE post_location LIKE concat(:zoekterm, '%') limit 20");
 
 
         // bind value
