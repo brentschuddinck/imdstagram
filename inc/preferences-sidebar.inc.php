@@ -8,7 +8,7 @@ $pageProfilePicture = "profile-picture.php";
 $huidige_pagina = basename($_SERVER['PHP_SELF']);
 ?>
 
-<div class="container">
+<div class="container preferences">
     <div class="container-fluid">
         <div class="row-fluid">
             <!-- start aside left -->

@@ -17,9 +17,15 @@ h1, h2, h3, h4, h5, h6, .navbar-brand, .name-label {
 }
 
 h1 {
-    font-size: 2.5em;
+    font-size: 3em;
     margin-bottom: 40px;
+    margin-top: 5px;
 }
+
+.preferences h1{
+    margin-top: 40px;
+}
+
 
 h2 {
     font-size: 1.8em;
@@ -40,7 +46,7 @@ p, span, div, .checkbox {
 
 /* overriding templates */
 .template {
-    padding-top: 60px;
+    padding-top: 40px;
 }
 
 .template.welcome {
@@ -75,22 +81,25 @@ p, span, div, .checkbox {
 }
 
 .profielfoto {
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    -ms-border-radius: 100%;
-    -o-border-radius: 100%;
-    border-radius: 100%;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
 }
 
 .profielfoto.mini {
+    object-fit: cover;
     width: 30px;
     height: 30px;
+
     margin-right: 7px;
     margin-top: -7px;
 
 }
 
 .profielfoto.groot {
+    object-fit: cover;
     width: 140px;
     height: 140px;
     margin-top: -10px;
@@ -120,6 +129,7 @@ aside {
     font-size: 2.4rem;
     margin-bottom: 10px;
 }
+
 
 .container-fluid {
     padding: 0;
@@ -194,6 +204,7 @@ textarea{
     display: none;
 }
 
+
 #postForm{
     margin-top: 20px;
 }
@@ -203,6 +214,95 @@ textarea{
     margin-bottom: 5px;
 }
 
+.centreer.tekst{
+    text-align: center;
+}
+
+.thumbnail{
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+}
+
+/*
+.thumbnail:hover{
+    -webkit-animation: scale 0.3s forwards;
+    -moz-animation: scale 0.3 forwards;
+    -ms-animation: scale 0.3s forwards;
+    -o-animation: scale 0.3s forwards;
+    animation: scale 0.3s forwards;
+}*/
+
+
+.thumbnail.picturelist{
+    border: 1px solid #EEEEEE; /* aanpassing cleaner design */
+    /*border: 0;*/ /* aanpassing cleaner design */
+    margin-bottom: 10px;
+    text-align: center;
+
+}
+
+.thumbnail.picturelist img {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+
+    object-fit: cover;
+    width: 292px;
+    height: 292px;
+}
+
+.thumbnail.picturelist:hover, .thumbnail.picturelist:focus, .thumbnail.picturelist:active{
+    -webkit-opacity: 0.7;
+    -moz-opacity: 0.7;
+    -ms-opacity: 0.7;
+    -o-opacity: 0.7;
+    opacity: 0.7;
+}
+
+.search.nmessages{
+    margin-top: -30px;
+}
+
+.container.search h2{
+    text-align: center;
+}
+
+
+/*
+@-webkit-keyframes scale{
+    from {-webkit-transform: scale(1);}
+    to {-webkit-transform: scale(1.05);}
+}
+
+@-moz-keyframes scale{
+    from {-moz-transform: scale(1);}
+    to {-moz-transform: scale(1.05);}
+}
+
+
+@-ms-keyframes scale{
+    from {-ms-transform: scale(1);}
+    to {-ms-transform: scale(1.05);}
+}
+
+@-o-keyframes scale{
+    from {-o-transform: scale(1);}
+    to {-o-transform: scale(1.05);}
+}
+
+@keyframes scale{
+    from {transform: scale(1);}
+    to {transform: scale(1.05);}
+}*/
+
+
+
+>>>>>>> f7_zoekfunctie
 
 @media screen and (min-width: 760px) {
     .template {
@@ -225,6 +325,25 @@ textarea{
         clear: both;
     }
 
+    .thumbnail.picturelist{
+        border: 2px solid #EEEEEE; /* aanpassing cleaner design */
+        /*border: 0; /* aanpassing cleaner design */
+        margin-bottom: 30px;
+        text-align: center;
+
+    }
+
+    .header.profielnaam{
+        display: none;
+    }
+
+    .container.search h2{
+        text-align: left;
+    }
+
+
+
+
 }
 
 
@@ -236,5 +355,12 @@ textarea{
 
     .label-picture{
         padding-top: 62px;
+    }
+
+}
+
+@media screen and (min-width: 1000px){
+    .header.profielnaam{
+        display: inline-block;
     }
 }
