@@ -83,7 +83,7 @@ if (isset($_POST['wijzigPrivacy'])) {
                     id="checkPrivateAccount"
                     <?php if ($_SESSION['login']['private'] == "1") {print "checked";} ?>>
                 <!-- Moet de checkbox default aangevinkt worden of niet? -->
-                Maak mijn account priv&eacute;. Alleen geaccepteerde personen kunnen mijn foto's en profiel bekijken.
+                <span class="vet">Maak mijn account priv&eacute;. </span><br>Alleen geaccepteerde personen kunnen mijn foto's bekijken.
 
             </label>
         </div>

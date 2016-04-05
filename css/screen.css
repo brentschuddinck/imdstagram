@@ -277,6 +277,10 @@ aside {
 
 
 
+@media screen and (min-width: 400px){
+
+}
+
 
 @media screen and (min-width: 760px) {
     .template {
