@@ -75,11 +75,11 @@ p, span, div, .checkbox {
 }
 
 .profielfoto {
-    -webkit-border-radius: 10%;
-    -moz-border-radius: 10%;
-    -ms-border-radius: 10%;
-    -o-border-radius: 10%;
-    border-radius: 10%;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
 }
 
 .profielfoto.mini {
@@ -215,21 +215,23 @@ aside {
 
 
 .thumbnail.picturelist{
-    /*border: 2px solid whitesmoke;*/ /* aanpassing cleaner design */
+    /*border: 2px solid #EEEEEE; /* aanpassing cleaner design */
     border: 0; /* aanpassing cleaner design */
     margin-bottom: 30px;
+    text-align: center;
+
 }
 
 .thumbnail.picturelist img {
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    -ms-border-radius: 6px;
-    -o-border-radius: 6px;
-    border-radius: 6px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
 
     object-fit: cover;
-    width: 290px;
-    height: 290px;
+    width: 292px;
+    height: 292px;
 }
 
 .thumbnail.picturelist:hover, .thumbnail.picturelist:focus, .thumbnail.picturelist:active{
@@ -274,6 +276,8 @@ aside {
 }*/
 
 
+
+
 @media screen and (min-width: 760px) {
     .template {
         padding-top: 80px;
@@ -295,6 +299,23 @@ aside {
         clear: both;
     }
 
+    .thumbnail.picturelist{
+        border: 2px solid #EEEEEE; /* aanpassing cleaner design */
+        /*border: 0; /* aanpassing cleaner design */
+        margin-bottom: 30px;
+        text-align: center;
+
+    }
+
+    .header.profielnaam{
+        display: none;
+    }
+
+
+
+
+
+
 }
 
 
@@ -306,5 +327,12 @@ aside {
 
     .label-picture{
         padding-top: 62px;
+    }
+
+}
+
+@media screen and (min-width: 1000px){
+    .header.profielnaam{
+        display: inline-block;
     }
 }

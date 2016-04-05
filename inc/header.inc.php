@@ -64,7 +64,7 @@
                                 <img class="profielfoto mini"
                                      src="/imdstagram/img/uploads/profile-pictures/<?php print htmlspecialchars($_SESSION['login']['profielfoto']); ?>"
                                      alt="Profielfoto van <?php print htmlspecialchars($_SESSION['login']['gebruikersnaam']); ?>">
-                                    <?php echo htmlspecialchars($_SESSION['login']['gebruikersnaam']); ?>
+                                    <span class="header profielnaam"><?php echo htmlspecialchars($_SESSION['login']['gebruikersnaam']); ?></span>
 
                                 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
