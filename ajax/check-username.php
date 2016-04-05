@@ -19,7 +19,7 @@ if(isset($_POST['username']) && !empty($_POST['username'])) {
         $user->setMSGebruikersnaam($nieuweUsername);
         $isUsernameAvailable = $user->UsernameAvailable();
 
-        if($isUsernameAvailable || $nieuweUsername == $sessieUsername) {
+        if($isUsernameAvailable /*|| $nieuweUsername == $sessieUsername*/) {
             $response['status'] = 'available';
             $response['message'] = 'De gebruikersnaam is beschikbaar.';
         }else{
