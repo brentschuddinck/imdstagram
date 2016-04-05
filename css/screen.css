@@ -184,13 +184,7 @@ aside {
     margin-bottom: 50px;
 }
 
-textarea{
-    resize: none;
-}
-.postDate{
-    text-align: right;
-    color: #4b6075;
-}
+
 
 .ajax-feedback.error{
     color: #E74C3C;
@@ -204,7 +198,6 @@ textarea{
     display: none;
 }
 
-
 #postForm{
     margin-top: 20px;
 }
@@ -213,6 +206,7 @@ textarea{
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
 
 .centreer.tekst{
     text-align: center;
@@ -302,7 +296,6 @@ textarea{
 
 
 
->>>>>>> f7_zoekfunctie
 
 @media screen and (min-width: 760px) {
     .template {
