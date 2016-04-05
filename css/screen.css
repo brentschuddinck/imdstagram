@@ -75,12 +75,11 @@ p, span, div, .checkbox {
 }
 
 .profielfoto {
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    -ms-border-radius: 100%;
-    -o-border-radius: 100%;
-    border-radius: 100%;
-    background-size: cover;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    -ms-border-radius: 10%;
+    -o-border-radius: 10%;
+    border-radius: 10%;
 }
 
 .profielfoto.mini {
@@ -216,21 +215,35 @@ aside {
 
 
 .thumbnail.picturelist{
-    border: 0; /* toevoeging cleaner design */
+    /*border: 2px solid whitesmoke;*/ /* aanpassing cleaner design */
+    border: 0; /* aanpassing cleaner design */
     margin-bottom: 30px;
 }
 
-.thumbnail.picturelist img{
-    -webkit-border-radius: 4px;
+.thumbnail.picturelist img {
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
+
+    object-fit: cover;
+    width: 290px;
+    height: 290px;
 }
 
 .thumbnail.picturelist:hover, .thumbnail.picturelist:focus, .thumbnail.picturelist:active{
     -webkit-opacity: 0.7;
+    -moz-opacity: 0.7;
+    -ms-opacity: 0.7;
+    -o-opacity: 0.7;
+    opacity: 0.7;
 }
 
 .search.nmessages{
     margin-top: -30px;
 }
+
 
 
 /*
