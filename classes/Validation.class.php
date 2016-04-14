@@ -6,26 +6,26 @@
 class Validation
 {
 
-    public function isGeldigEmailadres($p_sEmailadres)
+    public function isValidEmail($p_Email)
     {
 
         //controleer of e-mailadres is ingevuld
-        if (empty($p_sEmailadres)) {
+        if (empty($p_Email)) {
             return "E-mailadres is niet ingevuld.";
 
             // E-mailadres valideren met FILTER_VALIDATE_EMAIL (ingebouwd, geen gedoe met regex)
-        } else if (filter_var($p_sEmailadres, FILTER_VALIDATE_EMAIL)) {
+        } else if (filter_var($p_Email, FILTER_VALIDATE_EMAIL)) {
             //het e-mailformaat is geldig. Kijk nu of het geldige e-mailadres in de lijst met toegestane domeinen voorkomt
 
             //lijst toegestane domeinen
-            $toegestaneDomeinen = array('student.thomasmore.be', 'thomasmore.be');
+            $allowedDomains = array('student.thomasmore.be', 'thomasmore.be');
 
             //Explode e-mailadres en controloleer tweede deel (na de @). Vergelijk met toegestane domeinen.
-            $explodedEmail = explode('@', $p_sEmailadres);
+            $explodedEmail = explode('@', $p_Email);
             $domain = array_pop($explodedEmail);
 
             //als e-mailadres een geldig formaat heeft, MAAR NIET matcht met toegestane domeinen
-            if (!in_array($domain, $toegestaneDomeinen)) {
+            if (!in_array($domain, $allowedDomains)) {
                 //e-mailadres formaat is geldig + matcht met toegestane domeinen
                 return "E-mailadres is geen geldig Thomas More e-mailadres.";
             }
@@ -38,32 +38,32 @@ class Validation
 
 
     //valideer voor- en familienaam veld
-    public function isGeldigVoornaamFamilienaam($p_sVoornaamFamilienaam)
+    public function isValidFullname($p_sFullname)
     {
         //controleer of veld voor- en familienaam niet leeg is
-        if (empty($p_sVoornaamFamilienaam)) {
+        if (empty($p_sFullname)) {
             return "Voor- en familienaam is niet ingevuld.";
 
             //controleer of voor- en familienaam geldig aantal tekens heeft
-        } else if (strlen($p_sVoornaamFamilienaam) < 3 || !preg_match("~^(?:[\p{L}\p{Mn}\p{Pd}\'\x{2019}]+\s[\p{L}\p{Mn}\p{Pd}\'\x{2019}]+\s?)+$~u", $p_sVoornaamFamilienaam)) {
+        } else if (strlen($p_sFullname) < 3 || !preg_match("~^(?:[\p{L}\p{Mn}\p{Pd}\'\x{2019}]+\s[\p{L}\p{Mn}\p{Pd}\'\x{2019}]+\s?)+$~u", $p_sFullname)) {
             return "Voor- en familienaam is ongeldig.";
         }
     }
 
 
     //valideer veld gebruikersnaam
-    public function isGeldigGebruikersnaam($p_sGebruikersnaam)
+    public function isValidUsername($p_sUsername)
     {
 
         //controleer of gebruikersnaam is ingevuld
-        if (empty($p_sGebruikersnaam)) {
+        if (empty($p_sUsername)) {
             return "Gebruikersnaam is niet ingevuld.";
             //indien gebruikersnaam is ingevuld, controleer of deze niet groter/kleiner is dan toegelaten aantal tekens
-        } else if (strlen($p_sGebruikersnaam) > 20) {
+        } else if (strlen($p_sUsername) > 20) {
             return "Gebruikersnaam is te lang. Gebruikersnaam mag niet langer dan 20 tekens zijn.";
-        } else if (strlen($p_sGebruikersnaam) < 2) {
+        } else if (strlen($p_sUsername) < 2) {
             return "Gebruikersnaam is te kort. Gebruikersnaam moet moet minstens 2 tekens lang zijn.";
-        } else if (!ctype_alnum($p_sGebruikersnaam)) {
+        } else if (!ctype_alnum($p_sUsername)) {
             //reguliere expressie controleert of gebruikersnaam enkel letters a-z, of cijfers bevatten. Indien niet, toon error.
             return "Gebruikersnaam ongeldig. Gebruikersnaam mag enkel letters of cijfers bevatten.";
         }
@@ -71,19 +71,19 @@ class Validation
 
 
     //valideer veld wachtwoord
-    public function isGeldigWachtwoord($p_sWachtwoord)
+    public function isValidPassword($p_sPassword)
     {
-        if (empty($p_sWachtwoord)) {
+        if (empty($p_sPassword)) {
             return "Wachtwoord is niet ingevuld.";
-        } else if (strlen($p_sWachtwoord) < 6) {
+        } else if (strlen($p_sPassword) < 6) {
             return "Wachtwoord te kort. Wachtwoord moet minstens 6 tekens lang zijn.";
         }
     }
 
 
-    public function matchtNieuwWachtwoord($p_sNieuwWachtwoord, $p_sNieuwWachtwoordHerhaal)
+    public function matchNewpassword($p_sNewPassword, $p_sNewPasswordRepeat)
     {
-        if ($p_sNieuwWachtwoord === $p_sNieuwWachtwoordHerhaal) {
+        if ($p_sNewPassword === $p_sNewPasswordRepeat) {
             return true;
         } else {
             return false;
@@ -92,10 +92,10 @@ class Validation
 
 
     //valideer geldigheid zoekwoord
-    public function isGeldigHashTag($p_sZoekwoord)
+    public function isValidHashtag($p_sSearchTerm)
     {
 
-        if(strlen($p_sZoekwoord) > 1 && preg_match("/[+#a-zA-Z0-9_]/", $p_sZoekwoord) && !preg_match("/\s/", $p_sZoekwoord) && !preg_match("/[\'\/~`\!@\$%\^&\*\(\)\-\+=\{\}\[\]\|;:\"\<\>,\.\?\\\]/", $p_sZoekwoord)){
+        if(strlen($p_sSearchTerm) > 1 && preg_match("/[+#a-zA-Z0-9_]/", $p_sSearchTerm) && !preg_match("/\s/", $p_sSearchTerm) && !preg_match("/[\'\/~`\!@\$%\^&\*\(\)\-\+=\{\}\[\]\|;:\"\<\>,\.\?\\\]/", $p_sSearchTerm)){
             //geldig
             return true;
         }else{
@@ -104,10 +104,10 @@ class Validation
         }
     }
 
-    public function isGeldigZoekwoord($p_sZoekwoord)
+    public function isValidSearchTerm($p_sSearchTerm)
     {
 
-        if(strlen($p_sZoekwoord) > 1 && preg_match("/[+#a-zA-Z0-9_]/", $p_sZoekwoord) && !preg_match("/[\'\/~`\!@\$%\^&\*\(\)\-\+=\{\}\[\]\|;:\"\<\>,\.\?\\\]/", $p_sZoekwoord)){
+        if(strlen($p_sSearchTerm) > 1 && preg_match("/[+#a-zA-Z0-9_]/", $p_sSearchTerm) && !preg_match("/[\'\/~`\!@\$%\^&\*\(\)\-\+=\{\}\[\]\|;:\"\<\>,\.\?\\\]/", $p_sSearchTerm)){
             //geldig
             return true;
         }else{

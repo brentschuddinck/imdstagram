@@ -6,11 +6,11 @@ include_once('../../classes/Validation.class.php');
 
 
 if (isset($_POST['deleteAccount']) &&
-    !empty($_POST['inputWachtwoordDelete'])
+    !empty($_POST['inputPasswordDelete'])
 ) {
 
     //variabelen
-    $sWachtwoord = $_POST['inputWachtwoordDelete'];
+    $sPassword = $_POST['inputPasswordDelete'];
     $iUserId = $_SESSION['login']['userid'];
 
     //eerst kijken of beide passwoorden matchen
@@ -19,16 +19,16 @@ if (isset($_POST['deleteAccount']) &&
     //daarna kijken of oude wachtwoord klopt
     $deleteUserAccount = new User();
     $deleteUserAccount->setMIUserId($iUserId);
-    $deleteUserAccount->setMSWachtwoord($sWachtwoord);
+    $deleteUserAccount->setMSWachtwoord($sPassword);
 
     try {
         if ($deleteUserAccount->deleteAccount()) {
-            $feedback = bouwFeedbackBox("success", "Je account en de daarbij horende gegevens zijn gewist. <a href='/imdstagram/logout.php'>Log uit</a>.");
+            $feedback = buildFeedbackBox("success", "Je account en de daarbij horende gegevens zijn gewist. <a href='/imdstagram/logout.php'>Log uit</a>.");
             header('location: /imdstagram/logout.php');
         }
     } catch (Exception $e) {
         $errorException = $e->getMessage();
-        $feedback = bouwFeedbackBox("danger", $errorException);
+        $feedback = buildFeedbackBox("danger", $errorException);
     }
 
 }
@@ -77,14 +77,14 @@ if (isset($_POST['deleteAccount']) &&
 
         <div class="form-group">
             <!-- Oud wachtwoord  -->
-            <label for="inputWachtwoordDelete" class="col-lg-12 control-label">Wachtwoord:</label>
+            <label for="inputPasswordDelete" class="col-lg-12 control-label">Wachtwoord:</label>
             <div class="col-md-8 lg-together">
                 <input
                     type="password"
                     class="form-control col-lg-9"
-                    id="inputWachtwoordDelete"
+                    id="inputPasswordDelete"
                     title="Vul je wachtwoord in."
-                    name="inputWachtwoordDelete"
+                    name="inputPasswordDelete"
                     placeholder="Wachtwoord"
                     required
                     autofocus>

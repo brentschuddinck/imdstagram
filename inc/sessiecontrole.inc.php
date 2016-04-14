@@ -17,16 +17,16 @@ if(empty($_SESSION)){
 */
 
 
-$huidige_pagina = basename($_SERVER['PHP_SELF']);
+$current_page = basename($_SERVER['PHP_SELF']);
 
 if (isset($_SESSION['login']['loggedin']) && $_SESSION['login']['loggedin'] == 1) {
 
-    if ($huidige_pagina == 'login.php' || $huidige_pagina == 'register.php') {
+    if ($current_page == 'login.php' || $current_page == 'register.php') {
         header('location: /imdstagram/index.php');
         //live site: header('location: /index.php');
     }
 
-} else if ($huidige_pagina != 'login.php' && $huidige_pagina != 'register.php') {
+} else if ($current_page != 'login.php' && $current_page != 'register.php') {
     header('location: /imdstagram/login.php');
     // live site: header('location: /login.php');
 }

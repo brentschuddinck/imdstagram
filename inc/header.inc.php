@@ -62,15 +62,15 @@
                                data-toggle="dropdown">
 
                                 <img class="profielfoto mini"
-                                     src="/imdstagram/img/uploads/profile-pictures/<?php print htmlspecialchars($_SESSION['login']['profielfoto']); ?>"
-                                     alt="Profielfoto van <?php print htmlspecialchars($_SESSION['login']['gebruikersnaam']); ?>">
-                                    <span class="header profielnaam"><?php echo htmlspecialchars($_SESSION['login']['gebruikersnaam']); ?></span>
+                                     src="/imdstagram/img/uploads/profile-pictures/<?php print htmlspecialchars($_SESSION['login']['profilepicture']); ?>"
+                                     alt="Profielfoto van <?php print htmlspecialchars($_SESSION['login']['username']); ?>">
+                                    <span class="header profielnaam"><?php echo htmlspecialchars($_SESSION['login']['username']); ?></span>
 
                                 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/imdstagram/index.php">Photo wall</a></li>
                                 <li>
-                                    <a href="/imdstagram/account/profile.php?user=<?php print htmlspecialchars($_SESSION['login']['gebruikersnaam']); ?>">Mijn
+                                    <a href="/imdstagram/account/profile.php?user=<?php print htmlspecialchars($_SESSION['login']['username']); ?>">Mijn
                                         profiel</a></li>
                                 <li><a href="#">Volgers</a></li>
                                 <li><a href="#">Volgend</a></li>

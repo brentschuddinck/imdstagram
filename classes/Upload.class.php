@@ -35,9 +35,9 @@ class Upload
     //functies
 
     //oude foto deleten
-    public function deleteFileFromServer($p_teWissenFile)
+    public function deleteFileFromServer($p_fileToRemove)
     {
-        unlink($p_teWissenFile);
+        unlink($p_fileToRemove);
     }
 
 
@@ -60,9 +60,9 @@ class Upload
 
 
     //controleer bestandsgrootte
-    public function isBestandNietTeGroot($p_HuidgeGroteInBytes, $p_sMaxBytes)
+    public function isValidSize($p_CurrentSizeInBytes, $p_MaxBytes)
     {
-        if ($p_HuidgeGroteInBytes <= $p_sMaxBytes) {
+        if ($p_CurrentSizeInBytes <= $p_MaxBytes) {
             return true;
         } else {
             return false;
@@ -70,14 +70,14 @@ class Upload
     }
 
     //is extentie geldig
-    public function isExtentieGeldig($p_arrGeldigeExtenties, $p_sExtentieBestand)
+    public function isValidExtension($p_arrValidExtensions, $p_sExtensionFile)
     {
 
-        $arrExtenties = $p_arrGeldigeExtenties;
-        $extentieBestand = $p_sExtentieBestand;
+        $arrExtensions = $p_arrValidExtensions;
+        $extensionFile = $p_sExtensionFile;
 
-        foreach($arrExtenties as $arrExtentie){
-            if($arrExtentie == $extentieBestand){
+        foreach($arrExtensions as $arrExtension){
+            if($arrExtension == $extensionFile){
                 return true;
             }
         }
@@ -85,20 +85,20 @@ class Upload
     }
 
     //is bestandstype geldig. Deze functie dient om te voorkomen dat bijvoorbeeld een script hernoemd wordt naar .jpg om zo toch geupload te kunnen worden
-    public function isTypeGeldig($p_arrGeldigeTypes, $p_sUploadType){
+    public function isValidType($p_arrValidTypes, $p_sUploadType){
 
-        $arrGeldigeTypes = $p_arrGeldigeTypes;
+        $arrValidTypes = $p_arrValidTypes;
         $fileType = $p_sUploadType;
 
-        foreach($arrGeldigeTypes as $arrGeldigeType){
-            if($fileType == $arrGeldigeType){
+        foreach($arrValidTypes as $arrValidType){
+            if($fileType == $arrValidType){
                 return true;
             }
         }
     }
 
 
-    public function uploadfile($p_sFileTmpName, $p_sFileNewName){
+    public function uploadFile($p_sFileTmpName, $p_sFileNewName){
 
         if(move_uploaded_file($p_sFileTmpName, $p_sFileNewName)){
             return true;

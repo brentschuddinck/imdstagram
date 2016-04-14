@@ -5,7 +5,7 @@ $pagePrivacy = "privacy.php";
 $pageCloseAccount = "close-account.php";
 $pageProfilePicture = "profile-picture.php";
 
-$huidige_pagina = basename($_SERVER['PHP_SELF']);
+$current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
 <div class="container preferences">
@@ -16,19 +16,19 @@ $huidige_pagina = basename($_SERVER['PHP_SELF']);
                 <div class="well sidebar-nav fixed">
                     <div class="nav-header">Instellingen</div>
                     <ul class="nav nav-list">
-                        <li <?php if ($huidige_pagina === $pagePreference) {
+                        <li <?php if ($current_page === $pagePreference) {
                             print "class='active'";
                         } ?>><a href="<?php print $pagePreference; ?>">Algemeen</a></li>
-                        <li <?php if ($huidige_pagina === $pageProfilePicture) {
+                        <li <?php if ($current_page === $pageProfilePicture) {
                             print "class='active'";
                         } ?>><a href="<?php print $pageProfilePicture; ?>">Profielfoto</a></li>
-                        <li <?php if ($huidige_pagina === $pagePassword) {
+                        <li <?php if ($current_page === $pagePassword) {
                             print "class='active'";
                         } ?>><a href="<?php print $pagePassword; ?>">Wachtwoord</a></li>
-                        <li <?php if ($huidige_pagina === $pagePrivacy) {
+                        <li <?php if ($current_page === $pagePrivacy) {
                             print "class='active'";
                         } ?>><a href="<?php print $pagePrivacy; ?>">Privacy</a></li>
-                        <li <?php if ($huidige_pagina === $pageCloseAccount) {
+                        <li <?php if ($current_page === $pageCloseAccount) {
                             print "class='active'";
                         } ?>><a href="<?php print $pageCloseAccount; ?>">Account sluiten</a></li>
                     </ul>

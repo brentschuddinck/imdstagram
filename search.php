@@ -6,7 +6,7 @@ include_once('classes/Search.class.php');
 
 if (isset($_GET['search']) && !empty($_GET['search'])) {
 
-    $zoekterm = strtolower($_GET['search']);
+    $searchTerm = strtolower($_GET['search']);
 
     //search bestaat en is niet leeg
 
@@ -14,69 +14,69 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
     $validation = new Validation();
 
 
-    if($zoekterm[0] === '#'){
-        $isGeldigeZoekterm = $validation->isGeldigHashTag($zoekterm);
+    if($searchTerm[0] === '#'){
+        $isValidSearchTerm = $validation->isValidHashtag($searchTerm);
     }else{
-        $isGeldigeZoekterm = $validation->isGeldigZoekwoord($zoekterm);
+        $isValidSearchTerm = $validation->isValidSearchTerm($searchTerm);
     }
 
 
-    if ($isGeldigeZoekterm) {
+    if ($isValidSearchTerm) {
         //zoekwoord is geldig (tekst, cijfers, #, no-white-space)
         //zoeken naar resultaten
         try {
             $search = new Search();
-            $search->setMSZoekterm($zoekterm);
+            $search->setMSSearchTerm($searchTerm);
             //$isResultaatGevonden = $search->zoekResultaten();
-            $arrResultaat = $search->zoekResultaten();
+            $arrResult = $search->zoekResultaten();
 
-            if ($arrResultaat) {
+            if ($arrResult) {
                 //er zijn resultaten gevonden
                 //toon resultaten (gesorteerd op meeste likes)
-                $pageTitle = htmlspecialchars($zoekterm);
+                $pageTitle = htmlspecialchars($searchTerm);
 
-                $arrUsers = $arrResultaat['user'];
-                $arrTags = $arrResultaat['tag'];
-                $arrLocations = $arrResultaat['location'];
+                $arrUsers = $arrResult['user'];
+                $arrTags = $arrResult['tag'];
+                $arrLocations = $arrResult['location'];
 
-                $aantalUsers = count($arrUsers);
-                $aantalTags = count($arrTags);
-                $aantalLocations = count($arrLocations);
-                $aantalTotaal = $aantalUsers + $aantalTags + $aantalLocations;
+                $userCount = count($arrUsers);
+                $tagCount = count($arrTags);
+                $locationCount = count($arrLocations);
+                $totalCount = $userCount + $tagCount + $locationCount;
 
-                $aantalZoekresultaten = $aantalTotaal; //tel gevonden resultaten (enkel eerste 20 getoond!)
-                $aantalZoekresultaten = number_format($aantalZoekresultaten, 0, '.', '.'); //duizendtallen scheiden met punt
+                $amountOfSearchResults = $totalCount; //tel gevonden resultaten (enkel eerste 20 getoond!)
+                $amountOfSearchResults = number_format($amountOfSearchResults, 0, '.', '.'); //duizendtallen scheiden met punt
 
                 //query toont enkel de eerste 20 resultaten per onderdeel. Indien een van deze de maxima bereikt, toon melding, maar voer toch uit
                 $maxRecords = 20;
-                if ($aantalUsers == $maxRecords || $aantalTags == $maxRecords || $aantalLocations == $maxRecords) {
-                    $feedback = bouwFeedbackBox("warning", "alleen de eerste " . $maxRecords . " resultaten per onderdeel worden getoond. Mogelijk zijn er meer resultaten beschikbaar. Verfijn je zoekopdracht om gedetailleerde resultaten te bekomen.");
+                if ($userCount == $maxRecords || $tagCount == $maxRecords || $locationCount == $maxRecords) {
+                    $feedback = buildFeedbackBox("warning", "alleen de eerste " . $maxRecords . " resultaten per onderdeel worden getoond. Mogelijk zijn er meer resultaten beschikbaar. Verfijn je zoekopdracht om gedetailleerde resultaten te bekomen.");
                 }
 
             } else {
                 //er zijn geen resultaten gevonden
-                //$pageTitle = htmlspecialchars($zoekterm);
+                //$pageTitle = htmlspecialchars($searchTerm);
                 $pageTitle = "Niets gevonden :(";
-                $feedback = bouwFeedbackBox("danger", "er zijn geen resultaten gevonden voor " . htmlspecialchars($zoekterm) . ".");
+                $feedback = buildFeedbackBox("danger", "er zijn geen resultaten gevonden voor " . htmlspecialchars($searchTerm) . ".");
             }
 
         } catch (Exception $e) {
-            $feedbackTekst = $e->getMessage();
-            $feedback = bouwFeedbackBox("danger", $feedbackTekst);
+            $feedbacktext = $e->getMessage();
+            $feedback = buildFeedbackBox("danger", $feedbacktext);
         }
     } else {
         $pageTitle = "Niets gevonden :(";
-        if (strlen($zoekterm) < 2) {
-            $feedback = bouwFeedbackBox("danger", "het zoekwoord moet minstens 2 tekens lang zijn.");
+        if (strlen($searchTerm) < 2) {
+            $feedback = buildFeedbackBox("danger", "het zoekwoord moet minstens 2 tekens lang zijn.");
         } else {
-            $feedback = bouwFeedbackBox("danger", "het zoekwoord is ongeldig. Alleen #, _, letters en cijfers zonder spaties zijn toegestaan.");
+            $feedback = buildFeedbackBox("danger", "het zoekwoord is ongeldig. Alleen #, _, letters en cijfers zonder spaties zijn toegestaan.");
         }
     }
 
 } else {
     //search bestaat niet en/of is leeg
     $pageTitle = "Niets gevonden :(";
-    $feedback = bouwFeedbackBox("warning", "je hebt nog geen zoekterm ingegeven. Er zijn geen zoekresultaten gevonden.");
+    $feedback = buildFeedbackBox("warning", "je hebt nog geen zoekterm ingegeven. Er zijn geen zoekresultaten gevonden.");
 }
 
 
@@ -100,8 +100,8 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         <div class="col-sm-3 col-md-2"></div>
         <div class="col-sm-6 col-md-8">
             <h1 class="centreer tekst"><?php echo htmlspecialchars($pageTitle); ?></h1>
-            <?php if (isset($aantalZoekresultaten) && $aantalZoekresultaten > 0) {
-                echo "<div class='centreer tekst search nmessages vet'>" . htmlspecialchars($aantalZoekresultaten) . " resultaten</div>";
+            <?php if (isset($amountOfSearchResults) && $amountOfSearchResults > 0) {
+                echo "<div class='centreer tekst search nmessages vet'>" . htmlspecialchars($amountOfSearchResults) . " resultaten</div>";
             } ?>
 
             <div class="centreer tekst"><?php if (isset($feedback) && !empty($feedback)) {
@@ -121,14 +121,14 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         echo "<div class=\"row img-list\">";
 
         foreach ($arrTags as $arrItem) {
-            $toonTagName = $arrItem['tag_name'];
+            $showTagName = $arrItem['tag_name'];
 
-            $toonTags = "<article class=\"col-xs-12 col-sm-6 col-md-4\">";
-            $toonTags .= "<a class='thumbnail picturelist' href='/imdstagram/explore/index.php?tag=" . $toonTagName . "'>";
-            $toonTags .= "<div class='vet'>" . $toonTagName . "</div>";
-            //$toonLocaties .= "<img src='img/uploads/profile-pictures/". $toonLocatiesProfilePicture ."' alt='Profielfoto van ". $toonLocatiesFullName ."'>";
-            $toonTags .= "</a></article>";
-            echo $toonTags;
+            $showTags = "<article class=\"col-xs-12 col-sm-6 col-md-4\">";
+            $showTags .= "<a class='thumbnail picturelist' href='/imdstagram/explore/index.php?tag=" . $showTagName . "'>";
+            $showTags .= "<div class='vet'>" . $showTagName . "</div>";
+            //$showLocations .= "<img src='img/uploads/profile-pictures/". $showLocationsProfilePicture ."' alt='Profielfoto van ". $showLocationsFullName ."'>";
+            $showTags .= "</a></article>";
+            echo $showTags;
         }
         echo "</div>";
 
@@ -144,14 +144,14 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         echo "<div class=\"row img-list\">";
 
         foreach ($arrLocations as $arrItem) {
-            $toonLocationsName = $arrItem['post_location'];
+            $showLocationsName = $arrItem['post_location'];
 
-            $toonLocaties = "<article class=\"col-xs-12 col-sm-6 col-md-4\">";
-            $toonLocaties .= "<a class='thumbnail picturelist' href='/imdstagram/explore/index.php?location=" . $toonLocationsName . "'>";
-            $toonLocaties .= "<div class='vet'>" . $toonLocationsName . "</div>";
-            //$toonLocaties .= "<img src='img/uploads/profile-pictures/". $toonLocatiesProfilePicture ."' alt='Profielfoto van ". $toonLocatiesFullName ."'>";
-            $toonLocaties .= "</a></article>";
-            echo $toonLocaties;
+            $showLocations = "<article class=\"col-xs-12 col-sm-6 col-md-4\">";
+            $showLocations .= "<a class='thumbnail picturelist' href='/imdstagram/explore/index.php?location=" . $showLocationsName . "'>";
+            $showLocations .= "<div class='vet'>" . $showLocationsName . "</div>";
+            //$showLocations .= "<img src='img/uploads/profile-pictures/". $showLocationsProfilePicture ."' alt='Profielfoto van ". $showLocationsFullName ."'>";
+            $showLocations .= "</a></article>";
+            echo $showLocations;
         }
         echo "</div>";
 
@@ -166,17 +166,17 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         echo "<div class=\"row img-list\">";
 
         foreach ($arrUsers as $arrItem) {
-            $toonUsersGebruikersnaam = $arrItem['username'];
-            $toonUsersFullName = $arrItem['full_name'];
-            $toonUsersProfilePicture = $arrItem['profile_picture'];
+            $showUsersUsername = $arrItem['username'];
+            $showUsersFullName = $arrItem['full_name'];
+            $showUsersProfilePicture = $arrItem['profile_picture'];
 
-            $toonUsers = "<article class=\"col-xs-12 col-sm-4 col-md-3\">";
-            $toonUsers .= "<a class=\"thumbnail picturelist\" href='/imdstagram/account/profile.php?user=" . $toonUsersGebruikersnaam . "'>";
-            $toonUsers .= "<div class='vet'>" . $toonUsersFullName . "</div>";
-            $toonUsers .= "<div>" . $toonUsersGebruikersnaam . "</div>";
-            $toonUsers .= "<img src='img/uploads/profile-pictures/" . $toonUsersProfilePicture . "' alt='Profielfoto van " . $toonUsersFullName . "'>";
-            $toonUsers .= "</a></article>";
-            echo $toonUsers;
+            $showUsers = "<article class=\"col-xs-12 col-sm-4 col-md-3\">";
+            $showUsers .= "<a class=\"thumbnail picturelist\" href='/imdstagram/account/profile.php?user=" . $showUsersUsername . "'>";
+            $showUsers .= "<div class='vet'>" . $showUsersFullName . "</div>";
+            $showUsers .= "<div>" . $showUsersUsername . "</div>";
+            $showUsers .= "<img src='img/uploads/profile-pictures/" . $showUsersProfilePicture . "' alt='Profielfoto van " . $showUsersFullName . "'>";
+            $showUsers .= "</a></article>";
+            echo $showUsers;
         }
         echo "</div>";
 

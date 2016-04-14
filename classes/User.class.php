@@ -7,36 +7,26 @@ class User
 
     //membervariabelen
 
-    private $m_sVoornaamFamilienaam;
-    private $m_sEmailadres;
-    private $m_sGebruikersnaam;
-    private $m_sWachtwoord;
-    private $m_sNieuwWachtwoord;
+    private $m_sFullname;
+    private $m_sEmail;
+    private $m_sUsername;
+    private $m_sPassword;
+    private $m_sNewPassword;
     private $m_iUserAccountState;
     private $m_iUserId;
 
 
     //getters en setters
 
-    public function getMSProfilePicture()
+
+    public function getMSNewPassword()
     {
-        return $this->m_sProfilePicture;
+        return $this->m_sNewPassword;
     }
 
-    public function setMSProfilePicture($m_sProfilePicture)
+    public function setMSNewPassword($m_sNewPassword)
     {
-        $this->m_sProfilePicture = $m_sProfilePicture;
-    }
-
-
-    public function getMSNieuwWachtwoord()
-    {
-        return $this->m_sNieuwWachtwoord;
-    }
-
-    public function setMSNieuwWachtwoord($m_sNieuwWachtwoord)
-    {
-        $this->m_sNieuwWachtwoord = $m_sNieuwWachtwoord;
+        $this->m_sNewPassword = $m_sNewPassword;
     }
 
 
@@ -61,57 +51,57 @@ class User
         $this->m_iUserAccountState = $m_iUserAccountState;
     }
 
-    public function getMSVoornaamFamilienaam()
+    public function getMSFullname()
     {
-        return $this->m_sVoornaamFamilienaam;
+        return $this->m_sFullname;
     }
 
 
-    public function setMSVoornaamFamilienaam($m_sVoornaamFamilienaam)
+    public function setMSFullname($m_sFullname)
     {
-        $this->m_sVoornaamFamilienaam = $m_sVoornaamFamilienaam;
+        $this->m_sFullname = $m_sFullname;
     }
 
 
-    public function getMSEmailadres()
+    public function getMSEmail()
     {
-        return $this->m_sEmailadres;
+        return $this->m_sEmail;
     }
 
 
-    public function setMSEmailadres($m_sEmailadres)
+    public function setMSEmail($m_sEmail)
     {
-        $this->m_sEmailadres = $m_sEmailadres;
+        $this->m_sEmail = $m_sEmail;
     }
 
 
-    public function getMSGebruikersnaam()
+    public function getMSUsername()
     {
-        return $this->m_sGebruikersnaam;
+        return $this->m_sUsername;
     }
 
 
-    public function setMSGebruikersnaam($m_sGebruikersnaam)
+    public function setMSUsername($m_sUsername)
     {
-        $this->m_sGebruikersnaam = $m_sGebruikersnaam;
+        $this->m_sUsername = $m_sUsername;
     }
 
 
-    public function getMSWachtwoord()
+    public function getMSPassword()
     {
-        return $this->m_sWachtwoord;
+        return $this->m_sPassword;
     }
 
 
-    public function setMSWachtwoord($m_sWachtwoord)
+    public function setMSWachtwoord($m_sPassword)
     {
-        $this->m_sWachtwoord = $m_sWachtwoord;
+        $this->m_sPassword = $m_sPassword;
     }
 
 
     //functies
 
-    public function Registreer()
+    public function Register()
     {
 
         //connectie db
@@ -122,14 +112,14 @@ class User
         $statement = $conn->prepare("INSERT INTO user (full_name, username, email, password) VALUES (:fullname, :username, :email, :password)");
 
         //values binden
-        $statement->bindValue(":fullname", $this->m_sVoornaamFamilienaam, PDO::PARAM_STR);
-        $statement->bindValue(":username", $this->m_sGebruikersnaam, PDO::PARAM_STR);
-        $statement->bindValue(":email", $this->m_sEmailadres, PDO::PARAM_STR);
-        $statement->bindValue(":password", $this->m_sWachtwoord, PDO::PARAM_STR);
+        $statement->bindValue(":fullname", $this->m_sFullname, PDO::PARAM_STR);
+        $statement->bindValue(":username", $this->m_sUsername, PDO::PARAM_STR);
+        $statement->bindValue(":email", $this->m_sEmail, PDO::PARAM_STR);
+        $statement->bindValue(":password", $this->m_sPassword, PDO::PARAM_STR);
 
         //statement uitvoeren
         if (!$statement->execute()) {
-            throw new Exception(" je account is niet geregistreerd. Mogelijk bestaat er al een account met deze gegevens.");
+            throw new Exception(" je account is niet geRegisterd. Mogelijk bestaat er al een account met deze gegevens.");
         }
 
     }
@@ -138,7 +128,7 @@ class User
     //kan er ingelogd worden
     public function canLogin()
     {
-        if (!empty($this->m_sEmailadres) && !empty($this->m_sWachtwoord)) {
+        if (!empty($this->m_sEmail) && !empty($this->m_sPassword)) {
 
             //database connectie
             $conn = Db::getInstance();
@@ -146,7 +136,7 @@ class User
             // gebruiker zoeken die wil inloggen adhv e-mailadres
             $statement = $conn->prepare("SELECT * FROM user WHERE email = :email");
             // bind value to parameter :email
-            $statement->bindValue(":email", $this->m_sEmailadres, PDO::PARAM_STR);
+            $statement->bindValue(":email", $this->m_sEmail, PDO::PARAM_STR);
             //execute statement
             $statement->execute();
 
@@ -157,21 +147,21 @@ class User
                 $hash = $userRow['password'];
 
                 // check dat het ingegeven wachtwoord van de gebruiker overeenkomt met het wachtwoord in de databank
-                if (password_verify($this->m_sWachtwoord, $hash)) {
+                if (password_verify($this->m_sPassword, $hash)) {
 
                     //basis profielgegevens ophalen uit resultaatrij en toevoegen aan de sessie login
                     //meeste van deze gegevens komen op de meeste pagina's terug (foto, etc) zo niet steeds moeten querie halen performance
 
                     $_SESSION['login']['userid'] = $userRow['user_id']; //sessie_id ophalen
-                    $_SESSION['login']['gebruikersnaam'] = $userRow['username']; //username ophalen
-                    $_SESSION['login']['profielfoto'] = $userRow['profile_picture']; //link profile_picture
+                    $_SESSION['login']['username'] = $userRow['username']; //username ophalen
+                    $_SESSION['login']['profilepicture'] = $userRow['profile_picture']; //link profile_picture
                     $_SESSION['login']['email'] = $userRow['email']; //emailadres ophalen
-                    $_SESSION['login']['naam'] = $userRow['full_name']; //volledige naam ophalen
+                    $_SESSION['login']['name'] = $userRow['full_name']; //volledige naam ophalen
                     $_SESSION['login']['private'] = $userRow['private']; //accountstatus ophalen 0 = openbaar, 1 = private
 
                     //indien profielfoto in db leeg of indien de foto niet bestaat op de server, toon dan de default profielfoto
-                    if (empty($_SESSION['login']['profielfoto']) || !file_exists("img/uploads/profile-pictures/" . $_SESSION['login']['profielfoto'])) {
-                        $_SESSION['login']['profielfoto'] = "default.png"; //standaard profielfoto indien veld leeg in db
+                    if (empty($_SESSION['login']['profilepicture']) || !file_exists("img/uploads/profile-pictures/" . $_SESSION['login']['profilepicture'])) {
+                        $_SESSION['login']['profilepicture'] = "default.png"; //standaard profielfoto indien veld leeg in db
                     }
 
 
@@ -184,7 +174,7 @@ class User
             } else if ($statement->rowCount() == 0) {
                 // als er geen email in de database overeenkomt(0 rijen), met het ingevulde e-mail adress
                 // (het veld e-mail is in onze database UNIQUE dus we kunnen enkel 1 row of geen row terug krijgen)
-                throw new Exception("er is geen account geregistreerd met dit e-mailadres.");
+                throw new Exception("er is geen account geRegisterd met dit e-mailadres.");
 
             }
         }
@@ -224,9 +214,9 @@ class User
         $statement = $conn->prepare("UPDATE user SET email = :email, full_name = :fullname, username = :username WHERE user_id = :userid");
 
         //values binden
-        $statement->bindValue(":email", $this->m_sEmailadres, PDO::PARAM_STR);
-        $statement->bindValue(":fullname", $this->m_sVoornaamFamilienaam, PDO::PARAM_STR);
-        $statement->bindValue(":username", $this->m_sGebruikersnaam, PDO::PARAM_STR);
+        $statement->bindValue(":email", $this->m_sEmail, PDO::PARAM_STR);
+        $statement->bindValue(":fullname", $this->m_sFullname, PDO::PARAM_STR);
+        $statement->bindValue(":username", $this->m_sUsername, PDO::PARAM_STR);
         $statement->bindValue(":userid", $_SESSION['login']['userid'], PDO::PARAM_INT);
 
 
@@ -242,7 +232,7 @@ class User
     public function updatePassword()
     {
 
-        if (!empty($this->m_sWachtwoord)) {
+        if (!empty($this->m_sPassword)) {
 
             //database connectie
             $conn = Db::getInstance();
@@ -264,7 +254,7 @@ class User
 
 
                 // check dat het ingegeven wachtwoord van de gebruiker overeenkomt met het wachtwoord in de databank
-                if (password_verify($this->m_sWachtwoord, $hash)) {
+                if (password_verify($this->m_sPassword, $hash)) {
                     //database connectie (niet nodig omdat: "The connection remains active for the lifetime of that PDO object."
                     $conn = Db::getInstance();
 
@@ -272,7 +262,7 @@ class User
                     $statement = $conn->prepare("UPDATE user SET password = :newpassword WHERE user_id = :userid");
 
                     // bind value to parameter :userid, :newpassword
-                    $statement->bindValue(":newpassword", $this->m_sNieuwWachtwoord, PDO::PARAM_STR);
+                    $statement->bindValue(":newpassword", $this->m_sNewPassword, PDO::PARAM_STR);
                     $statement->bindValue(":userid", $this->m_iUserId, PDO::PARAM_INT);
 
                     //execute statement
@@ -296,7 +286,7 @@ class User
 
     public function deleteAccount()
     {
-        if (!empty($this->m_sWachtwoord)) {
+        if (!empty($this->m_sPassword)) {
 
             //database connectie
             $conn = Db::getInstance();
@@ -317,7 +307,7 @@ class User
                 $hash = $userRow['password'];
 
                 // check dat het ingegeven wachtwoord van de gebruiker overeenkomt met het wachtwoord in de databank
-                if (password_verify($this->m_sWachtwoord, $hash)) {
+                if (password_verify($this->m_sPassword, $hash)) {
                     $conn = Db::getInstance();
 
                     // gebruiker zoeken die wil inloggen adhv e-mailadres
@@ -357,7 +347,7 @@ class User
         $statement = $conn->prepare("SELECT username FROM user WHERE username = :username");
 
         // bind value to parameter :email
-        $statement->bindValue(":username", $this->m_sGebruikersnaam, PDO::PARAM_STR);
+        $statement->bindValue(":username", $this->m_sUsername, PDO::PARAM_STR);
         //execute statement
         if ($statement->execute()) {
             //query went ok

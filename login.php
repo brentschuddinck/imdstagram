@@ -6,7 +6,7 @@ include_once('classes/User.class.php');
     if(!empty($_POST['gebruikeremail']) && !empty($_POST['wachtwoord'])){
 
         $userLogin = new User();
-        $userLogin->setMSEmailadres($_POST['gebruikeremail']);
+        $userLogin->setMSEmail($_POST['gebruikeremail']);
         $userLogin->setMSWachtwoord($_POST['wachtwoord']);
 
         try {
@@ -16,12 +16,12 @@ include_once('classes/User.class.php');
             }
         }catch (Exception $e){
             $errorException = $e->getMessage();
-            $feedback = bouwFeedbackBox("danger", $errorException);
+            $feedback = buildFeedbackBox("danger", $errorException);
         }
     }else if(isset($_POST['gebruikeremail']) && empty($_POST['gebruikeremail'])){
-        $feedback = bouwFeedbackBox("danger", "Vul je e-mailadres in.");
+        $feedback = buildFeedbackBox("danger", "Vul je e-mailadres in.");
     }else if(isset($_POST['wachtwoord']) && empty($_POST['wachtwoord'])){
-        $feedback = bouwFeedbackBox("danger", "Vul je wachtwoord in.");
+        $feedback = buildFeedbackBox("danger", "Vul je wachtwoord in.");
     }
 
 
@@ -87,7 +87,7 @@ include_once('classes/User.class.php');
 
             <input type="submit" name="login" value="Inloggen" class="btn btn-primary btn-lg btn-block">
 
-            <a class="login-link" href="register.php">Heb je nog geen account? Registreer je nu.</a>
+            <a class="login-link" href="register.php">Heb je nog geen account? Register je nu.</a>
 
 
         </form>

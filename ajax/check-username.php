@@ -4,7 +4,7 @@ include_once('../classes/Db.class.php');
 include_once('../classes/User.class.php');
 include_once('../classes/Validation.class.php');
 
-$sessieUsername = $_SESSION['login']['gebruikersnaam'];
+$sessieUsername = $_SESSION['login']['username'];
 $nieuweUsername = $_POST['username'];
 
 $user = new User();
@@ -13,10 +13,10 @@ $validation = new Validation();
 if(isset($_POST['username']) && !empty($_POST['username'])) {
 
     //geldigheid controleren. Hergebruik functie uit validatieklasse
-    $isGeldigeGebruikersnaam = $validation->isGeldigGebruikersnaam($nieuweUsername);
+    $isValidUsername = $validation->isValidUsername($nieuweUsername);
 
-    if(empty($isGeldigeGebruikersnaam)){
-        $user->setMSGebruikersnaam($nieuweUsername);
+    if(empty($isValidUsername)){
+        $user->setMSUsername($nieuweUsername);
         $isUsernameAvailable = $user->UsernameAvailable();
 
         if($isUsernameAvailable /*|| $nieuweUsername == $sessieUsername*/) {
@@ -28,7 +28,7 @@ if(isset($_POST['username']) && !empty($_POST['username'])) {
         }
     }else{
         $response['status'] = "error";
-        $response['message'] = $isGeldigeGebruikersnaam;
+        $response['message'] = $isValidUsername;
     }
 
     header('Content-type: application/json');

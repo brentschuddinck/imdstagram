@@ -4,51 +4,51 @@ include_once('../../inc/feedbackbox.inc.php');
 include_once('../../classes/Upload.class.php');
 
 // uploaden van foto
-if(isset($_POST['btnUploadProfielfoto'])) {
+if(isset($_POST['btnUploadProfilePicture'])) {
 
     //ophalen afbeelding tyupe
-    $profielfotoArr = $_FILES["uploaded_profielfoto"];
-    $profielfotoNaam = $profielfotoArr["name"]; //the original name of the file uploaded from the user's machine
-    $profielfotoType = $profielfotoArr["type"]; //the MIME type of the uploaded file (if the browser provided the type)
-    $profielfotoSize = $profielfotoArr["size"]; //the size of the uploaded file in bytes
-    $profielfotoTmpName = $profielfotoArr["tmp_name"]; //the location in which the file is temporarily stored on the server
-    $profielfotoError = $profielfotoArr["error"]; //an error code resulting from the file upload
+    $profilePhotoArr = $_FILES["uploaded_profielfoto"];
+    $profilephotoName = $profilePhotoArr["name"]; //the original name of the file uploaded from the user's machine
+    $profilePhotoType = $profilePhotoArr["type"]; //the MIME type of the uploaded file (if the browser provided the type)
+    $profilePhotoSize = $profilePhotoArr["size"]; //the size of the uploaded file in bytes
+    $profilePhotoTmpName = $profilePhotoArr["tmp_name"]; //the location in which the file is temporarily stored on the server
+    $profilePhotoError = $profilePhotoArr["error"]; //an error code resulting from the file upload
 
     $maxBytes = 512000; //1024 x 500 = 512000 bytes = 500KB. Maximale bestandsgrootte dat we willen toestaan
-    $uploadKwaliteitInPct = 60; //algemeen genomen zoals we doen bij Photoshop export van afbeeldingen naar het web
+    $uploadQualityInPct = 60; //algemeen genomen zoals we doen bij Photoshop export van afbeeldingen naar het web
 
     //checken of we een bestand hebben en error geen 0 is
-    if ((!empty($profielfotoArr)) && ($profielfotoError == 0)) {
+    if ((!empty($profilePhotoArr)) && ($profilePhotoError == 0)) {
         try{
             $upload = new Upload();
 
             //controleer geldig afbeeldingsformaat
                 //bestandsnaam ophalen
-                $filename = basename($profielfotoNaam);
+                $filename = basename($profilephotoName);
                 //extentie ophalen +1 => .jpg => jpg
-                $extentieBestand = substr($filename, strrpos($filename, '.') + 1);
-                $geldigeExtenties = array("jpg", "png", "gif");
-                $geldigeTypes = array("image/jpeg", "image/png", "image/gif");
+                $extensionFile = substr($filename, strrpos($filename, '.') + 1);
+                $validExtensions = array("jpg", "png", "gif");
+                $validTypes = array("image/jpeg", "image/png", "image/gif");
 
-                $isGeldigeExtentie = $upload->isExtentieGeldig($geldigeExtenties, $extentieBestand);
-                $isGeldigType = $upload->isTypeGeldig($geldigeTypes, $profielfotoType);
+                $isValidExtension = $upload->isValidExtension($validExtensions, $extensionFile);
+                $isValidType = $upload->isValidType($validTypes, $profilePhotoType);
 
-                if($isGeldigType === true && $isGeldigeExtentie === true){
+                if($isValidType === true && $isValidExtension === true){
                     //controleer of bestand niet te groot is
-                    $isBestandNietTeGroot = $upload->isBestandNietTeGroot($profielfotoSize, $maxBytes);
-                    if($isBestandNietTeGroot){
+                    $isValidSize = $upload->isValidSize($profilePhotoSize, $maxBytes);
+                    if($isValidSize){
 
 
                         //Nieuwe locatie en naam bepalen tmp folder naar uiteindelijke folder
                         $dbFileName = "profile-picture_userid-" . $_SESSION['login']['userid'];
-                        $dbFullFileName = $dbFileName . "." . $extentieBestand;
+                        $dbFullFileName = $dbFileName . "." . $extensionFile;
                         $newnameTillId = "../../img/uploads/profile-pictures/" . $dbFileName;
-                        $fullNewName =  $newnameTillId . "." . $extentieBestand;
+                        $fullNewName =  $newnameTillId . "." . $extensionFile;
 
 
                         //Kijk of file al bestaat. Profielfoto mag overschreven worden, maar zo kunnen we extra query vermeiden
 
-                        $uploadGeslaagd = false;
+                        $uploadSucces = false;
 
                         if(!file_exists($fullNewName)){
                             //oud bestand? Dit moet gewist worden
@@ -59,45 +59,45 @@ if(isset($_POST['btnUploadProfielfoto'])) {
                             }
 
                             //eventuele oude bestanden zijn gewist. Nu foto updaten
-                            $uploadBestand = $upload->uploadFile($profielfotoTmpName, $fullNewName);
+                            $uploadFile = $upload->uploadFile($profilePhotoTmpName, $fullNewName);
 
                             //er is een nieuwe bestandsextentie => database updaten
                             $upload->setMSUserId($_SESSION['login']['userid']);
                             $upload->setMSProfilePicture($dbFullFileName);
-                            $uploadProfielfoto = $upload->saveProfilePicture();
+                            $uploadProfilePhoto = $upload->saveProfilePicture();
 
-                            if($uploadProfielfoto){
-                                $uploadGeslaagd = true;
+                            if($uploadProfilePhoto){
+                                $uploadSucces = true;
                             }
 
                         }else{
                             //het bestand bestaat, mag overschreven worden + geen query nodig
-                            $uploadBestand = $upload->uploadFile($profielfotoTmpName, $fullNewName);
-                            $uploadGeslaagd = true;
+                            $uploadFile = $upload->uploadFile($profilePhotoTmpName, $fullNewName);
+                            $uploadSucces = true;
                         }
 
 
                         //indien upload (incl db) geslaagd is, dan sessie aanpassen en successboodschap tonen
-                        if($uploadGeslaagd){
-                            $_SESSION['login']['profielfoto'] = $dbFullFileName;
-                            $feedback = bouwFeedbackBox("success", "Je profielfo is gewijzigd.");
+                        if($uploadSucces){
+                            $_SESSION['login']['profilepicture'] = $dbFullFileName;
+                            $feedback = buildFeedbackBox("success", "Je profielfo is gewijzigd.");
                         }
 
 
                     }else{
-                        $feedback = bouwFeedbackBox("danger", "de profielfoto mag niet groter zijn dan 500KB.");
+                        $feedback = buildFeedbackBox("danger", "de profielfoto mag niet groter zijn dan 500KB.");
                     }
                 }else{
-                    $feedback = bouwFeedbackBox("danger", "de profielfoto is geen geldige afbeelding. Alleen jpg, png en gif bestanden zijn toegestaan.");
+                    $feedback = buildFeedbackBox("danger", "de profielfoto is geen geldige afbeelding. Alleen jpg, png en gif bestanden zijn toegestaan.");
                 }
 
         }catch(Exception $e){
             $feedback = $e->getMessage();
-            $feedback = bouwFeedbackBox("danger", $feedback);
+            $feedback = buildFeedbackBox("danger", $feedback);
         }
 
     } else {
-        $feedback = bouwFeedbackBox("danger", "er is geen profielfoto geüpload.");
+        $feedback = buildFeedbackBox("danger", "er is geen profielfoto geüpload.");
     }
 }
 
@@ -139,13 +139,13 @@ if(isset($_POST['btnUploadProfielfoto'])) {
             <img
                 class="profielfoto groot"
                 title="Mijn profielfoto"
-                src="../../img/uploads/profile-pictures/<?php echo htmlspecialchars($_SESSION['login']['profielfoto']); ?>"
-                alt="Profielfoto van <?php echo htmlspecialchars($_SESSION['login']['naam']); ?>">
+                src="../../img/uploads/profile-pictures/<?php echo htmlspecialchars($_SESSION['login']['profilepicture']); ?>"
+                alt="Profielfoto van <?php echo htmlspecialchars($_SESSION['login']['name']); ?>">
         </div>
         <!-- einde formuliergroep profielfoto -->
 
-        <input type="file" id="fileToUpload" class="uploadfile" name="uploaded_profielfoto">
-        <input type="submit" value="Profielfoto wijzigen" name="btnUploadProfielfoto" id="btnUploadProfielfoto"
+        <input type="file" id="fileToUpload" class="uploadFile" name="uploaded_profielfoto">
+        <input type="submit" value="Profielfoto wijzigen" name="btnUploadProfilePicture" id="btnUploadProfilePicture"
                class="btn btn-primary btn-large">
 
 

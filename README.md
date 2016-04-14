@@ -26,10 +26,10 @@ $dbconnection = new PDO("mysql:host=178.62.241.17; dbname=imdstagram", "imdstagr
 ## Sessiewaarden
 Ik denk dat het een goed idee dat wanenner de gebruiker ingelogd wordt, er eenmalig waarden uit db in sessie gestopt worden voor onderstaande zaken. Op die manier moet niet bij elke pagina dezelfde query uitgevoerd worden. Mijn code is ingesteld op (dummycode):
 - $_SESSION['login']['userid'] //sessie_id ophalen
-- $_SESSION['login']['gebruikersnaam'] //username ophalen
-- $_SESSION['login']['profielfoto']  //link profile_picture
+- $_SESSION['login']['username'] //username ophalen
+- $_SESSION['login']['profilepicture']  //link profile_picture
 - $_SESSION['login']['email'] //emailadres ophalen
-- $_SESSION['login']['naam'] //volledige naam ophalen
+- $_SESSION['login']['name'] //volledige naam ophalen
 - $_SESSION['login']['private'] //accountstatus ophalen 0 = openbaar, 1 = private
 
 ## Feedback tonen via zelf gemaakte feedbackbox

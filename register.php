@@ -8,23 +8,23 @@ spl_autoload_register(function ($class_name) {
 });
 
 //hulpvariabele om in html input niet opnieuw te tonen bij voltooide registratie
-$accountgemaakt = false;
+$madeAccount = false;
 
-if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
+if (isset($_POST['Register']) && !empty($_POST['Register'])) {
 
     //invoervariabelen
-    $voornaamfamilienaam = $_POST['naam']; //ucwords zet de eerste letter van elk woord in een hoofdletter
-    $emailadres = $_POST['email'];
-    $gebruikersnaam = strtolower($_POST['gebruikersnaam']);
-    $wachtwoord = $_POST['wachtwoord'];
+    $fullname = $_POST['naam']; //ucwords zet de eerste letter van elk woord in een hoofdletter
+    $email = $_POST['email'];
+    $username = strtolower($_POST['gebruikersnaam']);
+    $password = $_POST['wachtwoord'];
 
 
     //invoer valideren via Validation classe en resultaat toevoegen aan array errors
     $validation = new Validation();
-    $errors["emailadres"] = $validation->isGeldigEmailadres($emailadres);
-    $errors["voornaamfamilienaam"] = $validation->isGeldigVoornaamFamilienaam($voornaamfamilienaam);
-    $errors["gebruikersnaam"] = $validation->isGeldigGebruikersnaam($gebruikersnaam);
-    $errors["wachtwoord"] = $validation->isGeldigWachtwoord($wachtwoord);
+    $errors["emailadres"] = $validation->isValidEmail($email);
+    $errors["voornaamfamilienaam"] = $validation->isValidFullname($fullname);
+    $errors["gebruikersnaam"] = $validation->isValidUsername($username);
+    $errors["wachtwoord"] = $validation->isValidPassword($password);
 
     //verwijdert juist ingevulde elemeneten (NULL) uit array
     $errors = array_filter($errors);
@@ -35,34 +35,34 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
 
         //wachtwoord hashen. Hier plaatsen, anders telkens hashen als invoer niet correct is.
         $hashOpties = ['cost' => 12];
-        $wachtwoordHash = password_hash($wachtwoord, PASSWORD_DEFAULT, $hashOpties);
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT, $hashOpties);
 
         try {
             $user = new User();
 
-            $user->setMSVoornaamFamilienaam($voornaamfamilienaam);
-            $user->setMSEmailadres($emailadres);
-            $user->setMSGebruikersnaam($gebruikersnaam);
-            $user->setMSWachtwoord($wachtwoordHash);
-            $user->Registreer();
+            $user->setMSFullname($fullname);
+            $user->setMSEmail($email);
+            $user->setMSUsername($username);
+            $user->setMSWachtwoord($passwordHash);
+            $user->Register();
 
-            $accountgemaakt = true;
+            $madeAccount = true;
 
-            $feedback = bouwFeedbackBox("success", "Je account is aangemaakt. <a href='login.php'>Log hier in</a>.");
+            $feedback = buildFeedbackBox("success", "Je account is aangemaakt. <a href='login.php'>Log hier in</a>.");
 
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
-            $feedback = bouwFeedbackBox("danger", $errorMessage);
+            $feedback = buildFeedbackBox("danger", $errorMessage);
         }
     } else {
         //niet alle velden zijn juist ingevuld
-        $feedbacktekst = "controleer volgende velden:";
+        $feedbacktext = "controleer volgende velden:";
         //li met fouten ophalen
         foreach ($errors as $error) {
-            $feedbacktekst .= "<li>$error</li>";
+            $feedbacktext .= "<li>$error</li>";
         }
 
-        $feedback = bouwFeedbackBox("danger", $feedbacktekst);
+        $feedback = buildFeedbackBox("danger", $feedbacktext);
     }
 
 }
@@ -70,7 +70,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Registreer</title>
+    <title>Register</title>
     <meta name="description" content="Maak een nieuw IMDstagram account aan.">
     <?php include_once('inc/style.inc.php'); ?>
 </head>
@@ -108,8 +108,8 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             <!-- veld email -->
             <div class="form-group">
                 <input type="email" name="email" class="form-control login-field"
-                       value="<?php if (!empty($feedback) && $accountgemaakt === false) {
-                           echo htmlspecialchars($emailadres);
+                       value="<?php if (!empty($feedback) && $madeAccount === false) {
+                           echo htmlspecialchars($email);
                        } ?>" placeholder="r0123456@student.thomasmore.be" id="email" required autofocus
                        title="Vul je Thomas More e-mailadres in.">
                 <label class="login-field-icon fui-mail" for="email"><span class="labeltext">E-mailadres</span></label>
@@ -118,8 +118,8 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             <!-- veld naam -->
             <div class="form-group">
                 <input type="text" name="naam" id="naam" class="form-control login-field"
-                       value="<?php if (!empty($feedback) && $accountgemaakt === false) {
-                           echo htmlspecialchars($voornaamfamilienaam);
+                       value="<?php if (!empty($feedback) && $madeAccount === false) {
+                           echo htmlspecialchars($fullname);
                        } ?>" placeholder="Volledige naam" required title="Vul je volledige naam in.">
                 <label class="login-field-icon fui-user" for="naam"><span class="labeltext">Volledige naam</span></label>
             </div>
@@ -127,8 +127,8 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             <!-- veld gebruikersnaam -->
             <div class="form-group">
                 <input type="text" name="gebruikersnaam" id="gebruikersnaam" class="form-control login-field"
-                       value="<?php if (!empty($feedback) && $accountgemaakt === false) {
-                           echo htmlspecialchars($gebruikersnaam);
+                       value="<?php if (!empty($feedback) && $madeAccount === false) {
+                           echo htmlspecialchars($username);
                        } ?>" placeholder="Gebruikersnaam" required title="Vul een gebruikersnaam in.">
                 <label class="login-field-icon fui-user" for="gebruikersnaam"><span class="labeltext">Gebruikersnaam</span></label>
             </div>
@@ -141,7 +141,7 @@ if (isset($_POST['registreer']) && !empty($_POST['registreer'])) {
             </div>
 
             <!-- formulier verzenden -->
-            <input type="submit" name="registreer" value="Registreren" class="btn btn-primary btn-lg btn-block">
+            <input type="submit" name="Register" value="Registreren" class="btn btn-primary btn-lg btn-block">
 
             <!-- link loginpagina -->
             <a class="login-link" href="login.php">Heb je al een account? Naar de loginpagina.</a>

@@ -11,7 +11,7 @@ if (!empty($feedback)) {
 // Noot: bij klikken op dismiss kruisje zal het error blok verwijdert worden.
 
 
-function bouwFeedbackBox($p_sFeedbackType, $p_sFeedbackMessage){
+function buildFeedbackBox($p_sFeedbackType, $p_sFeedbackMessage){
 
     switch($p_sFeedbackType){
 

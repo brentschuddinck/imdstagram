@@ -21,26 +21,26 @@ if(!empty($_POST['beschrijving']) && !empty($_FILES['foto']['name'])){
     // kijken of een geldig afbeeldingsformaat opgeladen is
     if(exif_imagetype($filetmp) == IMAGETYPE_JPEG || exif_imagetype($filetmp) == IMAGETYPE_PNG || exif_imagetype($filetmp) == IMAGETYPE_GIF){
         $upload = new Upload();
-        if($upload->isBestandNietTeGroot($filesize, $maxBytes)){
+        if($upload->isValidSize($filesize, $maxBytes)){
         move_uploaded_file($filetmp, $filepath);
         $post = new Post();
-        $post->setMSBeschrijving($_POST['beschrijving']);
-        $post->setMSAfbeelding($newFileName);
+        $post->setMSDescription($_POST['beschrijving']);
+        $post->setMSImage($newFileName);
         $post->postPhoto();
         }else{
-            $feedback = bouwFeedbackBox("danger", "Je foto mag niet groter zijn dan 500KB.");
+            $feedback = buildFeedbackBox("danger", "Je foto mag niet groter zijn dan 500KB.");
 
         }
     }else{
-        $feedback = bouwFeedbackBox("danger", "geen geldig afbeeldingsformaat");
+        $feedback = buildFeedbackBox("danger", "geen geldig afbeeldingsformaat");
     }
 
 
     }elseif(isset($_POST['beschrijving']) && empty($_POST['beschrijving'])){
-    $feedback = bouwFeedbackBox("info", "Je foto moet een beschrijving bevatten.");
+    $feedback = buildFeedbackBox("info", "Je foto moet een beschrijving bevatten.");
 
     }elseif(isset($_FILES['foto']) && empty($_FILES['foto']['name'])){
-    $feedback = bouwFeedbackBox("warning", "Je hebt nog geen foto geslecteert.");
+    $feedback = buildFeedbackBox("warning", "Je hebt nog geen foto geslecteert.");
 }
 
 $getPosts = new Post();

@@ -5,33 +5,33 @@ include_once('../../classes/Validation.class.php');
 include_once('../../classes/User.class.php');
 
 
-if (isset($_POST['wijzigProfielinstellingen'])) {
+if (isset($_POST['editProfilePreferences'])) {
 
-    //er is op de knop wijzigProfielinstellingen geklikt
+    //er is op de knop editProfilePreferences geklikt
 
 
     //invoervariabelen
-    $voornaamfamilienaam = $_POST['inputName'];
-    $emailadres = $_POST['inputEmail'];
-    $gebruikersnaam = strtolower($_POST['inputUsername']);
+    $fullname = $_POST['inputName'];
+    $email = $_POST['inputEmail'];
+    $username = strtolower($_POST['inputUsername']);
 
 
     //onnodige query voorkomen als er niets gewijzigd werd. controleer of huidige invoer verschilt van sessiewaarde
-    if ($voornaamfamilienaam != $_SESSION['login']['naam']
-        || $emailadres != $_SESSION['login']['email']
-        || $gebruikersnaam != $_SESSION['login']['gebruikersnaam']
+    if ($fullname != $_SESSION['login']['name']
+        || $email != $_SESSION['login']['email']
+        || $username != $_SESSION['login']['username']
     ) {
 
         //de invoer mag gevalideerd worden
 
         $validation = new Validation();
 
-        $nietgeldig["voornaamfamilienaam"] = $validation->isGeldigVoornaamFamilienaam($voornaamfamilienaam);
-        $nietgeldig["emailadres"] = $validation->isGeldigEmailadres($emailadres);
-        $nietgeldig["gebruikersnaam"] = $validation->isGeldigGebruikersnaam($gebruikersnaam);
+        $notValid["voornaamfamilienaam"] = $validation->isValidFullname($fullname);
+        $notValid["emailadres"] = $validation->isValidEmail($email);
+        $notValid["gebruikersnaam"] = $validation->isValidUsername($username);
 
         //verwijdert juist ingevulde elemeneten (NULL) uit array
-        $errors = array_filter($nietgeldig);
+        $errors = array_filter($notValid);
 
         //probeer gegevens te updaten als er geen errors in array $errors zitten
         if (count($errors) == 0) {
@@ -40,36 +40,36 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
 
                 $updatePreferences = new User();
 
-                $updatePreferences->setMSEmailadres($emailadres);
-                $updatePreferences->setMSVoornaamFamilienaam($voornaamfamilienaam);
-                $updatePreferences->setMSGebruikersnaam($gebruikersnaam);
+                $updatePreferences->setMSEmail($email);
+                $updatePreferences->setMSFullname($fullname);
+                $updatePreferences->setMSUsername($username);
 
                 if($updatePreferences->canUpdatePreferences()) {
                     //voltooid, sessiewaarden bijwerken
 
-                    $_SESSION['login']['naam'] = $voornaamfamilienaam;
-                    $_SESSION['login']['email'] = $emailadres;
-                    $_SESSION['login']['gebruikersnaam'] = $gebruikersnaam;
-                    $feedback = bouwFeedbackBox("success", "De instellingen zijn met succes bijgewerkt.");
+                    $_SESSION['login']['name'] = $fullname;
+                    $_SESSION['login']['email'] = $email;
+                    $_SESSION['login']['username'] = $username;
+                    $feedback = buildFeedbackBox("success", "De instellingen zijn met succes bijgewerkt.");
                 }
 
             } catch (Exception $e) {
                 $errorException = $e->getMessage();
-                $feedback = bouwFeedbackBox("danger", $errorException);
+                $feedback = buildFeedbackBox("danger", $errorException);
             }
         } else {
             //er zijn fouten. Toon ze
-            $feedbacktekst = "controleer volgende velden:";
+            $feedbacktext = "controleer volgende velden:";
             //li met fouten ophalen
             foreach ($errors as $error) {
-                $feedbacktekst .= "<li>$error</li>";
+                $feedbacktext .= "<li>$error</li>";
             }
-            $feedback = bouwFeedbackBox("danger", $feedbacktekst);
+            $feedback = buildFeedbackBox("danger", $feedbacktext);
         }
 
     } else {
         //niet echt bijgewerkt, maar melding tonen voor bezoeker (in achtergrond werd geen query uitgevoerd
-        $feedback = bouwFeedbackBox("success", "De instellingen zijn met succes bijgewerkt.");
+        $feedback = buildFeedbackBox("success", "De instellingen zijn met succes bijgewerkt.");
     }
 
 }
@@ -120,9 +120,9 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
                        placeholder="Volledige naam"
                        value="<?php
                        if (!empty($_POST)) {
-                           echo htmlspecialchars($voornaamfamilienaam);
+                           echo htmlspecialchars($fullname);
                        } else {
-                           echo htmlspecialchars($_SESSION['login']['naam']);
+                           echo htmlspecialchars($_SESSION['login']['name']);
                        }
                        ?>"
                        name="inputName"
@@ -142,7 +142,7 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
                        required
                        value="<?php
                        if (!empty($_POST)) {
-                           echo htmlspecialchars($emailadres);
+                           echo htmlspecialchars($email);
                        } else {
                            echo htmlspecialchars($_SESSION['login']['email']);
                        }
@@ -159,9 +159,9 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
                        title="Kies een gewenste gebruikbersnaam. Enkel letters en cijfers zijn toegestaan."
                        value="<?php
                        if (!empty($_POST)) {
-                           echo htmlspecialchars($gebruikersnaam);
+                           echo htmlspecialchars($username);
                        } else {
-                           echo htmlspecialchars($_SESSION['login']['gebruikersnaam']);
+                           echo htmlspecialchars($_SESSION['login']['username']);
                        }
                        ?>"
                        required>
@@ -172,8 +172,8 @@ if (isset($_POST['wijzigProfielinstellingen'])) {
         <!-- einde formuliergroep accountinstellingen -->
 
         <input type="submit"
-               name="wijzigProfielinstellingen"
-               id="wijzigProfielinstellingen"
+               name="editProfilePreferences"
+               id="editProfilePreferences"
                value="Profielinstellingen opslaan"
                class="btn btn-primary btn-large">
 

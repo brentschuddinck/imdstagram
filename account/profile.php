@@ -3,11 +3,11 @@ include_once('../inc/sessiecontrole.inc.php');
 
 //welk profiel opvragen?
 //als querystring user bestaat en de waarde hiervan verschillende is van de gebruikersnaam van de ingelogde gebruiker (sessie), dan wordt een ander profiel bekeken
-if(isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['gebruikersnaam']){
+if(isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['username']){
     $pageTitle = "Profiel " . htmlspecialchars($_GET['user']);}
 //in het andere geval wanneer profile.php bezocht wordt zonder user in de querystring, stuur bezoeker door (link zo deelbaar voor anderen)
 else if(!isset($_GET['user'])){
-    $_GET['user'] = $_SESSION['login']['gebruikersnaam'];
+    $_GET['user'] = $_SESSION['login']['username'];
     header('location: profile.php?user=' . $_GET['user']);
 //in het andere geval wil de ingelogde gebruiker zijn eigen profiel bekijken. Toon gepaste titel.
 }else{

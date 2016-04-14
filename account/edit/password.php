@@ -4,57 +4,57 @@ include_once('../../inc/feedbackbox.inc.php');
 include_once('../../classes/Validation.class.php');
 include_once('../../classes/User.class.php');
 
-if (isset($_POST['wijzigWachtwoord']) &&
-    !empty($_POST['inputOudWachtwoord']) &&
-    !empty('inputNieuwWachtwoord') &&
-    !empty('inputHerhaalNieuwWachtwoord')
+if (isset($_POST['editPassword']) &&
+    !empty($_POST['inputOldPassword']) &&
+    !empty($_POST['inputNewPassword']) &&
+    !empty($_POST['inputRepeatNewPassword'])
 ) {
 
     //invoervelden zijn netjes ingevuld
 
     //variabelen
-    $sOudWachtwoord = $_POST['inputOudWachtwoord'];
-    $sNieuwWachtwoord = $_POST['inputNieuwWachtwoord'];
-    $sHerhaalNieuwWachtwoord = $_POST['inputHerhaalNieuwWachtwoord'];
+    $sOldPassword = $_POST['inputOldPassword'];
+    $sNewPassword = $_POST['inputNewPassword'];
+    $sRepeatNewPassword = $_POST['inputRepeatNewPassword'];
 
 
     //eerst kijken of beide passwoorden matchen
     $validation = new Validation();
     $validation2 = new Validation();
-    if ($validation->matchtNieuwWachtwoord($sNieuwWachtwoord, $sHerhaalNieuwWachtwoord)) {
+    if ($validation->matchNewpassword($sNewPassword, $sRepeatNewPassword)) {
         //nieuwe wachtwoorden komen overeen
 
 
         //controleer of nieuw wachtwoord veilig genoeg is
-        if(empty($validation2->isGeldigWachtwoord($sNieuwWachtwoord))){
+        if(empty($validation2->isValidPassword($sNewPassword))){
             //daarna kijken of oude wachtwoord klopt
             $passwordMatch = new User();
-            $passwordMatch->setMSWachtwoord($sOudWachtwoord);
+            $passwordMatch->setMSWachtwoord($sOldPassword);
 
             //versleutel nieuw wachtwoord
             $hashOpties = ['cost' => 12];
-            $wachtwoordHash = password_hash($sNieuwWachtwoord, PASSWORD_DEFAULT, $hashOpties);
+            $passwordHash = password_hash($sNewPassword, PASSWORD_DEFAULT, $hashOpties);
 
-            $passwordMatch->setMSNieuwWachtwoord($wachtwoordHash);
+            $passwordMatch->setMSNewPassword($passwordHash);
             $passwordMatch->setMIUserId($_SESSION['login']['userid']);
 
             try {
                 if ($passwordMatch->updatePassword()) {
-                    $feedback = bouwFeedbackBox("success", "Je wachtwoord is gewijzigd.");
+                    $feedback = buildFeedbackBox("success", "Je wachtwoord is gewijzigd.");
                 }
             }catch (Exception $e) {
                 $errorException = $e->getMessage();
-                $feedback = bouwFeedbackBox("danger", $errorException);
+                $feedback = buildFeedbackBox("danger", $errorException);
             }
         }else{
-            $feedback = bouwFeedbackBox("danger", "het nieuwe wachtwoord moet minstens 6 tekens lang zijn.");
+            $feedback = buildFeedbackBox("danger", "het nieuwe wachtwoord moet minstens 6 tekens lang zijn.");
         }
 
     } else {
-        $feedback = bouwFeedbackBox("danger", "de nieuwe wachtwoorden komen niet overeen.");
+        $feedback = buildFeedbackBox("danger", "de nieuwe wachtwoorden komen niet overeen.");
     }
-}else if(isset($_POST['wijzigWachtwoord'])){
-    $feedback = bouwFeedbackBox("danger", "vul een wachtwoord in.");
+}else if(isset($_POST['editPassword'])){
+    $feedback = buildFeedbackBox("danger", "vul een wachtwoord in.");
 }
 
 ?><!doctype html>
@@ -95,15 +95,15 @@ if (isset($_POST['wijzigWachtwoord']) &&
 
         <!-- start formuliergroep oud wachtwoord -->
         <!-- Oud wachtwoord  -->
-        <label for="inputOudWachtwoord" class="col-lg-3 control-label">Oud wachtwoord:</label>
+        <label for="inputOldPassword" class="col-lg-3 control-label">Oud wachtwoord:</label>
         <div class="col-lg-9 lg-together">
             <input
                 type="password"
                 class="form-control col-lg-9"
-                id="inputOudWachtwoord"
+                id="inputOldPassword"
                 placeholder="Oud wachtwoord"
                 title="Vul je oude wachtwoord in."
-                name="inputOudWachtwoord"
+                name="inputOldPassword"
                 autofocus
                 required>
         </div>
@@ -114,28 +114,28 @@ if (isset($_POST['wijzigWachtwoord']) &&
 
 
             <!-- Nieuw wachtworod -->
-            <label for="inputNieuwWachtwoord" class="col-lg-3 control-label">Nieuw wachtwoord:</label>
+            <label for="inputNewPassword" class="col-lg-3 control-label">Nieuw wachtwoord:</label>
             <div
                 class="col-lg-9 lg-together">
                 <input
                     type="password"
                     class="form-control col-lg-9"
-                    id="inputNieuwWachtwoord"
+                    id="inputNewPassword"
                     placeholder="Nieuw wachtwoord"
-                    name="inputNieuwWachtwoord"
+                    name="inputNewPassword"
                     title="Vul je nieuwe wachtwoord in."
                     required>
             </div>
 
             <!-- Nieuw wachtwoord herhalen -->
-            <label for="inputHerhaalNieuwWachtwoord" class="col-lg-3 control-label">Herhaal wachtwoord:</label>
+            <label for="inputRepeatNewPassword" class="col-lg-3 control-label">Herhaal wachtwoord:</label>
             <div class="col-lg-9 lg-together">
                 <input
                     type="password"
                     class="form-control col-lg-9"
-                    id="inputHerhaalNieuwWachtwoord"
+                    id="inputRepeatNewPassword"
                     placeholder="Herhaal nieuw wachtwoord"
-                    name="inputHerhaalNieuwWachtwoord"
+                    name="inputRepeatNewPassword"
                     title="Herhaal je nieuwe achtwoord ter bevestiging."
                     required>
             </div>
@@ -146,9 +146,9 @@ if (isset($_POST['wijzigWachtwoord']) &&
 
 
         <input type="submit"
-               name="wijzigWachtwoord"
+               name="editPassword"
                value="Wachtwoord wijzigen"
-               id="wijzigWachtwoord"
+               id="editPassword"
                class="btn btn-primary btn-large">
 
 

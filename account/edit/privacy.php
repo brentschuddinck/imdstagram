@@ -3,7 +3,7 @@ include_once('../../inc/sessiecontrole.inc.php');
 include_once('../../inc/feedbackbox.inc.php');
 include_once('../../classes/User.class.php');
 
-if (isset($_POST['wijzigPrivacy'])) {
+if (isset($_POST['editPrivacy'])) {
 
     //sessievariabele private ophalen
     $sessionvarPrivateAccount = $_SESSION['login']['private'];
@@ -25,19 +25,19 @@ if (isset($_POST['wijzigPrivacy'])) {
 
             if($accountState->canUpdateAccountState()){
                 $_SESSION['login']['private'] = $privateState;
-                $feedback = bouwFeedbackBox("success", "Je privacyinstellingen zijn bijgewerkt.");
+                $feedback = buildFeedbackBox("success", "Je privacyinstellingen zijn bijgewerkt.");
             }else{
-                $feedback = bouwFeedbackBox("danger", "door een technisch probleem kunnen je privacy instellingen niet bijgewerkt worden. Probeer het later opnieuw.");
+                $feedback = buildFeedbackBox("danger", "door een technisch probleem kunnen je privacy instellingen niet bijgewerkt worden. Probeer het later opnieuw.");
             }
 
         }catch (Exception $e){
             //updaten niet gelukt. Toon fout
             $errorMessage = $e->getMessage();
-            $feedback = bouwFeedbackBox("danger", $errorMessage);
+            $feedback = buildFeedbackBox("danger", $errorMessage);
         }
     } else {
         //instellingen blijven hetzelfde, er moet niets aangepast worden. Toon meteen success feedback
-        $feedback = bouwFeedbackBox("success", "Je privacyinstellingen zijn bijgewerkt.");
+        $feedback = buildFeedbackBox("success", "Je privacyinstellingen zijn bijgewerkt.");
     }
 
 }
@@ -90,9 +90,9 @@ if (isset($_POST['wijzigPrivacy'])) {
 
 
         <input type="submit"
-               name="wijzigPrivacy"
+               name="editPrivacy"
                value="Wijzig privacyvoorkeuren"
-               id="wijzigPrivacy"
+               id="editPrivacy"
                class="btn btn-primary btn-large">
 
 

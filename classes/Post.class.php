@@ -5,27 +5,27 @@ include_once('Db.class.php');
 class Post{
 
     // member variabelen
-    private $m_sBeschrijving;
-    private $m_sAfbeelding;
+    private $m_sDescription;
+    private $m_sImageName;
 
 
     // setters & getters
-    public function getMSBeschrijving(){
-        return $this->m_sBeschrijving;
+    public function getMSDescription(){
+        return $this->m_sDescription;
     }
 
 
-    public function setMSBeschrijving($m_sBeschrijving){
-        $this->m_sBeschrijving = $m_sBeschrijving;
+    public function setMSDescription($m_sDescription){
+        $this->m_sDescription = $m_sDescription;
     }
 
 
-    public function getMSAfbeelding(){
-        return $this->m_sAfbeelding;
+    public function getMSImage(){
+        return $this->m_sImageName;
     }
 
-    public function setMSAfbeelding($m_sAfbeelding){
-        $this->m_sAfbeelding = $m_sAfbeelding;
+    public function setMSImage($m_sImageName){
+        $this->m_sImageName = $m_sImageName;
     }
 
 
@@ -37,8 +37,8 @@ class Post{
         $conn = Db::getInstance();
         $statement = $conn->prepare("INSERT INTO post (post_description, post_photo, post_date, user_id) VALUES(:description, :uploadPhoto, :postDate, :userId)");
         // bind values to parameters
-        $statement->bindValue(":description", $this->m_sBeschrijving);
-        $statement->bindValue(":uploadPhoto", $this->m_sAfbeelding);
+        $statement->bindValue(":description", $this->m_sDescription);
+        $statement->bindValue(":uploadPhoto", $this->m_sImageName);
         $statement->bindValue(":postDate", date(DATE_ATOM));
         $statement->bindValue(":userId", $_SESSION['login']['userid']);
         //execute statement
