@@ -20,11 +20,11 @@ class Post{
     }
 
 
-    public function getMSImage(){
+    public function getMSImageName(){
         return $this->m_sImageName;
     }
 
-    public function setMSImage($m_sImageName){
+    public function setMSImageName($m_sImageName){
         $this->m_sImageName = $m_sImageName;
     }
 

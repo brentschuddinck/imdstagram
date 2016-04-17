@@ -16,7 +16,7 @@
 
                     <ul class="nav navbar-nav">
 
-                        <li><a href="#"><span class="visible-xs">Foto toevoegen<span
+                        <li><a href="/imdstagram/upload.php"><span class="visible-xs">Foto toevoegen<span
                                         class="fui-photo"></span></span><span class="visible-sm visible-md visible-lg"><span
                                         class="fui-photo" title="foto toevoegen"></span></span></a></li>
                         <li><a href="#"><span class="navbar-unread"></span><span class="visible-xs"
