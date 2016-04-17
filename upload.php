@@ -69,7 +69,7 @@ include_once('classes/Upload.class.php');
     }elseif(isset($_FILES['postPhoto']) && empty($_FILES['postPhoto']['name'])){
     $feedback = buildFeedbackBox("warning", "Je hebt nog geen foto geslecteerd.");
     }
-   
+
 
 ?><!doctype html>
 <html>
