@@ -30,7 +30,7 @@ $showPosts = $getPosts->getAllPosts();
 
 <!-- start photowall -->
 
-<div class="container bootstrap snippet">
+<div class="container bootstrap">
     <div class="col-sm-6 col-sm-offset-3 col-md-8 col-md-offset-2">
         <h2>Tijdlijn</h2>
         <?php foreach($showPosts as $showPost): ?>
@@ -53,7 +53,7 @@ $showPosts = $getPosts->getAllPosts();
                 <img class="img-responsive pad" src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
                 <p><?php echo $showPost['post_description'] ?></p>
                 <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
-                <span class="pull-right text-muted">8 likes - 2 comments</span>
+                <span class="pull-right text-muted">8 likes - 2 reacties</span>
             </div>
             <div class="box-footer box-comments" style="display: block;">
                 <div class="box-comment">
@@ -77,7 +77,9 @@ $showPosts = $getPosts->getAllPosts();
                 <form action="#" method="post">
                     <img class="img-responsive img-circle img-sm" src="img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>" alt="Alt Text">
                     <div class="img-push">
-                        <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
+                        <input type="text" class="form-control input-sm" placeholder="Schrijf een reactie op deze foto...">
+                        <button type="submit" name="submit" class="btn btn-success green comment"><i class="reply"></i>Reageer</button>
+                        <div class="clearfix"></div>
                     </div>
                 </form>
             </div>

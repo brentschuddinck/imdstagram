@@ -524,6 +524,7 @@ body .no-padding {
 }
 
 
+
 @media screen and (min-width: 760px) {
     .template {
         padding-top: 80px;
@@ -559,6 +560,18 @@ body .no-padding {
 
     .container.search h2{
         text-align: left;
+    }
+
+    .input-sm{
+        width: 80%;
+        float: left;
+        height: 40px;
+
+    }
+    .comment{
+        width: 18%;
+        float: right;
+        margin-left: 2%;
     }
 
 
