@@ -7,9 +7,21 @@ class Post{
     // member variabelen
     private $m_sDescription;
     private $m_sImageName;
-
+    private $m_sPostId;
 
     // setters & getters
+
+    public function getMSPostId()
+    {
+        return $this->m_sPostId;
+    }
+
+    public function setMSPostId($m_sPostId)
+    {
+        $this->m_sPostId = $m_sPostId;
+    }
+
+
     public function getMSDescription(){
         return $this->m_sDescription;
     }
@@ -54,6 +66,27 @@ class Post{
         $statement->execute();
         $result = $statement->fetchAll();
         return $result;
+    }
+    // get username from poster
+    public function usernameFromPost(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT username FROM user u, post p WHERE u.user_id = p.user_id AND p.post_id = :currentPost");
+        $statement->bindValue(':currentPost', $this->m_sPostId);
+        $statement->execute();
+        $result = $statement->fetchColumn();
+        return $result;
+
+
+    }
+    // get user profiel picture from poster
+    public function userImgFromPost(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT profile_picture FROM user u, post p WHERE u.user_id = p.user_id AND p.post_id = :currentPost");
+        $statement->bindValue(':currentPost', $this->m_sPostId);
+        $statement->execute();
+        $result = $statement->fetchColumn();
+        return $result;
+
     }
 
 
