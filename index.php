@@ -53,7 +53,7 @@ if(!empty($_GET) ){
                     <div class="user-block">
                         <img class="img-circle" src="img/uploads/profile-pictures/<?php echo !empty($getPosts->userImgFromPost()) ? $getPosts->userImgFromPost() : 'default.png'; ?>" alt="User Image">
                         <span class="username"><a href="/imdstagram/account/profile.php?user=<?php echo $getPosts->usernameFromPost();?>"><?php echo $getPosts->usernameFromPost(); ?></a></span>
-                        <span class="description"><?php echo $showPost['post_date'];?> - locatie</</span>
+                        <span class="description"><?php echo $getPosts->timePosted($showPost['post_date']);?> - locatie</</span>
                     </div>
                     <div class="box-tools">
                         <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read">

@@ -141,5 +141,68 @@ class Post{
         return $result;
     }
 
+    // reformat timestamp
+    public function timePosted($p_posted_time){
+
+            $postedTime = strtotime($p_posted_time);
+            $currentTime = time();
+            // bereken seconds tussen time atm en posted time
+            $timeDifference = $currentTime - $postedTime;
+            $seconds = $timeDifference ;
+            $minutes = round($timeDifference / 60 );
+            $hours = round($timeDifference / 3600);
+            $days = round($timeDifference / 86400 );
+            $weeks = round($timeDifference / 604800);
+            $months = round($timeDifference / 2628000 );
+            $years = round($timeDifference / 31536000 );
+
+            if($seconds <= 60){
+                return "zojuist";
+
+            }else if($minutes <=60){
+                if($minutes==1){
+                    return "1 minuut geleden";
+                }else{
+                    return "$minutes minuten geleden";
+                }
+
+            }else if($hours <=24){
+                if($hours==1){
+                    return "1 uur geleden";
+                }else{
+                    return "$hours uur geleden";
+                }
+
+            }else if($days <= 7){
+                if($days==1){
+                    return "gisteren";
+                }else{
+                    return "$days dagen geleden";
+                }
+
+            }else if($weeks <= 4){
+                if($weeks==1){
+                    return "een week geleden";
+                }else{
+                    return "$weeks weken geleden";
+                }
+
+            }else if($months <=12){
+                if($months==1){
+                    return "een maand geleden";
+                }else{
+                    return "$months maanden geleden";
+                }
+
+            }else{
+                if($years==1){
+                    return "een jaar geleden";
+                }else{
+                    return "$years jaar geleden";
+                }
+            }
+        }
+
+
 
 }
