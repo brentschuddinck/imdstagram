@@ -5,6 +5,17 @@ include_once('inc/feedbackbox.inc.php');
 
 $getPosts = new Post();
 $showPosts = $getPosts->getAllPosts();
+if(isset($_POST['btnLikePicture'])) {
+    $getPosts->likePost();
+
+}
+
+if(!empty($_GET) ){
+    $getclick = $_GET['click'];
+    $getPosts->setMSPostId($getclick);
+    $getPosts->likePost();
+}
+
 
 
 ?><!doctype html>
@@ -34,56 +45,57 @@ $showPosts = $getPosts->getAllPosts();
     <div class="col-sm-6 col-sm-offset-3 col-md-8 col-md-offset-2">
         <h2>Tijdlijn</h2>
         <?php foreach($showPosts as $showPost): ?>
-            <?php $getPosts->setMSPostId($showPost['post_id']); ?>
-        <div class="box box-widget">
-            <div class="box-header with-border">
-                <div class="user-block">
-                    <img class="img-circle" src="img/uploads/profile-pictures/<?php echo $getPosts->userImgFromPost(); ?>" alt="User Image">
-                    <span class="username"><a href="/imdstagram/account/profile.php?user=<?php echo $getPosts->usernameFromPost();?>"><?php echo $getPosts->usernameFromPost(); ?></a></span>
-                    <span class="description"><?php echo $showPost['post_date']; ?> - locatie</</span>
-                </div>
-                <div class="box-tools">
-                    <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read">
-                        <i class="fa fa-circle-o"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div>
-            </div>
+            <?php $getPosts->setMSPostId($showPost['post_id']);?>
 
-            <div class="box-body">
-                <img class="img-responsive pad" src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
-                <p><?php echo $showPost['post_description'] ?></p>
-                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
-                <span class="pull-right text-muted">8 likes - 2 reacties</span>
-            </div>
-            <div class="box-footer box-comments" style="display: block;">
-                <div class="box-comment">
-                    <img class="img-circle img-sm" src="img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>" alt="User Image">
-                    <div class="comment-text">
+
+            <div class="box box-widget">
+                <div class="box-header with-border">
+                    <div class="user-block">
+                        <img class="img-circle" src="img/uploads/profile-pictures/<?php echo $getPosts->userImgFromPost(); ?>" alt="User Image">
+                        <span class="username"><a href="/imdstagram/account/profile.php?user=<?php echo $getPosts->usernameFromPost();?>"><?php echo $getPosts->usernameFromPost(); ?></a></span>
+                        <span class="description"><?php echo $showPost['post_date']; ?> - locatie</</span>
+                    </div>
+                    <div class="box-tools">
+                        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read">
+                            <i class="fa fa-circle-o"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <img class="img-responsive pad" src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
+                    <p><?php echo $showPost['post_description'] ?></p>
+                    <a href="?click=<?php echo $showPost['post_id'];?>" data-id="<?php echo $showPost['post_id'] ?>" class="likeBtn btn btn-xs <?php echo $getPosts->isLiked() == true ? 'liked ' : 'btn-default '?>"><i class="fa fa-thumbs-o-up"></i> vind ik leuk</a>
+                        <span class="pull-right text-muted showLikes"><?php echo $getPosts->showLikes();?> <?php echo $getPosts->showLikes() == 1 ? 'like' : 'likes' ?> </span>
+                </div>
+                <div class="box-footer box-comments">
+                    <div class="box-comment">
+                        <img class="img-circle img-sm" src="img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>" alt="User Image">
+                        <div class="comment-text">
           <span class="username">anyone
           <span class="text-muted pull-right">8:03</span>
           </span>comment 1</div>
-                </div>
+                    </div>
 
-                <div class="box-comment">
-                    <img class="img-circle img-sm" src="img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>" alt="User Image">
-                    <div class="comment-text">
+                    <div class="box-comment">
+                        <img class="img-circle img-sm" src="img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>" alt="User Image">
+                        <div class="comment-text">
           <span class="username">Someone
           <span class="text-muted pull-right">8:03</span>
           </span>comment 2
+                        </div>
                     </div>
                 </div>
+                <div class="box-footer">
+                    <form action="#" method="post">
+                        <img class="img-responsive img-circle img-sm" src="img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>" alt="Alt Text">
+                        <div class="img-push">
+                            <input type="text" class="form-control input-sm" placeholder="Schrijf een reactie op deze foto...">
+                            <button type="submit" name="submit" class="btn btn-success green comment"><i class="reply"></i>Reageer</button>
+                            <div class="clearfix"></div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="box-footer">
-                <form action="#" method="post">
-                    <img class="img-responsive img-circle img-sm" src="img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>" alt="Alt Text">
-                    <div class="img-push">
-                        <input type="text" class="form-control input-sm" placeholder="Schrijf een reactie op deze foto...">
-                        <button type="submit" name="submit" class="btn btn-success green comment"><i class="reply"></i>Reageer</button>
-                        <div class="clearfix"></div>
-                    </div>
-                </form>
-            </div>
-        </div>
         <?php endforeach ?>
     </div>
 </div>
@@ -91,6 +103,31 @@ $showPosts = $getPosts->getAllPosts();
 
 
 <?php include_once('inc/footer.inc.php'); ?>
+<script>
+/*
+     $(document).ready(function(){
+     $('.btn').on('click',function(){
+     var click = +$(this).data('clicks') || 0;
+     console.log(click);
+     if(click % 2 == 1) {
+     $('.fa').removeClass('fa-thumbs-up');
+     $(this).removeClass('liked');
+     $(this).addClass('btn-default');
+     $('.fa').addClass('fa-thumbs-o-up');
+     }else{
+     $('.fa').addClass('fa-thumbs-up');
+     $(this).addClass('liked');
+     $(this).removeClass('btn-default');
+     $('.fa').removeClass('fa-thumbs-o-up');
 
+     }
+     $(this).data('clicks', click+1);
+     });
+
+
+     });
+     */
+</script>
+    <script src="js/ajax/liking-a-post.js"></script>
 </body>
 </html>

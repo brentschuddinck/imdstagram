@@ -523,6 +523,12 @@ body .no-padding {
     width: 100%;
 }
 
+/*LIKING A PHOTO*/
+
+.liked{
+    background-color: #1abc9c;
+    color: #fff;
+}
 
 
 @media screen and (min-width: 760px) {
