@@ -103,31 +103,7 @@ if(!empty($_GET) ){
 
 
 <?php include_once('inc/footer.inc.php'); ?>
-<script>
-/*
-     $(document).ready(function(){
-     $('.btn').on('click',function(){
-     var click = +$(this).data('clicks') || 0;
-     console.log(click);
-     if(click % 2 == 1) {
-     $('.fa').removeClass('fa-thumbs-up');
-     $(this).removeClass('liked');
-     $(this).addClass('btn-default');
-     $('.fa').addClass('fa-thumbs-o-up');
-     }else{
-     $('.fa').addClass('fa-thumbs-up');
-     $(this).addClass('liked');
-     $(this).removeClass('btn-default');
-     $('.fa').removeClass('fa-thumbs-o-up');
 
-     }
-     $(this).data('clicks', click+1);
-     });
-
-
-     });
-     */
-</script>
     <script src="js/ajax/liking-a-post.js"></script>
 </body>
 </html>
