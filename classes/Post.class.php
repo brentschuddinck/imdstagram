@@ -142,12 +142,14 @@ class Post{
     }
 
     // reformat timestamp
-    public function timePosted($p_posted_time){
+    public function timePosted($p_postedTime){
 
-            $postedTime = strtotime($p_posted_time);
+            $postedTime = strtotime($p_postedTime);
             $currentTime = time();
+
             // bereken seconds tussen time atm en posted time
             $timeDifference = $currentTime - $postedTime;
+
             $seconds = $timeDifference ;
             $minutes = round($timeDifference / 60 );
             $hours = round($timeDifference / 3600);

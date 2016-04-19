@@ -3,17 +3,17 @@ include_once('inc/sessiecontrole.inc.php');
 include_once('classes/Post.class.php');
 include_once('inc/feedbackbox.inc.php');
 
-$getPosts = new Post();
-$showPosts = $getPosts->getAllPosts();
+$post = new Post();
+$showPosts = $post->getAllPosts();
 if(isset($_POST['btnLikePicture'])) {
-    $getPosts->likePost();
+    $post->likePost();
 
 }
 
 if(!empty($_GET) ){
     $getclick = $_GET['click'];
-    $getPosts->setMSPostId($getclick);
-    $getPosts->likePost();
+    $post->setMSPostId($getclick);
+    $post->likePost();
 }
 
 
@@ -45,15 +45,15 @@ if(!empty($_GET) ){
     <div class="col-sm-6 col-sm-offset-3 col-md-8 col-md-offset-2">
         <h2>Tijdlijn</h2>
         <?php foreach($showPosts as $showPost): ?>
-            <?php $getPosts->setMSPostId($showPost['post_id']);?>
+            <?php $post->setMSPostId($showPost['post_id']);?>
 
 
             <div class="box box-widget">
                 <div class="box-header with-border">
                     <div class="user-block">
-                        <img class="img-circle" src="img/uploads/profile-pictures/<?php echo !empty($getPosts->userImgFromPost()) ? $getPosts->userImgFromPost() : 'default.png'; ?>" alt="User Image">
-                        <span class="username"><a href="/imdstagram/account/profile.php?user=<?php echo $getPosts->usernameFromPost();?>"><?php echo $getPosts->usernameFromPost(); ?></a></span>
-                        <span class="description"><?php echo $getPosts->timePosted($showPost['post_date']);?> - locatie</</span>
+                        <img class="img-circle" src="img/uploads/profile-pictures/<?php echo !empty($post->userImgFromPost()) ? $post->userImgFromPost() : 'default.png'; ?>" alt="User Image">
+                        <span class="username"><a href="/imdstagram/account/profile.php?user=<?php echo $post->usernameFromPost();?>"><?php echo $post->usernameFromPost(); ?></a></span>
+                        <span class="description"><?php echo $post->timePosted($showPost['post_date']);?> - locatie</</span>
                     </div>
                     <div class="box-tools">
                         <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read">
@@ -63,8 +63,8 @@ if(!empty($_GET) ){
                 <div class="box-body">
                     <img class="img-responsive pad" src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
                     <p><?php echo $showPost['post_description'] ?></p>
-                    <a href="?click=<?php echo $showPost['post_id'];?>" data-id="<?php echo $showPost['post_id'] ?>" class="likeBtn btn btn-xs <?php echo $getPosts->isLiked() == true ? 'liked ' : 'btn-default '?>"><i class="fa fa-thumbs-o-up"></i> vind ik leuk</a>
-                        <span class="pull-right text-muted showLikes"><?php echo $getPosts->showLikes();?> <?php echo $getPosts->showLikes() == 1 ? 'like' : 'likes' ?> </span>
+                    <a href="?click=<?php echo $showPost['post_id'];?>" data-id="<?php echo $showPost['post_id'] ?>" class="likeBtn btn btn-xs <?php echo $post->isLiked() == true ? 'liked ' : 'btn-default '?>"><i class="fa fa-thumbs-o-up"></i> vind ik leuk</a>
+                        <span class="pull-right text-muted showLikes"><?php echo $post->showLikes();?> <?php echo $post->showLikes() == 1 ? 'like' : 'likes' ?> </span>
                 </div>
                 <div class="box-footer box-comments">
                     <div class="box-comment">
