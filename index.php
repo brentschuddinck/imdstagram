@@ -20,6 +20,7 @@ include_once('inc/feedbackbox.inc.php');
         $deletePostId = $_GET['delete'];
         $post->setMSPostId($deletePostId);
         $post->deletePost();
+        header('Location: index.php');
     }
 
 
@@ -59,11 +60,24 @@ include_once('inc/feedbackbox.inc.php');
                     <div class="user-block">
                         <img class="img-circle" src="img/uploads/profile-pictures/<?php echo !empty($post->userImgFromPost()) ? $post->userImgFromPost() : 'default.png'; ?>" alt="User Image">
                         <span class="username"><a href="/imdstagram/account/profile.php?user=<?php echo $post->usernameFromPost();?>"><?php echo $post->usernameFromPost(); ?></a></span>
-                        <span class="description"><?php echo $post->timePosted($showPost['post_date']);?> - locatie</</span>
+                        <span class="description"><?php echo $post->timePosted($showPost['post_date']);?> - <span class="fa fa-map-marker"> locatie</span></span>
                     </div>
                     <div class="box-tools">
                         <div class="<?php echo $showPost['user_id'] == $_SESSION['login']['userid'] ? 'show' :'hidden' ?>">
-                        <a href="?delete=<?php echo $showPost['post_id'];?>" type="button" class="btn btn-box-tool" title="post verwijderen"><i class="fa fa-trash-o"></i></a>
+                        <a type="button" class="btn btn-box-tool" title="post verwijderen" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <p>Ben je zeker dat je de geslecteerde foto wil verwijderen?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="?delete=<?php echo $showPost['post_id'];?>" class="btn btn-danger btn-ok">verwijder foto</a>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuleren</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
