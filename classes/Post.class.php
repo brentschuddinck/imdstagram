@@ -174,14 +174,14 @@ class Post{
             if($seconds <= 60){
                 return "zojuist";
 
-            }else if($minutes <=60){
+            }else if($minutes <= 59){
                 if($minutes==1){
                     return "1 minuut geleden";
                 }else{
                     return "$minutes minuten geleden";
                 }
 
-            }else if($hours <=24){
+            }else if($hours <= 24){
                 if($hours==1){
                     return "1 uur geleden";
                 }else{
@@ -202,7 +202,7 @@ class Post{
                     return "$weeks weken geleden";
                 }
 
-            }else if($months <=12){
+            }else if($months <= 12){
                 if($months==1){
                     return "een maand geleden";
                 }else{
