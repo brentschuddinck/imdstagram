@@ -451,6 +451,10 @@ body .no-padding {
     background: transparent;
     color: #97a0b3;
 }
+
+.btn-box-tool:hover {
+    background-color: #2f4154;
+}
 .box-body {
     border-top-left-radius: 0;
     border-top-right-radius: 0;

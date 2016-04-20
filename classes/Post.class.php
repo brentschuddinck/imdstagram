@@ -227,5 +227,12 @@ class Post{
         return $result;
     }
 
+    public function deletePost(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("DELETE FROM post WHERE post_id = :postId AND user_id = :userId");
+        $statement->bindValue(':postId', $this->m_sPostId);
+        $statement->bindValue(':userId', $_SESSION['login']['userid']);
+        $statement->execute();
+    }
 
 }

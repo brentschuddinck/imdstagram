@@ -3,18 +3,24 @@ include_once('inc/sessiecontrole.inc.php');
 include_once('classes/Post.class.php');
 include_once('inc/feedbackbox.inc.php');
 
-$post = new Post();
-$showPosts = $post->getAllPosts();
-if(isset($_POST['btnLikePicture'])) {
-    $post->likePost();
+    $post = new Post();
+    $showPosts = $post->getAllPosts();
+    if(isset($_POST['btnLikePicture'])) {
+        $post->likePost();
 
-}
+    }
 
-if(!empty($_GET) ){
-    $getclick = $_GET['click'];
-    $post->setMSPostId($getclick);
-    $post->likePost();
-}
+    if(!empty($_GET['click']) ){
+        $getclick = $_GET['click'];
+        $post->setMSPostId($getclick);
+        $post->likePost();
+    }
+
+    if(!empty($_GET['delete'])){
+        $deletePostId = $_GET['delete'];
+        $post->setMSPostId($deletePostId);
+        $post->deletePost();
+    }
 
 
 
@@ -56,9 +62,11 @@ if(!empty($_GET) ){
                         <span class="description"><?php echo $post->timePosted($showPost['post_date']);?> - locatie</</span>
                     </div>
                     <div class="box-tools">
-                        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read">
-                            <i class="fa fa-ellipsis-h"></i></button>
+                        <div class="<?php echo $showPost['user_id'] == $_SESSION['login']['userid'] ? 'show' :'hidden' ?>">
+                        <a href="?delete=<?php echo $showPost['post_id'];?>" type="button" class="btn btn-box-tool" title="post verwijderen"><i class="fa fa-trash-o"></i></a>
+                        </div>
                     </div>
+
                 </div>
                 <div class="box-body">
                     <img class="img-responsive pad" src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
