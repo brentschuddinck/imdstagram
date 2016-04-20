@@ -37,10 +37,9 @@ else if(!isset($_GET['user'])){
 
 <?php include_once('../inc/header.inc.php'); ?>
 <div class="container">
-    <div class="col-sm-6 col-sm-offset-3 col-md-10 col-md-offset-1">
+    <div class="col-md-10 col-md-offset-1">
     <div class="card hovercard">
         <div class="card-background">
-            <!-- http://lorempixel.com/850/280/people/9/ -->
         </div>
         <div class="useravatar">
             <img alt="" src="../img/uploads/profile-pictures/<?php echo !empty($user->profilePictureOnProfile()) ? $user->profilePictureOnProfile() : 'default.png' ?>">
