@@ -52,7 +52,7 @@ else if(!isset($_GET['user'])){
     <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
         <div class="btn-group" role="group">
             <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="fa fa-camera" aria-hidden="true"></span>
-                <div class="hidden-xs"><strong><?php echo $post->countPostsForEachuser(); ?></strong> foto's</div>
+                <div class="hidden-xs"><strong><?php echo $post->countPostsForEachuser(); ?></strong> <?php echo $post->countPostsForEachuser() == 1 ? 'foto' : 'foto\'s' ?></div>
             </button>
         </div>
         <div class="btn-group" role="group">
