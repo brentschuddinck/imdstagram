@@ -57,7 +57,7 @@ if(!empty($_GET) ){
                     </div>
                     <div class="box-tools">
                         <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read">
-                            <i class="fa fa-circle-o"></i></button>
+                            <i class="fa fa-ellipsis-h"></i></button>
                     </div>
                 </div>
                 <div class="box-body">

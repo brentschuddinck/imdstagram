@@ -8,9 +8,22 @@ class Post{
     private $m_sDescription;
     private $m_sImageName;
     private $m_sPostId;
+    private $m_sUsernamePosts;
 
 
     // setters & getters
+
+    public function getMSUsernamePosts()
+    {
+        return $this->m_sUsernamePosts;
+    }
+
+
+    public function setMSUsernamePosts($m_sUsernamePosts)
+    {
+        $this->m_sUsernamePosts = $m_sUsernamePosts;
+    }
+
 
     public function getMSPostId()
     {
@@ -205,6 +218,14 @@ class Post{
             }
         }
 
+    public function getPostsForEachuser(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT * FROM post p WHERE user_id = (SELECT user_id FROM user WHERE username = :username ) ORDER BY post_date DESC");
+        $statement->bindValue(':username', $this->m_sUsernamePosts);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
 
 
 }

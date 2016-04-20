@@ -1,5 +1,11 @@
 <?php
 include_once('../inc/sessiecontrole.inc.php');
+include_once('../classes/Post.class.php');
+
+    $post = new Post();
+    $username = $_GET['user'];
+    $post->setMSUsernamePosts($username);
+    $userPosts = $post->getPostsForEachUser();
 
 //welk profiel opvragen?
 //als querystring user bestaat en de waarde hiervan verschillende is van de gebruikersnaam van de ingelogde gebruiker (sessie), dan wordt een ander profiel bekeken
@@ -21,30 +27,31 @@ else if(!isset($_GET['user'])){
     <title>IMDstagram tijdlijn</title>
     <meta name="description" class="tijdlijn">
     <?php include_once('../inc/style.inc.php'); ?>
+
 </head>
 <body class="template">
 
 <?php include_once('../inc/header.inc.php'); ?>
 
 
+
 <!-- start photowall -->
 <div class="container">
-    <div class="row">
-        <div class="col-sm-3 col-md-2"></div>
-        <div class="col-sm-6 col-md-8">
-            <h1><?php echo htmlspecialchars($pageTitle); ?></h1>
-            <article class="thumbnail">
-                <img data-src="holder.js/100%x600" alt="...">
-                <div class="caption">
-                    <h2>Titel artikel</h2>
-                    <p>Dit is een voorbeeld van een <a href="#">&#35;awesome</a> boodschap die de plaatser bij de foto geschreven heeft.</p>
-                    <p><a role="button" class="btn btn-primary" href="#">Button</a> <a role="button" class="btn btn-default" href="#">Button</a>
-                    </p>
-                </div>
-            </article>
+    <div class="col-sm-6 col-sm-offset-3 col-md-8 col-md-offset-2">
+
+    <h1><?php echo htmlspecialchars($pageTitle); ?></h1>
+
+    <div class="row img-list">
+            <?php foreach($userPosts as $userPost): ?>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <a class="thumbnail picturelist">
+                <img src="../img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" alt="">
+                </a>
+            </div>
+            <?php endforeach ?>
         </div>
     </div>
-</div>
+    </div>
 <!-- einde photowall -->
 
 
