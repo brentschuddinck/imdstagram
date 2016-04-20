@@ -181,28 +181,28 @@ class Post{
                     return "$minutes minuten geleden";
                 }
 
-            }else if($hours <= 24){
+            }else if($hours <= 23){
                 if($hours==1){
                     return "1 uur geleden";
                 }else{
                     return "$hours uur geleden";
                 }
 
-            }else if($days <= 7){
+            }else if($days <= 6){
                 if($days==1){
                     return "gisteren";
                 }else{
                     return "$days dagen geleden";
                 }
 
-            }else if($weeks <= 4){
+            }else if($weeks <= 3){
                 if($weeks==1){
                     return "een week geleden";
                 }else{
                     return "$weeks weken geleden";
                 }
 
-            }else if($months <= 12){
+            }else if($months <= 11){
                 if($months==1){
                     return "een maand geleden";
                 }else{
