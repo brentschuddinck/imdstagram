@@ -227,6 +227,15 @@ class Post{
         return $result;
     }
 
+    public function countPostsForEachuser(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT COUNT(*) FROM post p WHERE user_id = (SELECT user_id FROM user WHERE username = :username )");
+        $statement->bindValue(':username', $this->m_sUsernamePosts);
+        $statement->execute();
+        $result = $statement->fetchColumn();
+        return $result;
+    }
+
     public function deletePost(){
         $conn = Db::getInstance();
         $statement = $conn->prepare("DELETE FROM post WHERE post_id = :postId AND user_id = :userId");

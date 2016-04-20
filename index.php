@@ -38,7 +38,6 @@ include_once('inc/feedbackbox.inc.php');
             background-color: #ecf0f5;
         }
     </style>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
 </head>
 <body class="template">

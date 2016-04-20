@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="/imdstagram/css/screen.css">
 <link href="https://fonts.googleapis.com/css?family=Arimo:700,400" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet" type="text/css">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <?php //include_once("/open-graph-protocol.inc.php"); ?>

@@ -362,6 +362,15 @@ class User
 
     }
 
+    public function profilePictureOnProfile(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT profile_picture FROM user WHERE username = :username");
+        $statement->bindValue(':username', $this->m_sUsername);
+        $statement->execute();
+        $result = $statement->fetchColumn();
+        return $result;
+    }
+
 }
 
 ?>
