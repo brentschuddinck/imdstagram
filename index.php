@@ -62,7 +62,7 @@ if(!empty($_GET) ){
                 </div>
                 <div class="box-body">
                     <img class="img-responsive pad" src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
-                    <p><?php echo $showPost['post_description'] ?></p>
+                    <p><?php echo htmlspecialchars($showPost['post_description']) ?></p>
                     <a href="?click=<?php echo $showPost['post_id'];?>" data-id="<?php echo $showPost['post_id'] ?>" class="likeBtn btn btn-xs <?php echo $post->isLiked() == true ? 'liked ' : 'btn-default '?>"><i class="fa fa-thumbs-o-up"></i> vind ik leuk</a>
                         <span class="pull-right text-muted showLikes"><?php echo $post->showLikes();?> <?php echo $post->showLikes() == 1 ? 'like' : 'likes' ?> </span>
                 </div>
