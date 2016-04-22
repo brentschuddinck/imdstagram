@@ -9,9 +9,22 @@ class Post{
     private $m_sImageName;
     private $m_sPostId;
     private $m_sUsernamePosts;
+    private $m_sLocation;
+
 
 
     // setters & getters
+
+    public function getMSLocation()
+    {
+        return $this->m_sLocation;
+    }
+
+    public function setMSLocation($m_sLocation)
+    {
+        $this->m_sLocation = $m_sLocation;
+    }
+
 
     public function getMSUsernamePosts()
     {
@@ -61,11 +74,12 @@ class Post{
     public function postPhoto(){
         // database connectie
         $conn = Db::getInstance();
-        $statement = $conn->prepare("INSERT INTO post (post_description, post_photo, post_date, user_id) VALUES(:description, :uploadPhoto, :postDate, :userId)");
+        $statement = $conn->prepare("INSERT INTO post (post_description, post_photo, post_date, post_location, user_id) VALUES(:description, :uploadPhoto, :postDate, :location, :userId)");
         // bind values to parameters
         $statement->bindValue(":description", $this->m_sDescription);
         $statement->bindValue(":uploadPhoto", $this->m_sImageName);
         $statement->bindValue(":postDate", date(DATE_ATOM));
+        $statement->bindValue(":location", $this->m_sLocation);
         $statement->bindValue(":userId", $_SESSION['login']['userid']);
         //execute statement
         $statement->execute();

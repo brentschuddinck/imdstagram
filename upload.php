@@ -49,6 +49,7 @@ include_once('classes/Upload.class.php');
                         $post = new Post();
                         $post->setMSDescription($_POST['description']);
                         $post->setMSImageName($FullFileName);
+                        $post->setMSLocation($_POST['location']);
                         $post->postPhoto();
                         $feedback = buildFeedbackBox("success", "Je foto is geplaatst!");
                     }
@@ -103,10 +104,13 @@ include_once('classes/Upload.class.php');
                             echo $feedback;
                         }
                         ?>
+                        <input type="hidden" name="location" id="location" value="">
                         <textarea name="description" id="description" maxlength="1000" placeholder="Beschrijving foto" required title="voeg een beschrijving toe aan je foto." ><?php echo isset($_POST['description']) && empty($_FILES['postPhoto']['name']) ? htmlspecialchars($_POST['description']) : '' ?></textarea>
                         <span><p id="charCount" class="help-block ">You have reached the limit</p></span>
                         <input type="file" id="file" name="postPhoto">
                         <button type="submit" name="submit" class="btn btn-success green"><i class="fa fa-reply"></i>Post</button>
+
+
                     </form>
                 </div><!-- Status Upload  -->
             </div><!-- Widget Area -->
@@ -117,5 +121,6 @@ include_once('classes/Upload.class.php');
 
 <?php include_once('inc/footer.inc.php'); ?>
 <script src="js/charCount.js"></script>
+<script src="js/postLocation.js"></script>
 </body>
 </html>

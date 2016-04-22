@@ -59,7 +59,7 @@ include_once('inc/feedbackbox.inc.php');
                     <div class="user-block">
                         <img class="img-circle" src="img/uploads/profile-pictures/<?php echo !empty($post->userImgFromPost()) ? $post->userImgFromPost() : 'default.png'; ?>" alt="User Image">
                         <span class="username"><a href="/imdstagram/account/profile.php?user=<?php echo $post->usernameFromPost();?>"><?php echo $post->usernameFromPost(); ?></a></span>
-                        <span class="description"><?php echo $post->timePosted($showPost['post_date']);?> - <span class="fa fa-map-marker"> locatie</span></span>
+                        <span class="description"><?php echo $post->timePosted($showPost['post_date']);?> <?php  echo !empty($showPost['post_location']) ? '-' : '' ?> <span class="<?php echo !empty($showPost['post_location']) ? 'fa fa-map-marker' : '' ?>"><?php echo " " . $showPost['post_location']; ?></span></span>
                     </div>
                     <div class="box-tools">
                         <div class="<?php echo $showPost['user_id'] == $_SESSION['login']['userid'] ? 'show' :'hidden' ?>">
