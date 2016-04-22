@@ -63,9 +63,11 @@ include_once('inc/feedbackbox.inc.php');
                     </div>
                     <div class="box-tools">
                         <div class="<?php echo $showPost['user_id'] == $_SESSION['login']['userid'] ? 'show' :'hidden' ?>">
-                        <a type="button" class="btn btn-box-tool" title="post verwijderen" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a>
+                        <a href="?delete=<?php echo $showPost['post_id'];?>" type="button" class="btn btn-box-tool" title="post verwijderen" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a>
                         </div>
+
                     </div>
+                    <!--
                     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -73,12 +75,13 @@ include_once('inc/feedbackbox.inc.php');
                                     <p>Ben je zeker dat je de geslecteerde foto wil verwijderen?</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="?delete=<?php echo $showPost['post_id'];?>" class="btn btn-danger btn-ok">verwijder foto</a>
+                                    <button class="btn btn-danger btn-ok confirmDelete" name="confirmDelete">verwijder foto</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Annuleren</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    -->
 
                 </div>
                 <div class="box-body">

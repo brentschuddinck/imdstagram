@@ -71,11 +71,11 @@ else if(!isset($_GET['user'])){
             <div class="tab-pane fade in active" id="tab1">
                 <div class="row img-list">
                     <?php foreach($userPosts as $userPost): ?>
-                        <div class="col-xs-12 col-sm-4 col-md-4">
-                            <a class="thumbnail picturelist">
-                                <img src="../img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" alt="">
+                            <div class="col-xs-12 col-sm-4 col-md-4">
+                            <a data-id="<?php echo $userPost['post_id'] ?>" class="thumbnail picturelist">
+                                <img   class="thumb" src="../img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" alt="">
                             </a>
-                        </div>
+                            </div>
                     <?php endforeach ?>
                 </div>
             </div>
@@ -88,10 +88,6 @@ else if(!isset($_GET['user'])){
         </div>
     </div>
 
-    </div>
-    </div>
-</div>
-
 <?php include_once('../inc/footer.inc.php'); ?>
 <script>
     $(document).ready(function() {
@@ -101,5 +97,6 @@ else if(!isset($_GET['user'])){
         });
     });
 </script>
+
 </body>
 </html>
