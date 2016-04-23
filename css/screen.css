@@ -672,6 +672,11 @@ body .no-padding {
     -webkit-border-radius:0 !important;
 }
 
+.fb{
+    text-align: center;
+    font-size: 17px;
+}
+
 
 
 @media screen and (min-width: 960px) {

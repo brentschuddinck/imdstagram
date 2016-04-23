@@ -12,18 +12,25 @@ include_once('../classes/User.class.php');
     $user = new User();
     $user->setMSUsername($username);
 
-//welk profiel opvragen?
-//als querystring user bestaat en de waarde hiervan verschillende is van de gebruikersnaam van de ingelogde gebruiker (sessie), dan wordt een ander profiel bekeken
-if(isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['username']){
-    $pageTitle = "Profiel " . htmlspecialchars($_GET['user']);}
-//in het andere geval wanneer profile.php bezocht wordt zonder user in de querystring, stuur bezoeker door (link zo deelbaar voor anderen)
-else if(!isset($_GET['user'])){
-    $_GET['user'] = $_SESSION['login']['username'];
-    header('location: profile.php?user=' . $_GET['user']);
-//in het andere geval wil de ingelogde gebruiker zijn eigen profiel bekijken. Toon gepaste titel.
-}else{
-    $pageTitle = "Mijn profiel";
-}
+    if(empty($userPosts) && $post->countPostsForEachuser() > 0){
+        $feedback =  'Dit account is privé, stuur een volg verzoek om de foto\'s van deze gebruiker te zien.';
+    }elseif(empty($userPosts) && $post->countPostsForEachuser() == 0){
+        $feedback =  'Deze gebruiker heeft nog geen foto\'s geplaatst';
+    }
+
+
+    //welk profiel opvragen?
+    //als querystring user bestaat en de waarde hiervan verschillende is van de gebruikersnaam van de ingelogde gebruiker (sessie), dan wordt een ander profiel bekeken
+    if(isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['username']){
+        $pageTitle = "Profiel " . htmlspecialchars($_GET['user']);}
+    //in het andere geval wanneer profile.php bezocht wordt zonder user in de querystring, stuur bezoeker door (link zo deelbaar voor anderen)
+    else if(!isset($_GET['user'])){
+        $_GET['user'] = $_SESSION['login']['username'];
+        header('location: profile.php?user=' . $_GET['user']);
+    //in het andere geval wil de ingelogde gebruiker zijn eigen profiel bekijken. Toon gepaste titel.
+    }else{
+        $pageTitle = "Mijn profiel";
+    }
 
 ?><!doctype html>
 <html lang="nl">
@@ -77,6 +84,7 @@ else if(!isset($_GET['user'])){
                             </a>
                             </div>
                     <?php endforeach ?>
+                   <p class="fb"><?php echo !empty($feedback) ? $feedback : ''?></p>
                 </div>
             </div>
             <div class="tab-pane fade in" id="tab2">
