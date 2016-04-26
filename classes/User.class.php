@@ -159,11 +159,6 @@ class User
                     $_SESSION['login']['name'] = $userRow['full_name']; //volledige naam ophalen
                     $_SESSION['login']['private'] = $userRow['private']; //accountstatus ophalen 0 = openbaar, 1 = private
 
-                    //indien profielfoto in db leeg of indien de foto niet bestaat op de server, toon dan de default profielfoto
-                    if (empty($_SESSION['login']['profilepicture']) || !file_exists("img/uploads/profile-pictures/" . $_SESSION['login']['profilepicture'])) {
-                        $_SESSION['login']['profilepicture'] = "default.png"; //standaard profielfoto indien veld leeg in db
-                    }
-
 
                     //alles okido
                     return true;

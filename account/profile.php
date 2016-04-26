@@ -49,7 +49,7 @@ include_once('../classes/User.class.php');
         <div class="card-background">
         </div>
         <div class="useravatar">
-            <img alt="" src="../img/uploads/profile-pictures/<?php echo !empty($user->profilePictureOnProfile()) ? $user->profilePictureOnProfile() : 'default.png' ?>">
+            <img alt="" src="../img/uploads/profile-pictures/<?php echo htmlspecialchars($user->profilePictureOnProfile()); ?>">
         </div>
         <div class="card-info"> <span class="card-title"><?php echo htmlspecialchars($pageTitle); ?></span>
 

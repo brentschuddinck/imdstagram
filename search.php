@@ -4,6 +4,7 @@ include_once('inc/feedbackbox.inc.php');
 include_once('classes/Validation.class.php');
 include_once('classes/Search.class.php');
 
+
 if (isset($_GET['search']) && !empty($_GET['search'])) {
 
     $searchTerm = strtolower($_GET['search']);
