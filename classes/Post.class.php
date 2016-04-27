@@ -171,7 +171,7 @@ class Post{
     // reformat timestamp
     public function timePosted($p_postedTime){
 
-            $postedTime = strtotime($p_postedTime);
+            $postedTime = strtotime($p_postedTime); //parse textual datetime description into UNIX timestamp
             $currentTime = time();
 
             // bereken seconds tussen time atm en posted time
@@ -258,5 +258,13 @@ class Post{
         $statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->execute();
     }
+
+
+    /*public function deletePostPicture(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT post_photo FROM post WHERE post_id = :postId");
+        $statement->bindValue(':postId', $this->m_sPostId);
+        $statement->execute();
+    }*/
 
 }

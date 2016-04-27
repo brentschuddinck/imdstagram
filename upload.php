@@ -6,6 +6,8 @@ include_once('classes/Upload.class.php');
 
 // uploaden van foto
     if(!empty($_POST['description']) && !empty($_FILES['postPhoto']['name'])) {
+
+
         // get file array info
         $postPhotoArr = $_FILES["postPhoto"];
         $postPhotoName = $postPhotoArr["name"];
@@ -14,7 +16,8 @@ include_once('classes/Upload.class.php');
         $postPhotoTmpName = $postPhotoArr["tmp_name"];
         $postPhotoError = $postPhotoArr["error"];
 
-        $maxBytes = 5120000; // maximum toegestane grote voor post foto's is 5mb
+        $maxBytes = 5242880; // maximum toegestane grote voor post foto's is 5mb
+        $maxMB = floor($maxBytes/1024/1024);
 
         if ($postPhotoError == 0) {
             $uploadPost = new Upload();
@@ -30,11 +33,11 @@ include_once('classes/Upload.class.php');
             $ValidType = $uploadPost->isValidType($validTypes, $postPhotoType);
 
             // als file een geldige extentie heeft & geldig type
-            if($ValidType && $ValidExtension){
+            if ($ValidType && $ValidExtension) {
                 //check dat bestand  niet te groot is
                 $ValidSize = $uploadPost->isValidSize($postPhotoSize, $maxBytes);
 
-                if($ValidSize){
+                if ($ValidSize === true) {
                     // give file new name
                     $newFileName = "post-picture_userid-" . $_SESSION['login']['userid'] . "-" . time();
                     // add extension to new name
@@ -44,32 +47,36 @@ include_once('classes/Upload.class.php');
                     // move uploaded file to new location
                     $uploadFile = $uploadPost->uploadFile($postPhotoTmpName, $filePath);
 
-                    if($uploadFile){
+                    if ($uploadFile) {
                         // upload foto to database
                         $post = new Post();
                         $post->setMSDescription($_POST['description']);
                         $post->setMSImageName($FullFileName);
                         $post->setMSLocation($_POST['location']);
                         $post->postPhoto();
-                        $feedback = buildFeedbackBox("success", "Je foto is geplaatst!");
+                        $feedback = buildFeedbackBox("success", "Je foto is geplaatst! <a href='/imdstagram/index.php'>Bekijk het resultaat</a>.");
+                    }else{
+                        $feedback = buildFeedbackBox("danger", "er is iets misgelopen bij het plaatsen van je post. Onze excuses voor het ongemak. Probeer het later opnieuw.");
                     }
-                }else{
-                    $feedback = buildFeedbackBox("danger", "Je foto mag niet groter zijn dan 5mb.");
+                } else {
+                    $feedback = buildFeedbackBox("danger", "je foto mag niet groter zijn dan " . $maxMB . "MB.");
                 }
-            }else{
-                $feedback = buildFeedbackBox("danger", "Je geselecteerde foto heeft geen geldige extentie. Toegestane extenties: .jpg, .png & .gif.");
+            } else {
+                $feedback = buildFeedbackBox("danger", "je geselecteerde foto heeft geen geldige extentie. Toegestane extenties: .jpg, .png & .gif.");
 
             }
-        }else{
-            $feedback = buildFeedbackBox("danger", "Er is iets fout gegaan bij het uploaden van je foto, probeer het nog eens opnieuw.");
+        } else {
+            $feedback = buildFeedbackBox("danger", "er is iets fout gegaan bij het uploaden van je foto, probeer het nog eens opnieuw.");
 
         }
+
     }elseif(isset($_POST['description']) && empty($_POST['description'])){
     $feedback = buildFeedbackBox("info", "Voeg een beschrijving aan je foto toe.");
 
     }elseif(isset($_FILES['postPhoto']) && empty($_FILES['postPhoto']['name'])){
-    $feedback = buildFeedbackBox("warning", "Je hebt nog geen foto geslecteerd.");
+    $feedback = buildFeedbackBox("warning", "je hebt nog geen foto geslecteerd.");
     }
+
 
 
 ?><!doctype html>
@@ -86,11 +93,11 @@ include_once('classes/Upload.class.php');
 <body class="template">
 <?php include_once('inc/header.inc.php'); ?>
 
-<div class="container">
+<div class="container uploads">
     <div class="col-sm-6 col-sm-offset-3 col-md-8 col-md-offset-2">
 
     <div class="row">
-        <h2>Upload foto</h2>
+        <h1>Upload foto</h1>
     </div>
 
     <div class="row">

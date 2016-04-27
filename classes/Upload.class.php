@@ -62,11 +62,14 @@ class Upload
     //controleer bestandsgrootte
     public function isValidSize($p_CurrentSizeInBytes, $p_MaxBytes)
     {
+
         if ($p_CurrentSizeInBytes <= $p_MaxBytes) {
             return true;
         } else {
             return false;
         }
+
+
     }
 
     //is extentie geldig
@@ -76,8 +79,8 @@ class Upload
         $arrExtensions = $p_arrValidExtensions;
         $extensionFile = $p_sExtensionFile;
 
-        foreach($arrExtensions as $arrExtension){
-            if($arrExtension == $extensionFile){
+        foreach ($arrExtensions as $arrExtension) {
+            if ($arrExtension == $extensionFile) {
                 return true;
             }
         }
@@ -85,24 +88,26 @@ class Upload
     }
 
     //is bestandstype geldig. Deze functie dient om te voorkomen dat bijvoorbeeld een script hernoemd wordt naar .jpg om zo toch geupload te kunnen worden
-    public function isValidType($p_arrValidTypes, $p_sUploadType){
+    public function isValidType($p_arrValidTypes, $p_sUploadType)
+    {
 
         $arrValidTypes = $p_arrValidTypes;
         $fileType = $p_sUploadType;
 
-        foreach($arrValidTypes as $arrValidType){
-            if($fileType == $arrValidType){
+        foreach ($arrValidTypes as $arrValidType) {
+            if ($fileType == $arrValidType) {
                 return true;
             }
         }
     }
 
 
-    public function uploadFile($p_sFileTmpName, $p_sFileNewName){
+    public function uploadFile($p_sFileTmpName, $p_sFileNewName)
+    {
 
-        if(move_uploaded_file($p_sFileTmpName, $p_sFileNewName)){
+        if (move_uploaded_file($p_sFileTmpName, $p_sFileNewName)) {
             return true;
-        }else{
+        } else {
             return false;
         }
 

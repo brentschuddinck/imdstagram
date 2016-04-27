@@ -2,6 +2,7 @@
 include_once('../inc/sessiecontrole.inc.php');
 include_once('../classes/Post.class.php');
 include_once('../classes/User.class.php');
+include_once('../inc/feedbackbox.inc.php');
 
 
     $post = new Post();
@@ -13,9 +14,9 @@ include_once('../classes/User.class.php');
     $user->setMSUsername($username);
 
     if(empty($userPosts) && $post->countPostsForEachuser() > 0){
-        $feedback =  'Dit account is privé, stuur een volg verzoek om de foto\'s van deze gebruiker te zien.';
+        $feedback = 'Dit account is privé, stuur een volg verzoek om de foto\'s van deze gebruiker te zien.';
     }elseif(empty($userPosts) && $post->countPostsForEachuser() == 0){
-        $feedback =  'Deze gebruiker heeft nog geen foto\'s geplaatst';
+        $feedback = 'Deze gebruiker heeft nog geen foto\'s geplaatst.';
     }
 
 

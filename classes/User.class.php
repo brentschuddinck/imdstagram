@@ -119,7 +119,7 @@ class User
 
         //statement uitvoeren
         if (!$statement->execute()) {
-            throw new Exception(" je account is niet geRegisterd. Mogelijk bestaat er al een account met deze gegevens.");
+            throw new Exception(" je account is niet geregistreerd. Mogelijk bestaat er al een account met deze gegevens.");
         }
 
     }
@@ -169,7 +169,7 @@ class User
             } else if ($statement->rowCount() == 0) {
                 // als er geen email in de database overeenkomt(0 rijen), met het ingevulde e-mail adress
                 // (het veld e-mail is in onze database UNIQUE dus we kunnen enkel 1 row of geen row terug krijgen)
-                throw new Exception("er is geen account geRegisterd met dit e-mailadres.");
+                throw new Exception("er is geen account geregistreerd met dit e-mailadres.");
 
             }
         }

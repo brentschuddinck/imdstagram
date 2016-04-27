@@ -12,7 +12,15 @@ body {
     font-size: 1.6rem;
 }
 
-h1, h2, h3, h4, h5, h6, .navbar-brand, .name-label {
+.container{
+    padding: 0 10px;
+}
+
+.img-push input{
+    margin-bottom: 10px;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand, .name-label, .card-title {
     font-family: "Bree Serif", serif;
 }
 
@@ -27,7 +35,7 @@ h1 {
 }
 
 
-h2 {
+h2{
     font-size: 1.8em;
     margin-bottom: 30px;
 }
@@ -48,6 +56,11 @@ p, span, div, .checkbox {
 .template {
     padding-top: 40px;
 }
+
+.col-sm-12{
+    padding: 30px 0;
+}
+
 
 .template.welcome {
 
@@ -81,11 +94,11 @@ p, span, div, .checkbox {
 }
 
 .profielfoto {
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    -o-border-radius: 4px;
-    border-radius: 4px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -o-border-radius: 100%;
+    border-radius: 100%;
 }
 
 .profielfoto.mini {
@@ -133,6 +146,7 @@ aside {
 
 .container-fluid {
     padding: 0;
+    margin: 0;
 }
 
 .control-label {
@@ -296,6 +310,11 @@ aside {
 
 /*UPLOAD FORM*/
 
+.uploads h1{
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
 #file{
     padding-top: 5px;
     float: left;
@@ -303,7 +322,10 @@ aside {
 
 .btn-success{
     background-color: #1abc9c;
+    margin-bottom: 5px;
 }
+
+
 
 .btn-success:hover{
     background-color: #2f4154;
@@ -434,6 +456,17 @@ body .no-padding {
     color: #999;
     font-size: 13px;
 }
+
+.user-block .description span{
+    font-family: "Arimo", sans-serif;
+}
+
+.user-block .description span:before{
+    font-family: "FontAwesome";
+}
+
+
+
 .user-block .username,
 .user-block .description,
 .user-block .comment {
@@ -463,9 +496,15 @@ body .no-padding {
     padding: 10px;
     display: block;
 }
+
 .pad {
-    padding: 10px;
+    margin: 10px 0;
 }
+
+input[type="checkbox"]{
+    padding: 5px;
+}
+
 .box .btn-default {
     background-color: #f4f4f4;
     color: #444;
@@ -536,6 +575,10 @@ body .no-padding {
 
 
 @media screen and (min-width: 760px) {
+    .container{
+        padding: 0;
+    }
+
     .template {
         padding-top: 80px;
     }
@@ -576,6 +619,7 @@ body .no-padding {
         width: 80%;
         float: left;
         height: 40px;
+        margin-bottom: 5px;
 
     }
     .comment{
@@ -612,9 +656,7 @@ body .no-padding {
     background-color: #fff;
     background-color: rgba(255, 255, 255, 1);
 }
-.card.hovercard .card-background {
-    height: 130px;
-}
+
 .card-background img {
     -webkit-filter: blur(25px);
     -moz-filter: blur(25px);
@@ -626,37 +668,41 @@ body .no-padding {
     min-width: 130%;
 }
 .card.hovercard .useravatar {
-    position: absolute;
     top: 15px;
     left: 0;
     right: 0;
 }
 .card.hovercard .useravatar img {
-    width: 100px;
-    height: 100px;
-    max-width: 100px;
-    max-height: 100px;
+    width: 150px;
+    height: 150px;
+    max-width: 150px;
+    max-height: 150px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
     border: 5px solid rgba(255, 255, 255, 0.5);
 }
 .card.hovercard .card-info {
-    position: absolute;
     bottom: 14px;
     left: 0;
     right: 0;
 }
+
+.card-info{
+    margin-top: 10px;
+}
+
 .card.hovercard .card-info .card-title {
     padding:0 5px;
-    font-size: 20px;
-    line-height: 1;
+    font-size: 2.6em;
+    font-weight: bold;
     color: #262626;
     background-color: rgba(255, 255, 255, 0.1);
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
 }
+
 .card.hovercard .card-info {
     overflow: hidden;
     font-size: 12px;
@@ -677,7 +723,12 @@ body .no-padding {
     font-size: 17px;
 }
 
+@media screen and (min-width: 760px){
+    .col-sm-12{
+        padding: 0;
+    }
 
+}
 
 @media screen and (min-width: 960px) {
     .fixed{

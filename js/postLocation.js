@@ -24,7 +24,7 @@ var App = {
         window.jQuery.ajax({
             url: requestUrl,
             success: function (data) {
-                var city = data.results[2].address_components[1].long_name;
+                var city = data.results[1].address_components[0].long_name;
                 $('#location').val(city);
 
             }

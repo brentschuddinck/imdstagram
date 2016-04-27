@@ -19,10 +19,6 @@
                         <li><a href="/imdstagram/upload.php"><span class="visible-xs">Foto toevoegen<span
                                         class="fui-photo"></span></span><span class="visible-sm visible-md visible-lg"><span
                                         class="fui-photo" title="foto toevoegen"></span></span></a></li>
-                        <li><a href="#"><span class="navbar-unread"></span><span class="visible-xs"
-                                                                                 title="meldingen">Meldingen<span
-                                        class="fui-chat"></span></span><span class="visible-sm visible-md visible-lg"><span
-                                        class="fui-chat" title="meldingen"></span></span></a></li>
 
                     </ul>
 
@@ -72,8 +68,6 @@
                                 <li>
                                     <a href="/imdstagram/account/profile.php?user=<?php print htmlspecialchars($_SESSION['login']['username']); ?>">Mijn
                                         profiel</a></li>
-                                <li><a href="#">Volgers</a></li>
-                                <li><a href="#">Volgend</a></li>
                                 <li class="divider"></li>
                                 <li><a href="/imdstagram/account/edit/preferences.php"><span class="fui-gear"> </span>Profiel
                                         bewerken</a></li>

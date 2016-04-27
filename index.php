@@ -20,6 +20,7 @@ include_once('inc/feedbackbox.inc.php');
         $deletePostId = $_GET['delete'];
         $post->setMSPostId($deletePostId);
         $post->deletePost();
+        /*$post->deletePostPicture($deletePostId);*/
         header('Location: index.php');
     }
 
@@ -48,8 +49,7 @@ include_once('inc/feedbackbox.inc.php');
 <!-- start photowall -->
 
 <div class="container bootstrap">
-    <div class="col-sm-6 col-sm-offset-3 col-md-8 col-md-offset-2">
-        <h2>Tijdlijn</h2>
+    <div class="col-sm-12 col-md-8 col-md-offset-2">
         <?php foreach($showPosts as $showPost): ?>
             <?php $post->setMSPostId($showPost['post_id']);?>
 
@@ -67,7 +67,7 @@ include_once('inc/feedbackbox.inc.php');
                         </div>
 
                     </div>
-                    <!--
+
                     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -81,13 +81,13 @@ include_once('inc/feedbackbox.inc.php');
                             </div>
                         </div>
                     </div>
-                    -->
+
 
                 </div>
                 <div class="box-body">
                     <img class="img-responsive pad" src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
                     <p><?php echo htmlspecialchars($showPost['post_description']) ?></p>
-                    <a href="?click=<?php echo $showPost['post_id'];?>" data-id="<?php echo $showPost['post_id'] ?>" class="likeBtn btn btn-xs <?php echo $post->isLiked() == true ? 'liked ' : 'btn-default '?>"><i class="fa fa-thumbs-o-up"></i> vind ik leuk</a>
+                    <a href="?click=<?php echo $showPost['post_id'];?>" data-id="<?php echo $showPost['post_id'] ?>" class="likeBtn btn btn-xs <?php echo $post->isLiked() == true ? 'liked ' : 'btn-default '?>"><i class="fa fa-heart-o"></i> vind ik leuk</a>
                         <span class="pull-right text-muted showLikes"><?php echo $post->showLikes();?> <?php echo $post->showLikes() == 1 ? 'like' : 'likes' ?> </span>
                 </div>
                 <div class="box-footer box-comments">
@@ -112,7 +112,7 @@ include_once('inc/feedbackbox.inc.php');
                     <form action="#" method="post">
                         <img class="img-responsive img-circle img-sm" src="img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>" alt="Alt Text">
                         <div class="img-push">
-                            <input type="text" class="form-control input-sm" placeholder="Schrijf een reactie op deze foto...">
+                            <input type="text" class="form-control input-sm" placeholder="Schrijf een reactie...">
                             <button type="submit" name="submit" class="btn btn-success green comment"><i class="reply"></i>Reageer</button>
                             <div class="clearfix"></div>
                         </div>
