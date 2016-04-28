@@ -66,7 +66,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="/imdstagram/index.php">Photo wall</a></li>
                                 <li>
-                                    <a href="/imdstagram/account/profile.php?user=<?php print htmlspecialchars($_SESSION['login']['username']); ?>">Mijn
+                                    <a href="/imdstagram/explore/profile.php?user=<?php print htmlspecialchars($_SESSION['login']['username']); ?>">Mijn
                                         profiel</a></li>
                                 <li class="divider"></li>
                                 <li><a href="/imdstagram/account/edit/preferences.php"><span class="fui-gear"> </span>Profiel
