@@ -377,9 +377,9 @@ class User
     public function isFollowing(){
         $userid = $_SESSION['login']['userid'];
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT * FROM following WHERE user_id = :userId AND follows = :follows");
+        $statement = $conn->prepare("SELECT * FROM following WHERE user_id = :userId AND follows = (SELECT user_id FROM user WHERE username = :username)");
         $statement->bindValue(':userId', $userid);
-        $statement->bindValue(':follows', $this->m_iUserId);
+        $statement->bindValue(':username', $this->m_sUsername);
         $statement->execute();
         $result = $statement->rowCount();
         return $result;
@@ -412,6 +412,15 @@ class User
             $result = $statementDeleteFollow->fetchAll();
             return $result;
         }
+    }
+
+        public function countFollowers(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT COUNT(follows) FROM following WHERE user_id = :userId");
+        $statement->bindValue(':userId', $_SESSION['login']['userid']);
+        $statement->execute();
+        $result = $statement->fetchColumn();
+        return $result;
     }
 }
 ?>

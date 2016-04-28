@@ -17,7 +17,7 @@ include_once('../inc/feedbackbox.inc.php');
     $user->setMIUserId($_GET['id']);
     $user->followUser();
     }
-
+    $user->countFollowers();
     if(empty($userPosts) && $post->countPostsForEachuser() > 0){
         $feedback = 'Dit account is privé, stuur een volg verzoek om de foto\'s van deze gebruiker te zien.';
     }elseif(empty($userPosts) && $post->countPostsForEachuser() == 0){
@@ -63,9 +63,10 @@ include_once('../inc/feedbackbox.inc.php');
         <?php if(isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['username']): ?>
         <div>
             <form action="" method="post">
-                <a  style="margin-top: 20px" href="?user=<?php echo $_GET['user'];?>&id=<?php echo $user->getIdFromProfile() ?>" class="likeBtn btn btn-info"><?php echo $user->isFollowing() == 0 ? 'follow' : 'unfollow' ?><i></i></a>
+                <a  style="margin-top: 20px" href="?user=<?php echo $_GET['user'];?>&id=<?php echo $user->getIdFromProfile() ?>" class="likeBtn btn btn-info"><i class="<?php echo $user->isFollowing() == 0 ? 'fa fa-plus-circle' :'fa fa-times' ?> fa-lg"></i><?php echo $user->isFollowing() == 0 ? ' Volg deze gebruiker' : ' Niet meer volgen' ?></a>
             </form>
         </div>
+
         <?php endif ?>
     </div>
     <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
