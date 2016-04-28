@@ -13,6 +13,7 @@ $validation = new Validation();
 if(isset($_POST['username']) && !empty($_POST['username'])) {
 
     //geldigheid controleren. Hergebruik functie uit validatieklasse
+    //eerst kijken op validerend. Indien niet, een onnodige query vermeden.
     $isValidUsername = $validation->isValidUsername($nieuweUsername);
 
     if(empty($isValidUsername)){

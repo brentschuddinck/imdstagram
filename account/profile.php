@@ -81,7 +81,7 @@ include_once('../inc/feedbackbox.inc.php');
                     <?php foreach($userPosts as $userPost): ?>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                             <a data-id="<?php echo $userPost['post_id'] ?>" class="thumbnail picturelist">
-                                <img   class="thumb" src="../img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" alt="">
+                                <img class="thumb <?php echo $userPost['photo_effect']; ?>" src="../img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" alt="">
                             </a>
                             </div>
                     <?php endforeach ?>

@@ -18,6 +18,7 @@ include_once('classes/Upload.class.php');
         $maxBytes = 5242880; // maximum toegestane grote voor post foto's is 5mb
         $maxMB = floor($maxBytes/1024/1024);
 
+
         if ($postPhotoError == 0) {
             $uploadPost = new Upload();
 
@@ -62,19 +63,18 @@ include_once('classes/Upload.class.php');
                     $feedback = buildFeedbackBox("danger", "je foto mag niet groter zijn dan " . $maxMB . "MB.");
                 }
             } else {
-                $feedback = buildFeedbackBox("danger", "je geselecteerde foto heeft geen geldige extentie. Toegestane extenties: .jpg, .png & .gif.");
+                $feedback = buildFeedbackBox("danger", "je gekozen foto heeft geen geldige extentie. Toegestane extenties: .jpg, .png & .gif.");
 
             }
         } else {
             $feedback = buildFeedbackBox("danger", "er is iets fout gegaan bij het uploaden van je foto, probeer het nog eens opnieuw.");
-
         }
 
     }elseif(isset($_POST['description']) && empty($_POST['description'])){
     $feedback = buildFeedbackBox("info", "Voeg een beschrijving aan je foto toe.");
 
     }elseif(isset($_FILES['postPhoto']) && empty($_FILES['postPhoto']['name'])){
-    $feedback = buildFeedbackBox("warning", "je hebt nog geen foto geslecteerd.");
+    $feedback = buildFeedbackBox("warning", "je hebt nog geen foto toegevoegd.");
     }
 
 
@@ -148,8 +148,8 @@ include_once('classes/Upload.class.php');
                         </select><br>
 
                         <div id="send">
-                            <label for="submit">Post je bericht:</label>
-                            <button type="submit" name="submit" id="submit" class="btn btn-success green"><i class="fa fa-reply"></i>Post je bericht</button>
+                            <label for="submit">Plaats je foto:</label>
+                            <button type="submit" name="submit" id="submit" class="btn btn-success green"><i class="fa fa-reply"></i>Plaats je foto</button>
                             <br>
                             <hr>
                         </div>
@@ -166,7 +166,7 @@ include_once('classes/Upload.class.php');
 
 <?php include_once('inc/footer.inc.php'); ?>
 <script src="js/charCount.js"></script>
-<script src="js/uploadPreview.js"></script>
+<script src="js/uploadPostPreview.js"></script>
 <script src="js/effectPreview.js"></script>
 <script src="js/postLocation.js"></script>
 </body>

@@ -615,7 +615,7 @@ input[type="checkbox"]{
     .input-sm{
         width: 80%;
         float: left;
-        height: 40px;
+        height: 45px;
         margin-bottom: 5px;
 
     }
@@ -720,12 +720,11 @@ input[type="checkbox"]{
 
 
 .box-body img{
-    /*display: block;
+    display: block;
     margin: 5px auto;
     text-align: center;
     max-width: 100%;
-    max-height: 500px;*/
-    width: 100%;
+    max-height: 500px;
 }
 
 
@@ -796,6 +795,15 @@ input[type='file'] {
 }
 
 
+.btn-success, .btn-large{
+    height: 45px;
+}
+
+.btn.comment:before{
+    font-family: "FontAwesome";
+    content: '\f075';
+    margin-right: 6px;
+}
 
 @media screen and (min-width: 480px){
 
@@ -809,6 +817,7 @@ input[type='file'] {
     }
 
 }
+
 
 @media screen and (min-width: 760px){
     .col-sm-12{

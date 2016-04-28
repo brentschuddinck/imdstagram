@@ -63,7 +63,7 @@ include_once('inc/feedbackbox.inc.php');
                     </div>
                     <div class="box-tools">
                         <div class="<?php echo $showPost['user_id'] == $_SESSION['login']['userid'] ? 'show' :'hidden' ?>">
-                        <a href="?delete=<?php echo $showPost['post_id'];?>" type="button" class="btn btn-box-tool" title="post verwijderen" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a>
+                        <a href="?delete=<?php echo $showPost['post_id'];?>" type="button" class="btn btn-box-tool" title="post verwijderen" data-target="#confirm-delete"><i class="fa fa-trash-o fa-lg"></i></a>
                         </div>
 
                     </div>
@@ -72,7 +72,7 @@ include_once('inc/feedbackbox.inc.php');
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <p>Ben je zeker dat je de geslecteerde foto wil verwijderen?</p>
+                                    <p>Ben je zeker dat je de geselecteerde foto wil verwijderen?</p>
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-danger btn-ok confirmDelete" name="confirmDelete">verwijder foto</button>
@@ -85,9 +85,9 @@ include_once('inc/feedbackbox.inc.php');
 
                 </div>
                 <div class="box-body">
-                    <img class="img-responsive pad <?php echo $showPost['photo_effect']; ?>" src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
+                    <img class="img-responsive pad <?php echo htmlspecialchars($showPost['photo_effect']); ?>" src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
                     <p><?php echo htmlspecialchars($showPost['post_description']) ?></p>
-                    <a href="?click=<?php echo $showPost['post_id'];?>" data-id="<?php echo $showPost['post_id'] ?>" class="likeBtn btn btn-xs <?php echo $post->isLiked() == true ? 'liked ' : 'btn-default '?>"><i class="fa fa-heart-o"></i> vind ik leuk</a>
+                    <a href="?click=<?php echo $showPost['post_id'];?>" data-id="<?php echo $showPost['post_id'] ?>" class="likeBtn btn btn-xs <?php echo $post->isLiked() == true ? 'liked ' : 'btn-default '?>"><i class="fa fa-heart-o fa-lg"></i> vind ik leuk</a>
                         <span class="pull-right text-muted showLikes"><?php echo $post->showLikes();?> <?php echo $post->showLikes() == 1 ? 'like' : 'likes' ?> </span>
                 </div>
                 <div class="box-footer box-comments">

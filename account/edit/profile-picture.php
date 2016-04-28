@@ -15,7 +15,7 @@ if(isset($_POST['btnUploadProfilePicture'])) {
     $profilePhotoError = $profilePhotoArr["error"]; //an error code resulting from the file upload
 
     $maxBytes = 512000; //1024 x 500 = 512000 bytes = 500KB. Maximale bestandsgrootte dat we willen toestaan
-    $uploadQualityInPct = 60; //algemeen genomen zoals we doen bij Photoshop export van afbeeldingen naar het web
+    //$uploadQualityInPct = 60; //algemeen genomen zoals we doen bij Photoshop export van afbeeldingen naar het web
 
     //checken of we een bestand hebben en error geen 0 is
     if ((!empty($profilePhotoArr)) && ($profilePhotoError == 0)) {
@@ -27,7 +27,7 @@ if(isset($_POST['btnUploadProfilePicture'])) {
                 $filename = basename($profilephotoName);
                 //extentie ophalen +1 => .jpg => jpg
                 $extensionFile = substr($filename, strrpos($filename, '.') + 1);
-                $validExtensions = array("jpg", "png", "gif");
+                $validExtensions = array("jpg", "png", "gif", "jpeg");
                 $validTypes = array("image/jpeg", "image/png", "image/gif");
 
                 $isValidExtension = $upload->isValidExtension($validExtensions, $extensionFile);
@@ -97,7 +97,7 @@ if(isset($_POST['btnUploadProfilePicture'])) {
         }
 
     } else {
-        $feedback = buildFeedbackBox("danger", "er is geen profielfoto geüpload.");
+        $feedback = buildFeedbackBox("danger", "je hebt nog geen geldige nieuwe profielfoto toegevoegd.");
     }
 }
 
@@ -145,7 +145,7 @@ if(isset($_POST['btnUploadProfilePicture'])) {
         <!-- einde formuliergroep profielfoto -->
 
         <input type="file" id="fileToUpload" class="uploadFile" name="uploaded_profielfoto">
-        <input type="submit" value="Profielfoto wijzigen" name="btnUploadProfilePicture" id="btnUploadProfilePicture"
+        <input type="submit" value="Profielfoto wijzigen" name="btnUploadProfilePicture"
                class="btn btn-primary btn-large">
 
 
@@ -161,5 +161,6 @@ if(isset($_POST['btnUploadProfilePicture'])) {
 </div>
 
 <?php include_once('../../inc/footer.inc.php'); ?>
+<script src="../../js/uploadProfilePicturePreview.js"></script>
 </body>
 </html>
