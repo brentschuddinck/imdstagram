@@ -193,6 +193,10 @@ aside {
     padding-bottom: 10px;
 }
 
+.error{
+    text-align: center;
+}
+
 
 .login-form{
     margin-bottom: 50px;

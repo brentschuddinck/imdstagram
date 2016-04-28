@@ -1,1 +1,5 @@
 #2do: directe toegang tot ajax, classes en inc blokkeren.
+ErrorDocument 404 /imdstagram/error/404.php
+
+#blokkeer indexes
+#ptions -Indexes

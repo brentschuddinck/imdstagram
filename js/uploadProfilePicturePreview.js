@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     function readURL(input) {
         if (input.files && input.files[0]) {
 
@@ -23,6 +24,9 @@ $(document).ready(function () {
                 if(validFileType){
                     return true;
                 }else{
+                    //toon default foto
+                    $('.profielfoto.groot').attr('src', '/imdstagram/img/uploads/profile-pictures/default.png');
+                    $('.btn-primary').prop('disabled', true);
                     return false;
                 }
 
@@ -31,6 +35,9 @@ $(document).ready(function () {
 
 
             if(checkFileType()){
+
+                $('.btn-primary').prop('disabled', false);
+
                 var reader = new FileReader();
 
                 reader.onload = function (e) {

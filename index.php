@@ -7,16 +7,15 @@ include_once('inc/feedbackbox.inc.php');
     $showPosts = $post->getAllPosts();
     if(isset($_POST['btnLikePicture'])) {
         $post->likePost();
-
     }
 
-    if(!empty($_GET['click']) ){
+    if(isset($_GET['click']) && !empty($_GET['click']) ){
         $getclick = $_GET['click'];
         $post->setMSPostId($getclick);
         $post->likePost();
     }
 
-    if(!empty($_GET['delete'])){
+    if(isset($_GET['delete']) && !empty($_GET['delete'])){
         $deletePostId = $_GET['delete'];
         $post->setMSPostId($deletePostId);
         $post->deletePost();
