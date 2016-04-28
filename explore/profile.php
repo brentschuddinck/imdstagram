@@ -17,7 +17,7 @@ include_once('../inc/feedbackbox.inc.php');
     $user->setMIUserId($_GET['id']);
     $user->followUser();
     }
-    $user->countFollowers();
+
     if(empty($userPosts) && $post->countPostsForEachuser() > 0){
         $feedback = 'Dit account is privé, stuur een volg verzoek om de foto\'s van deze gebruiker te zien.';
     }elseif(empty($userPosts) && $post->countPostsForEachuser() == 0){
@@ -77,12 +77,12 @@ include_once('../inc/feedbackbox.inc.php');
         </div>
         <div class="btn-group" role="group">
             <button type="button" id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="fa fa-users" aria-hidden="true"></span>
-                <div class="hidden-xs"><strong>35</strong> volgers</div>
+                <div class="hidden-xs"><strong><?php echo $user->countFollowers(); ?></strong><?php echo $user->countFollowers() == 1 ? ' volger' : ' volgers' ?></div>
             </button>
         </div>
         <div class="btn-group" role="group">
             <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="fa fa-user" aria-hidden="true"></span>
-                <div class="hidden-xs"><strong>20</strong> volgend</div>
+                <div class="hidden-xs"><strong><?php echo $user->countFollowing(); ?></strong> volgend</div>
             </button>
         </div>
     </div>

@@ -414,10 +414,19 @@ class User
         }
     }
 
-        public function countFollowers(){
+    public function countFollowers(){
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT COUNT(follows) FROM following WHERE user_id = :userId");
-        $statement->bindValue(':userId', $_SESSION['login']['userid']);
+        $statement = $conn->prepare("SELECT COUNT(follows) FROM following WHERE follows = (SELECT user_id FROM user WHERE username = :username)");
+        $statement->bindValue(':username', $this->m_sUsername);
+        $statement->execute();
+        $result = $statement->fetchColumn();
+        return $result;
+    }
+
+    public function countFollowing(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT COUNT(user_id) FROM following WHERE user_id = (SELECT user_id FROM user WHERE username = :username)");
+        $statement->bindValue(':username', $this->m_sUsername);
         $statement->execute();
         $result = $statement->fetchColumn();
         return $result;
