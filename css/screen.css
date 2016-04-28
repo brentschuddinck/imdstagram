@@ -213,7 +213,7 @@ aside {
 }
 
 #postForm{
-    margin-top: 20px;
+    margin: 10px 0;
 }
 
 #postForm #file{
@@ -311,13 +311,12 @@ aside {
 /*UPLOAD FORM*/
 
 .uploads h1{
-    margin-bottom: 0;
+    margin-bottom: 10px;
     padding-bottom: 0;
 }
 
 #file{
     padding-top: 5px;
-    float: left;
 }
 
 .btn-success{
@@ -627,8 +626,6 @@ input[type="checkbox"]{
     }
 
 
-
-
 }
 
 /* PROFIEL PAGINA */
@@ -721,19 +718,105 @@ input[type="checkbox"]{
     font-size: 17px;
 }
 
+
 .box-body img{
-    display: block;
+    /*display: block;
     margin: 5px auto;
-    width: auto;
-    height: auto;
+    text-align: center;
     max-width: 100%;
-    max-height: 500px;
+    max-height: 500px;*/
+    width: 100%;
 }
 
+
+.image-preview{
+    max-width: 100%;
+    max-height: 500px;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+
+.status-upload form{
+    margin-bottom: 20px;
+}
+
+.status-upload{
+    margin-bottom: 30px;
+}
+
+
+select#effect{
+    width: 100%;
+    padding: 5px;
+}
+
+.status-upload #file{
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.status-upload form label{
+    padding: 0;
+    font-weight: bold;
+    margin: 10px 0 0 0;
+    display: block;
+    width: 100%;
+}
+
+.status-upload .btn-success{
+    width: 100%;
+    float: left;
+    padding: 8px;
+    margin: 0;
+}
+
+.status-upload h2{
+    display: block;
+    width: 100%;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.status-upload hr{
+    color: #EFEFEF;
+}
+
+#send{
+    margin: 10px 0;
+}
+
+hr{
+    margin-top: 30px;
+}
+
+input[type='file'] {
+    color: transparent;
+    width: 100%;
+}
+
+
+
+@media screen and (min-width: 480px){
+
+    .status-upload .btn-success{
+        width: 300px;
+    }
+
+    select#effect{
+        width: 300px;
+        padding: 5px;
+    }
+
+}
 
 @media screen and (min-width: 760px){
     .col-sm-12{
         padding: 0;
+    }
+
+    input[type='file'] {
+        color: #000;
     }
 
 }

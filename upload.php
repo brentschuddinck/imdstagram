@@ -7,7 +7,6 @@ include_once('classes/Upload.class.php');
 // uploaden van foto
     if(!empty($_POST['description']) && !empty($_FILES['postPhoto']['name'])) {
 
-
         // get file array info
         $postPhotoArr = $_FILES["postPhoto"];
         $postPhotoName = $postPhotoArr["name"];
@@ -53,6 +52,7 @@ include_once('classes/Upload.class.php');
                         $post->setMSDescription($_POST['description']);
                         $post->setMSImageName($FullFileName);
                         $post->setMSLocation($_POST['location']);
+                        $post->setMSEffect($_POST['effect']);
                         $post->postPhoto();
                         $feedback = buildFeedbackBox("success", "Je foto is geplaatst! <a href='/imdstagram/index.php'>Bekijk het resultaat</a>.");
                     }else{
@@ -112,10 +112,48 @@ include_once('classes/Upload.class.php');
                         }
                         ?>
                         <input type="hidden" name="location" id="location" value="">
-                        <textarea name="description" id="description" maxlength="1000" placeholder="Beschrijving foto" required title="voeg een beschrijving toe aan je foto." ><?php echo isset($_POST['description']) && empty($_FILES['postPhoto']['name']) ? htmlspecialchars($_POST['description']) : '' ?></textarea>
-                        <span><p id="charCount" class="help-block ">You have reached the limit</p></span>
-                        <input type="file" id="file" name="postPhoto">
-                        <button type="submit" name="submit" class="btn btn-success green"><i class="fa fa-reply"></i>Post</button>
+
+                        <label for="description">Bericht dat je met je foto wil meesturen:</label>
+                        <textarea name="description" id="description" maxlength="1000" placeholder="Beschrijving foto"  autofocus required title="voeg een beschrijving toe aan je foto." ><?php echo isset($_POST['description']) && empty($_FILES['postPhoto']['name']) ? htmlspecialchars($_POST['description']) : '' ?></textarea>
+                        <span><p id="charCount" class="help-block ">Je bericht heeft de limiet van 1000 karakters bereikt.</p></span>
+
+                        <label for="file">Bladeren naar een afbeelding:</label>
+                        <input type="file" id="file" name="postPhoto" accept="image/*;capture=camera">
+
+                        <label for="effect">Versterk je foto met een effect:</label>
+                        <select name="effect" id="effect">
+                            <option value="default">Geen effect</option>
+                            <option value="_1977">1977</option>
+                            <option value="aden">Aden</option>
+                            <option value="brooklyn">Brooklyn</option>
+                            <option value="clarendon">Clarendon</option>
+                            <option value="earlybird">Earlybird</option>
+                            <option value="gingham">Gingham</option>
+                            <option value="hudson">Hudson</option>
+                            <option value="inkwell">Inkwell</option>
+                            <option value="lark">Lark</option>
+                            <option value="lofi">Lofi</option>
+                            <option value="mayfair">Mayfair</option>
+                            <option value="moon">Moon</option>
+                            <option value="nashville">Nashville</option>
+                            <option value="perpetua">Perpetua</option>
+                            <option value="reyes">Reyes</option>
+                            <option value="rise">Rise</option>
+                            <option value="reyes">Reyes</option>
+                            <option value="slumber">Slumber</option>
+                            <option value="toaster">Toaster</option>
+                            <option value="walden">Walden</option>
+                            <option value="willow">Willow</option>
+                            <option value="xpro2">Xpro2</option>
+                        </select><br>
+
+                        <div id="send">
+                            <label for="submit">Post je bericht:</label>
+                            <button type="submit" name="submit" id="submit" class="btn btn-success green"><i class="fa fa-reply"></i>Post je bericht</button>
+                            <br>
+                            <hr>
+                        </div>
+
 
 
                     </form>
@@ -128,6 +166,8 @@ include_once('classes/Upload.class.php');
 
 <?php include_once('inc/footer.inc.php'); ?>
 <script src="js/charCount.js"></script>
+<script src="js/uploadPreview.js"></script>
+<script src="js/effectPreview.js"></script>
 <script src="js/postLocation.js"></script>
 </body>
 </html>

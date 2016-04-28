@@ -10,10 +10,20 @@ class Post{
     private $m_sPostId;
     private $m_sUsernamePosts;
     private $m_sLocation;
-
+    private $m_sEffect;
 
 
     // setters & getters
+
+    public function getMSEffect()
+    {
+        return $this->m_sEffect;
+    }
+
+    public function setMSEffect($m_sEffect)
+    {
+        $this->m_sEffect = $m_sEffect;
+    }
 
     public function getMSLocation()
     {
@@ -74,13 +84,15 @@ class Post{
     public function postPhoto(){
         // database connectie
         $conn = Db::getInstance();
-        $statement = $conn->prepare("INSERT INTO post (post_description, post_photo, post_date, post_location, user_id) VALUES(:description, :uploadPhoto, :postDate, :location, :userId)");
+        $statement = $conn->prepare("INSERT INTO post (post_description, post_photo, post_date, post_location, user_id, photo_effect) VALUES(:description, :uploadPhoto, :postDate, :location, :userId, :effect)");
         // bind values to parameters
         $statement->bindValue(":description", $this->m_sDescription);
         $statement->bindValue(":uploadPhoto", $this->m_sImageName);
         $statement->bindValue(":postDate", date(DATE_ATOM));
         $statement->bindValue(":location", $this->m_sLocation);
         $statement->bindValue(":userId", $_SESSION['login']['userid']);
+        $statement->bindValue(":effect", $this->m_sEffect);
+
         //execute statement
         $statement->execute();
 
@@ -172,18 +184,21 @@ class Post{
     public function timePosted($p_postedTime){
 
             $postedTime = strtotime($p_postedTime); //parse textual datetime description into UNIX timestamp
-            $currentTime = time();
+            $currentTime = time(); //Returns the current time measured in the number of seconds since the Unix Epoch
 
             // bereken seconds tussen time atm en posted time
             $timeDifference = $currentTime - $postedTime;
 
             $seconds = $timeDifference ;
-            $minutes = round($timeDifference / 60 );
-            $hours = round($timeDifference / 3600);
-            $days = round($timeDifference / 86400 );
-            $weeks = round($timeDifference / 604800);
-            $months = round($timeDifference / 2628000 );
-            $years = round($timeDifference / 31536000 );
+            //floor rond naar beneden af
+            $minutes = floor($timeDifference / 60 );
+            $hours = floor($timeDifference / 3600);
+            $days = floor($timeDifference / 86400 );
+            $weeks = floor($timeDifference / 604800);
+            $months = floor($timeDifference / 2628000 );
+            $years = floor($timeDifference / 31536000 );
+
+
 
             if($seconds <= 60){
                 return "zojuist";

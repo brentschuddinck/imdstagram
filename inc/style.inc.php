@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/imdstagram/css/bootstrap.min.css">
 <link rel="stylesheet" href="/imdstagram/css/flat-ui.css">
 <link rel="stylesheet" href="/imdstagram/css/screen.css">
+<link rel="stylesheet" href="/imdstagram/css/cssgram.min.css">
 <link href="https://fonts.googleapis.com/css?family=Arimo:700,400" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet" type="text/css">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
@@ -14,7 +15,6 @@
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
 <!--[if lt IE 9]>
 <script src="/imdstagram/js/html5shiv.js"></script>
-<script src="/imdstagram/js/respond.min.js"></script>
 <![endif]-->
 
 <!-- end fall-back support older browsers -->
