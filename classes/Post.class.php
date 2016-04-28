@@ -102,7 +102,7 @@ class Post{
     // posts (van vrienden) die op timeline van gebruiker komen
     public function getAllPosts(){
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT * FROM post ORDER BY post_date DESC");
+        $statement = $conn->prepare("SELECT * FROM post ORDER BY post_date DESC LIMIT 20");
         $statement->execute();
         $result = $statement->fetchAll();
         return $result;

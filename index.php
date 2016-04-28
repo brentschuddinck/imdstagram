@@ -85,7 +85,7 @@ include_once('inc/feedbackbox.inc.php');
 
                 </div>
                 <div class="box-body">
-                    <img class="img-responsive pad" src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
+                    <img class="img-responsive pad <?php echo $showPost['photo_effect']; ?>" src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
                     <p><?php echo htmlspecialchars($showPost['post_description']) ?></p>
                     <a href="?click=<?php echo $showPost['post_id'];?>" data-id="<?php echo $showPost['post_id'] ?>" class="likeBtn btn btn-xs <?php echo $post->isLiked() == true ? 'liked ' : 'btn-default '?>"><i class="fa fa-heart-o"></i> vind ik leuk</a>
                         <span class="pull-right text-muted showLikes"><?php echo $post->showLikes();?> <?php echo $post->showLikes() == 1 ? 'like' : 'likes' ?> </span>
