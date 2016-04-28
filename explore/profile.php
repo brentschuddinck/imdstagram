@@ -13,6 +13,11 @@ include_once('../inc/feedbackbox.inc.php');
     $user = new User();
     $user->setMSUsername($username);
 
+    if(!empty($_GET['id'])){
+    $user->setMIUserId($_GET['id']);
+    $user->followUser();
+    }
+
     if(empty($userPosts) && $post->countPostsForEachuser() > 0){
         $feedback = 'Dit account is privé, stuur een volg verzoek om de foto\'s van deze gebruiker te zien.';
     }elseif(empty($userPosts) && $post->countPostsForEachuser() == 0){
@@ -55,6 +60,13 @@ include_once('../inc/feedbackbox.inc.php');
         <div class="card-info"> <span class="card-title"><?php echo htmlspecialchars($pageTitle); ?></span>
 
         </div>
+        <?php if(isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['username']): ?>
+        <div>
+            <form action="" method="post">
+                <a  style="margin-top: 20px" href="?user=<?php echo $_GET['user'];?>&id=<?php echo $user->getIdFromProfile() ?>" class="likeBtn btn btn-info"><?php echo $user->isFollowing() == 0 ? 'follow' : 'unfollow' ?><i></i></a>
+            </form>
+        </div>
+        <?php endif ?>
     </div>
     <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
         <div class="btn-group" role="group">
