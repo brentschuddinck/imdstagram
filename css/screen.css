@@ -722,6 +722,14 @@ input[type="checkbox"]{
     font-size: 17px;
 }
 
+.user-block{
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 200px;
+}
+
 
 .box-body img{
     display: block;

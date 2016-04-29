@@ -119,16 +119,23 @@ if(empty($userPosts) && $post->countPostsForEachuser() > 0){
             <div class="tab-pane fade in" id="tab2">
                 <ul>
                 <?php foreach($followers as $follower): ?>
-                <li><?php echo $follower['username'] ?></li>
+                    <div class="user-block"">
+                        <a href="/imdstagram/explore/profile.php?user=<?php echo $follower['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $follower['profile_picture'] ?>" alt="<">
+                        <span class="username"><?php echo $follower['username']; ?></span></a>
+                    </div>
                 <?php endforeach ?>
+
+
                 </ul>
                 <p class="fb"><?php echo !empty($followerfb) ? $followerfb : ''?></p>
             </div>
             <div class="tab-pane fade in" id="tab3">
                 <ul>
                 <?php foreach($followings as $following): ?>
-                    <li><?php echo $following['username'] ?></li>
-                <?php endforeach ?>
+                    <div class="user-block"">
+                    <a href="/imdstagram/explore/profile.php?user=<?php echo $following['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $follower['profile_picture'] ?>" alt="<">
+                        <span class="username"><?php echo $following['username']; ?></span></a>
+            </div>                <?php endforeach ?>
                 </ul>
                 <p class="fb"><?php echo !empty($followingfb) ? $followingfb : ''?></p>
 
