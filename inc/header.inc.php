@@ -54,7 +54,7 @@
 
 
                         <li class="dropdown">
-                            <a href="/imdstagram/account/profile.php" class="dropdown-toggle"
+                            <a href="/imdstagram/explore/profile.php" class="dropdown-toggle"
                                data-toggle="dropdown">
 
                                 <img class="profielfoto mini"
