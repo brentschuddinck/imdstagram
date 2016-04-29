@@ -722,7 +722,8 @@ input[type="checkbox"]{
     font-size: 17px;
 }
 
-.user-block{
+#tab2 .user-block,
+#tab3 .user-block{
     margin-bottom: 25px;
     margin-left: auto;
     margin-right: auto;
