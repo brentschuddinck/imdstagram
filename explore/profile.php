@@ -23,10 +23,15 @@ include_once('../inc/feedbackbox.inc.php');
     $followers = $user->getFollowers();
     $followings = $user->getFollowing();
 
-if(empty($userPosts) && $post->countPostsForEachuser() > 0){
-        $feedback = 'Dit account is privé, stuur een volg verzoek om de foto\'s van deze gebruiker te zien.';
-    }elseif(empty($userPosts) && $post->countPostsForEachuser() == 0){
-        $feedback = 'Deze gebruiker heeft nog geen foto\'s geplaatst.';
+    // feedback voor als een profiel nog geen foto's, volgers of nog niemand volgt 
+    if(empty($userPosts) && $post->countPostsForEachuser() > 0){
+            $feedback = 'Dit account is privé, stuur een volg verzoek om de foto\'s van deze gebruiker te zien.';
+        }elseif(empty($userPosts) && $post->countPostsForEachuser() == 0){
+            $feedback = 'Deze gebruiker heeft nog geen foto\'s geplaatst.';
+        }
+
+    if(empty($followers) && $user->countFollowers() == 0){
+        $followerfb = 'Deze gebruiker heeft nog geen volgers';
     }
 
     if(empty($followings) && $user->countFollowing() == 0){
@@ -34,9 +39,6 @@ if(empty($userPosts) && $post->countPostsForEachuser() > 0){
     }
 
 
-    if(empty($userPosts) && $user->countFollowers() == 0){
-        $followerfb = 'Deze gebruiker heeft nog geen volgers';
-    }
 
 
 
@@ -117,28 +119,22 @@ if(empty($userPosts) && $post->countPostsForEachuser() > 0){
                 </div>
             </div>
             <div class="tab-pane fade in" id="tab2">
-                <ul>
                 <?php foreach($followers as $follower): ?>
                     <div class="user-block"">
                         <a href="/imdstagram/explore/profile.php?user=<?php echo $follower['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $follower['profile_picture'] ?>" alt="<">
                         <span class="username"><?php echo $follower['username']; ?></span></a>
                     </div>
                 <?php endforeach ?>
-
-
-                </ul>
                 <p class="fb"><?php echo !empty($followerfb) ? $followerfb : ''?></p>
             </div>
             <div class="tab-pane fade in" id="tab3">
-                <ul>
                 <?php foreach($followings as $following): ?>
                     <div class="user-block profile-block"">
                     <a href="/imdstagram/explore/profile.php?user=<?php echo $following['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $follower['profile_picture'] ?>" alt="<">
                         <span class="username"><?php echo $following['username']; ?></span></a>
-            </div>                <?php endforeach ?>
-                </ul>
+                    </div>
+                <?php endforeach ?>
                 <p class="fb"><?php echo !empty($followingfb) ? $followingfb : ''?></p>
-
             </div>
         </div>
     </div>
