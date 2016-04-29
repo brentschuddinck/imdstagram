@@ -94,8 +94,8 @@ class Validation
     //valideer geldigheid zoekwoord
     public function isValidHashtag($p_sSearchTerm)
     {
-
-        if(strlen($p_sSearchTerm) > 1 && preg_match("/[+#a-zA-Z0-9_]/", $p_sSearchTerm) && !preg_match("/\s/", $p_sSearchTerm) && !preg_match("/[\'\/~`\!@\$%\^&\*\(\)\-\+=\{\}\[\]\|;:\"\<\>,\.\?\\\]/", $p_sSearchTerm)){
+        //strlen = string length
+        if(strlen($p_sSearchTerm) > 1 && preg_match("/[+#a-zA-Z0-9]/", $p_sSearchTerm) && !preg_match("/\s/", $p_sSearchTerm) && !preg_match("/[\'\/~`\!@\$%\^&\*\(\)\_\-\+=\{\}\[\]\|;:\"\<\>,\.\?\\\]/", $p_sSearchTerm)){
             //geldig
             return true;
         }else{
@@ -107,7 +107,7 @@ class Validation
     public function isValidSearchTerm($p_sSearchTerm)
     {
 
-        if(strlen($p_sSearchTerm) > 1 && preg_match("/[+#a-zA-Z0-9_]/", $p_sSearchTerm) && !preg_match("/[\'\/~`\!@\$%\^&\*\(\)\-\+=\{\}\[\]\|;:\"\<\>,\.\?\\\]/", $p_sSearchTerm)){
+        if(strlen($p_sSearchTerm) > 1 && preg_match("/[+#a-zA-Z0-9]/", $p_sSearchTerm) && !preg_match("/[\'\/~`\!@\$%\^&\*\(\)\+=\{\}\[\]\|;:\"\<\>,\.\?\\\]/", $p_sSearchTerm)){
             //geldig
             return true;
         }else{

@@ -7,7 +7,7 @@ include_once('classes/Search.class.php');
 
 if (isset($_GET['search']) && !empty($_GET['search'])) {
 
-    $searchTerm = strtolower($_GET['search']);
+    $searchTerm = $_GET['search'];
 
     //search bestaat en is niet leeg
 
@@ -70,7 +70,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         if (strlen($searchTerm) < 2) {
             $feedback = buildFeedbackBox("danger", "het zoekwoord moet minstens 2 tekens lang zijn.");
         } else {
-            $feedback = buildFeedbackBox("danger", "het zoekwoord is ongeldig. Alleen #, _, letters en cijfers zonder spaties zijn toegestaan.");
+            $feedback = buildFeedbackBox("danger", "het zoekwoord is ongeldig. Alleen #, letters en cijfers zonder spaties zijn toegestaan.");
         }
     }
 
@@ -124,7 +124,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         foreach ($arrTags as $arrItem) {
             $showTagName = $arrItem['tag_name'];
 
-            $showTags = "<article class=\"col-xs-12 col-sm-6 col-md-4\">";
+            $showTags = "<article class=\"col-xs-6 col-sm-4 col-md-3\">";
             $showTags .= "<a class='thumbnail picturelist' href='/imdstagram/explore/index.php?tag=" . $showTagName . "'>";
             $showTags .= "<div class='vet'>" . $showTagName . "</div>";
             //$showLocations .= "<img src='img/uploads/profile-pictures/". $showLocationsProfilePicture ."' alt='Profielfoto van ". $showLocationsFullName ."'>";
@@ -147,10 +147,9 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         foreach ($arrLocations as $arrItem) {
             $showLocationsName = $arrItem['post_location'];
 
-            $showLocations = "<article class=\"col-xs-12 col-sm-6 col-md-4\">";
-            $showLocations .= "<a class='thumbnail picturelist' href='/imdstagram/explore/index.php?location=" . $showLocationsName . "'>";
-            $showLocations .= "<div class='vet'>" . $showLocationsName . "</div>";
-            //$showLocations .= "<img src='img/uploads/profile-pictures/". $showLocationsProfilePicture ."' alt='Profielfoto van ". $showLocationsFullName ."'>";
+            $showLocations = "<article class=\"col-xs-12 col-sm-4 col-md-3\">";
+            $showLocations .= "<a class='thumbnail picturelist' href='/imdstagram/explore/index.php?location=" . htmlspecialchars($showLocationsName) . "'>";
+            $showLocations .= "<div class='vet'>" . htmlspecialchars($showLocationsName) . "</div>";
             $showLocations .= "</a></article>";
             echo $showLocations;
         }
@@ -172,10 +171,10 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
             $showUsersProfilePicture = $arrItem['profile_picture'];
 
             $showUsers = "<article class=\"col-xs-12 col-sm-4 col-md-3\">";
-            $showUsers .= "<a class=\"thumbnail picturelist\" href='/imdstagram/account/profile.php?user=" . $showUsersUsername . "'>";
-            $showUsers .= "<div class='vet'>" . $showUsersFullName . "</div>";
-            $showUsers .= "<div>" . $showUsersUsername . "</div>";
-            $showUsers .= "<img src='img/uploads/profile-pictures/" . $showUsersProfilePicture . "' alt='Profielfoto van " . $showUsersFullName . "'>";
+            $showUsers .= "<a class=\"thumbnail picturelist\" href='/imdstagram/explore/profile.php?user=" . htmlspecialchars($showUsersUsername) . "'>";
+            $showUsers .= "<div class='vet'>" . htmlspecialchars($showUsersFullName) . "</div>";
+            $showUsers .= "<div>" . htmlspecialchars($showUsersUsername) . "</div>";
+            $showUsers .= "<img src='img/uploads/profile-pictures/" . $showUsersProfilePicture . "' alt='Profielfoto van " . htmlspecialchars($showUsersFullName) . "'>";
             $showUsers .= "</a></article>";
             echo $showUsers;
         }

@@ -212,7 +212,9 @@ aside {
     margin-bottom: 50px;
 }
 
-
+.ajax-feedback{
+    text-align: left;
+}
 
 .ajax-feedback.error{
     color: #E74C3C;
@@ -720,6 +722,38 @@ input[type="checkbox"]{
     border-radius: 4px;
 }
 
+.card-title{
+    display: block;
+    margin-bottom: 20px;
+}
+
+.thumb{
+    cursor: pointer;
+}
+
+.delete-post-icon,
+.inappropriate-post-icon{
+    width: 30px;
+    height: 30px;
+}
+
+#post-extra input{
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.inappropriate-post-icon:before{
+    font-family: "FontAwesome";
+    content: '\f12a';
+    color: #fff;
+}
+
+.delete-post-icon:hover,
+.inappropriate-post-icon:hover{
+    background-color: #E74C3C;
+}
 
 .card.hovercard .card-info {
     overflow: hidden;
@@ -741,6 +775,10 @@ input[type="checkbox"]{
     font-size: 17px;
 }
 
+a.follow-btn{
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
 
 .box-body img{
     display: block;
@@ -798,6 +836,11 @@ select#effect{
     width: 100%;
     margin-top: 0;
     padding-top: 0;
+}
+
+.likeBtn{
+    height: 34px;
+    padding-top: 12px;
 }
 
 .status-upload hr{

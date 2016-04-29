@@ -102,7 +102,7 @@ class Post{
     // posts (van vrienden) die op timeline van gebruiker komen
     public function getAllPosts(){
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT * FROM post ORDER BY post_date DESC LIMIT 20");
+        $statement = $conn->prepare("SELECT * FROM post WHERE inappropriate < 3  ORDER BY post_date DESC LIMIT 20");
         $statement->execute();
         $result = $statement->fetchAll();
         return $result;
@@ -275,6 +275,38 @@ class Post{
         $statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->execute();
     }
+
+
+    public function getHashtags($p_sString, $str = 1) {
+        preg_match_all('/#(\w+)/', $p_sString, $matches);
+        $i = 0;
+        $keywords = "";
+
+        if ($str) {
+            foreach ($matches[1] as $match) {
+                $count = count($matches[1]);
+                $keywords .= "$match";
+                $i++;
+                if ($count > $i) $keywords .= ", ";
+            }
+        } else {
+            foreach ($matches[1] as $match) {
+                $keyword[] = $match;
+            }
+            $keywords = $keyword;
+        }
+        return $keywords;
+    }
+
+
+    public function convertHashtagToLink($p_sString) {
+        preg_match_all('/#(\w+)/',$p_sString, $matches);
+        foreach ($matches[1] as $match) {
+            $string = str_replace("#$match", "<a href='/imdstagram/explore/tag.php?tag=$match'>#$match</a>", "$p_sString");
+        }
+        return $p_sString;
+    }
+
 
 
     /*public function deletePostPicture(){
