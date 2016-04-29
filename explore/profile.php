@@ -6,7 +6,22 @@ include_once('../inc/feedbackbox.inc.php');
 
 
     $post = new Post();
-    $username = $_GET['user'];
+    $user = new User();
+
+    //detecteer of er een user is
+    if(isset($_GET['user']) && !empty($_GET['user'])){
+        $username = $_GET['user'];
+
+        //kijk of deze gebruiker bestaat
+        $user->setMSUsername($username);
+        if($user->UsernameAvailable()){
+            //hergebruik functie. rows = 0 keert true terug. In deze situatie moet dit 1 zijn.
+            header('Location: /imdstagram/error/error404.php');
+        }
+    }else{
+        header('Location: /imdstagram/error/error404.php');
+    }
+
     $post->setMSUsernamePosts($username);
     $userPosts = $post->getPostsForEachUser();
 
