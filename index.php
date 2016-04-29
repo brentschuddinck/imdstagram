@@ -3,25 +3,25 @@ include_once('inc/sessiecontrole.inc.php');
 include_once('classes/Post.class.php');
 include_once('inc/feedbackbox.inc.php');
 
-    $post = new Post();
-    $showPosts = $post->getAllPosts();
-    if(isset($_POST['btnLikePicture'])) {
-        $post->likePost();
-    }
+$post = new Post();
+$showPosts = $post->getAllPosts();
+if(isset($_POST['btnLikePicture'])) {
+    $post->likePost();
+}
 
-    if(isset($_GET['click']) && !empty($_GET['click']) ){
-        $getclick = $_GET['click'];
-        $post->setMSPostId($getclick);
-        $post->likePost();
-    }
+if(isset($_GET['click']) && !empty($_GET['click']) ){
+    $getclick = $_GET['click'];
+    $post->setMSPostId($getclick);
+    $post->likePost();
+}
 
-    if(isset($_GET['delete']) && !empty($_GET['delete'])){
-        $deletePostId = $_GET['delete'];
-        $post->setMSPostId($deletePostId);
-        $post->deletePost();
-        /*$post->deletePostPicture($deletePostId);*/
-        header('Location: index.php');
-    }
+if(isset($_GET['delete']) && !empty($_GET['delete'])){
+    $deletePostId = $_GET['delete'];
+    $post->setMSPostId($deletePostId);
+    $post->deletePost();
+    /*$post->deletePostPicture($deletePostId);*/
+    header('Location: index.php');
+}
 
 
 
@@ -61,8 +61,8 @@ include_once('inc/feedbackbox.inc.php');
                         <span class="description"><?php echo $post->timePosted($showPost['post_date']);?> <?php  echo !empty($showPost['post_location']) ? '-' : '' ?> <span class="<?php echo !empty($showPost['post_location']) ? 'fa fa-map-marker' : '' ?>"><?php echo " " . $showPost['post_location']; ?></span></span>
                     </div>
                     <div class="box-tools">
-                        <div class="<?php echo $showPost['user_id'] == $_SESSION['login']['userid'] ? 'show' :'hidden' ?>">
-                        <a href="?delete=<?php echo $showPost['post_id'];?>" type="button" class="btn btn-box-tool" title="post verwijderen" data-target="#confirm-delete"><i class="fa fa-trash-o fa-lg"></i></a>
+                        <div class="<?php echo $showPost['p.user_id'] == $_SESSION['login']['userid'] ? 'show' :'hidden' ?>">
+                            <a href="?delete=<?php echo $showPost['post_id'];?>" type="button" class="btn btn-box-tool" title="post verwijderen" data-target="#confirm-delete"><i class="fa fa-trash-o fa-lg"></i></a>
                         </div>
 
                     </div>
@@ -87,7 +87,7 @@ include_once('inc/feedbackbox.inc.php');
                     <img class="img-responsive pad <?php echo htmlspecialchars($showPost['photo_effect']); ?>" src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
                     <p><?php echo htmlspecialchars($showPost['post_description']) ?></p>
                     <a href="?click=<?php echo $showPost['post_id'];?>" data-id="<?php echo $showPost['post_id'] ?>" class="likeBtn btn btn-xs <?php echo $post->isLiked() == true ? 'liked ' : 'btn-default '?>"><i class="fa fa-heart-o fa-lg"></i> vind ik leuk</a>
-                        <span class="pull-right text-muted showLikes"><?php echo $post->showLikes();?> <?php echo $post->showLikes() == 1 ? 'like' : 'likes' ?> </span>
+                    <span class="pull-right text-muted showLikes"><?php echo $post->showLikes();?> <?php echo $post->showLikes() == 1 ? 'like' : 'likes' ?> </span>
                 </div>
                 <div class="box-footer box-comments">
                     <div class="box-comment">
@@ -126,6 +126,6 @@ include_once('inc/feedbackbox.inc.php');
 
 <?php include_once('inc/footer.inc.php'); ?>
 
-    <script src="js/ajax/liking-a-post.js"></script>
+<script src="js/ajax/liking-a-post.js"></script>
 </body>
 </html>

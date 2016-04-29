@@ -355,6 +355,7 @@ class User
 
     }
 
+    // toon profielfoto op een bepaald profiel
     public function profilePictureOnProfile()
     {
         $conn = Db::getInstance();
@@ -365,6 +366,7 @@ class User
         return $result;
     }
 
+    // id ophalen van profiel
     public function getIdFromProfile(){
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT user_id FROM user WHERE username = :username ");
@@ -374,6 +376,7 @@ class User
         return $result;
     }
 
+    // volgt de user een bepaalde persoon?
     public function isFollowing(){
         $userid = $_SESSION['login']['userid'];
         $conn = Db::getInstance();
@@ -385,6 +388,7 @@ class User
         return $result;
     }
 
+    // user volgen
     public function followUser()
     {
         $userid = $_SESSION['login']['userid'];
@@ -395,7 +399,7 @@ class User
         $statementCheckIfFollows->execute();
 
 
-        // nog geen rijen, user heeft post nog niet geliked
+        // nog geen rijen, user volgt deze persoon nog niet
         if ($statementCheckIfFollows->rowCount() == 0) {
             $statememtInsertFollow = $conn->prepare("INSERT INTO following (user_id, follows, accepted) VALUES (:userId, :follows, true)");
             $statememtInsertFollow->bindValue(':userId', $userid);
@@ -403,7 +407,7 @@ class User
             $statememtInsertFollow->execute();
             $result = $statememtInsertFollow->fetchAll();
             return $result;
-            // 1 rij: user heeft de pos al geliked en wil nu disliken
+            // 1 rij: user volgt deze persoon al
         } else {
             $statementDeleteFollow = $conn->prepare("DELETE FROM following WHERE user_id = :userId AND follows = :follows");
             $statementDeleteFollow->bindValue(':userId', $userid);
@@ -414,6 +418,7 @@ class User
         }
     }
 
+    // tel het aantal followers
     public function countFollowers(){
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT COUNT(follows) FROM following WHERE follows = (SELECT user_id FROM user WHERE username = :username)");
@@ -423,6 +428,18 @@ class User
         return $result;
     }
 
+    // gegevens ophalen van de followers
+    public function getFollowers(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT u.username, u.profile_picture FROM user u, following f WHERE u.user_id = f.user_id
+                                      AND f.follows = (SELECT user_id FROM user WHERE username = :username)");
+        $statement->bindValue(':username', $this->m_sUsername);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
+    // tellen van het aantal following
     public function countFollowing(){
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT COUNT(user_id) FROM following WHERE user_id = (SELECT user_id FROM user WHERE username = :username)");
@@ -431,5 +448,17 @@ class User
         $result = $statement->fetchColumn();
         return $result;
     }
+
+    //gegevens ophalen van personen die je volgt
+    public function getFollowing(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT u.username, u.profile_picture FROM user u, following f WHERE u.user_id = f.follows
+                                      AND f.user_id = (SELECT user_id FROM user WHERE username = :username)");
+        $statement->bindValue(':username', $this->m_sUsername);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
 }
 ?>

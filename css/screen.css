@@ -24,16 +24,6 @@ h1, h2, h3, h4, h5, h6, .navbar-brand, .name-label, .card-title {
     font-family: "Bree Serif", serif;
 }
 
-
-.navbar-header,
-.navbar-nav{
-    overflow: hidden;
-}
-
-.row h1{
-    margin-top: 40px;
-}
-
 h1 {
     font-size: 3em;
     margin-bottom: 40px;
@@ -212,9 +202,7 @@ aside {
     margin-bottom: 50px;
 }
 
-.ajax-feedback{
-    text-align: left;
-}
+
 
 .ajax-feedback.error{
     color: #E74C3C;
@@ -588,15 +576,6 @@ input[type="checkbox"]{
 
 
 @media screen and (min-width: 760px) {
-    .navbar-header,
-    .navbar-nav{
-        overflow: visible;
-    }
-
-    .row h1{
-        margin-top: 0;
-    }
-
     .container{
         padding: 0;
     }
@@ -716,43 +695,11 @@ input[type="checkbox"]{
     padding:0 5px;
     font-size: 2.6em;
     font-weight: bold;
-    color: #34495E;
+    color: #262626;
+    background-color: rgba(255, 255, 255, 0.1);
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
-}
-
-.card-title{
-    display: block;
-    margin-bottom: 20px;
-}
-
-.thumb{
-    cursor: pointer;
-}
-
-.delete-post-icon,
-.inappropriate-post-icon{
-    width: 30px;
-    height: 30px;
-}
-
-#post-extra input{
-    border: none;
-    background-color: transparent;
-    padding: 0;
-    margin: 0;
-}
-
-.inappropriate-post-icon:before{
-    font-family: "FontAwesome";
-    content: '\f12a';
-    color: #fff;
-}
-
-.delete-post-icon:hover,
-.inappropriate-post-icon:hover{
-    background-color: #E74C3C;
 }
 
 .card.hovercard .card-info {
@@ -775,10 +722,15 @@ input[type="checkbox"]{
     font-size: 17px;
 }
 
-a.follow-btn{
-    margin-top: 15px;
-    margin-bottom: 10px;
+#tab2 .user-block,
+#tab3 .user-block{
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 200px;
 }
+
 
 .box-body img{
     display: block;
@@ -836,11 +788,6 @@ select#effect{
     width: 100%;
     margin-top: 0;
     padding-top: 0;
-}
-
-.likeBtn{
-    height: 34px;
-    padding-top: 12px;
 }
 
 .status-upload hr{

@@ -102,7 +102,8 @@ class Post{
     // posts (van vrienden) die op timeline van gebruiker komen
     public function getAllPosts(){
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT * FROM post WHERE inappropriate < 3  ORDER BY post_date DESC LIMIT 20");
+        $statement = $conn->prepare("SELECT * FROM post p, following f WHERE p.user_id = f.follows AND f.user_id = :userId ORDER BY post_date DESC LIMIT 20");
+        $statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->execute();
         $result = $statement->fetchAll();
         return $result;
@@ -148,7 +149,7 @@ class Post{
             $statememtInsertLike->execute();
             $result = $statememtInsertLike->fetchAll();
             return $result;
-        // meer als 1 rij: user heeft de pos al geliked en wil nu disliken
+            // meer als 1 rij: user heeft de pos al geliked en wil nu disliken
         }else{
             $statementUpdateLike = $conn->prepare("DELETE FROM likes WHERE post_id = :postId AND user_id = :userId");
             $statementUpdateLike->bindValue(':postId', $this->m_sPostId);
@@ -183,70 +184,71 @@ class Post{
     // reformat timestamp
     public function timePosted($p_postedTime){
 
-            $postedTime = strtotime($p_postedTime); //parse textual datetime description into UNIX timestamp
-            $currentTime = time(); //Returns the current time measured in the number of seconds since the Unix Epoch
+        $postedTime = strtotime($p_postedTime); //parse textual datetime description into UNIX timestamp
+        $currentTime = time(); //Returns the current time measured in the number of seconds since the Unix Epoch
 
-            // bereken seconds tussen time atm en posted time
-            $timeDifference = $currentTime - $postedTime;
+        // bereken seconds tussen time atm en posted time
+        $timeDifference = $currentTime - $postedTime;
 
-            $seconds = $timeDifference ;
-            //floor rond naar beneden af
-            $minutes = floor($timeDifference / 60 );
-            $hours = floor($timeDifference / 3600);
-            $days = floor($timeDifference / 86400 );
-            $weeks = floor($timeDifference / 604800);
-            $months = floor($timeDifference / 2628000 );
-            $years = floor($timeDifference / 31536000 );
+        $seconds = $timeDifference ;
+        //floor rond naar beneden af
+        $minutes = floor($timeDifference / 60 );
+        $hours = floor($timeDifference / 3600);
+        $days = floor($timeDifference / 86400 );
+        $weeks = floor($timeDifference / 604800);
+        $months = floor($timeDifference / 2628000 );
+        $years = floor($timeDifference / 31536000 );
 
 
 
-            if($seconds <= 60){
-                return "zojuist";
+        if($seconds <= 60){
+            return "zojuist";
 
-            }else if($minutes <= 59){
-                if($minutes==1){
-                    return "1 minuut geleden";
-                }else{
-                    return "$minutes minuten geleden";
-                }
-
-            }else if($hours <= 23){
-                if($hours==1){
-                    return "1 uur geleden";
-                }else{
-                    return "$hours uur geleden";
-                }
-
-            }else if($days <= 6){
-                if($days==1){
-                    return "gisteren";
-                }else{
-                    return "$days dagen geleden";
-                }
-
-            }else if($weeks <= 3){
-                if($weeks==1){
-                    return "een week geleden";
-                }else{
-                    return "$weeks weken geleden";
-                }
-
-            }else if($months <= 11){
-                if($months==1){
-                    return "een maand geleden";
-                }else{
-                    return "$months maanden geleden";
-                }
-
+        }else if($minutes <= 59){
+            if($minutes==1){
+                return "1 minuut geleden";
             }else{
-                if($years==1){
-                    return "een jaar geleden";
-                }else{
-                    return "$years jaar geleden";
-                }
+                return "$minutes minuten geleden";
+            }
+
+        }else if($hours <= 23){
+            if($hours==1){
+                return "1 uur geleden";
+            }else{
+                return "$hours uur geleden";
+            }
+
+        }else if($days <= 6){
+            if($days==1){
+                return "gisteren";
+            }else{
+                return "$days dagen geleden";
+            }
+
+        }else if($weeks <= 3){
+            if($weeks==1){
+                return "een week geleden";
+            }else{
+                return "$weeks weken geleden";
+            }
+
+        }else if($months <= 11){
+            if($months==1){
+                return "een maand geleden";
+            }else{
+                return "$months maanden geleden";
+            }
+
+        }else{
+            if($years==1){
+                return "een jaar geleden";
+            }else{
+                return "$years jaar geleden";
             }
         }
+    }
 
+    // toon de foto's van een bepaalde persoon op profielpagina
     public function getPostsForEachuser(){
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT * FROM post p WHERE user_id = (SELECT user_id FROM user WHERE username = :username AND private = false)
@@ -259,6 +261,7 @@ class Post{
         return $result;
     }
 
+    // tellen van het aantal posts dat een bepaalde persoon heeft
     public function countPostsForEachuser(){
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT COUNT(*) FROM post p WHERE user_id = (SELECT user_id FROM user WHERE username = :username )");
@@ -268,6 +271,7 @@ class Post{
         return $result;
     }
 
+    // post deleten, enkel als de post van de ingelogde gebruiker is
     public function deletePost(){
         $conn = Db::getInstance();
         $statement = $conn->prepare("DELETE FROM post WHERE post_id = :postId AND user_id = :userId");
@@ -275,38 +279,6 @@ class Post{
         $statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->execute();
     }
-
-
-    public function getHashtags($p_sString, $str = 1) {
-        preg_match_all('/#(\w+)/', $p_sString, $matches);
-        $i = 0;
-        $keywords = "";
-
-        if ($str) {
-            foreach ($matches[1] as $match) {
-                $count = count($matches[1]);
-                $keywords .= "$match";
-                $i++;
-                if ($count > $i) $keywords .= ", ";
-            }
-        } else {
-            foreach ($matches[1] as $match) {
-                $keyword[] = $match;
-            }
-            $keywords = $keyword;
-        }
-        return $keywords;
-    }
-
-
-    public function convertHashtagToLink($p_sString) {
-        preg_match_all('/#(\w+)/',$p_sString, $matches);
-        foreach ($matches[1] as $match) {
-            $string = str_replace("#$match", "<a href='/imdstagram/explore/tag.php?tag=$match'>#$match</a>", "$p_sString");
-        }
-        return $p_sString;
-    }
-
 
 
     /*public function deletePostPicture(){

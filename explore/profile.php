@@ -13,28 +13,45 @@ $userPosts = $post->getPostsForEachUser();
 $user = new User();
 $user->setMSUsername($username);
 
-if (!empty($_GET['id'])) {
+if(!empty($_GET['id'])){
     $user->setMIUserId($_GET['id']);
     $user->followUser();
+    header('location: profile.php?user=' . $_GET['user']);
+
 }
 
-if (empty($userPosts) && $post->countPostsForEachuser() > 0) {
+$followers = $user->getFollowers();
+$followings = $user->getFollowing();
+
+// feedback voor als een profiel nog geen foto's, volgers of nog niemand volgt
+if(empty($userPosts) && $post->countPostsForEachuser() > 0){
     $feedback = 'Dit account is privé, stuur een volg verzoek om de foto\'s van deze gebruiker te zien.';
-} elseif (empty($userPosts) && $post->countPostsForEachuser() == 0) {
+}elseif(empty($userPosts) && $post->countPostsForEachuser() == 0){
     $feedback = 'Deze gebruiker heeft nog geen foto\'s geplaatst.';
 }
+
+if(empty($followers) && $user->countFollowers() == 0){
+    $followerfb = 'Deze gebruiker heeft nog geen volgers';
+}
+
+if(empty($followings) && $user->countFollowing() == 0){
+    $followingfb = 'Deze gebruiker volgt nog niemand';
+}
+
+
+
 
 
 //welk profiel opvragen?
 //als querystring user bestaat en de waarde hiervan verschillende is van de gebruikersnaam van de ingelogde gebruiker (sessie), dan wordt een ander profiel bekeken
-if (isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['username']) {
-    $pageTitle = "Profiel " . htmlspecialchars($_GET['user']);
-} //in het andere geval wanneer profile.php bezocht wordt zonder user in de querystring, stuur bezoeker door (link zo deelbaar voor anderen)
-else if (!isset($_GET['user'])) {
+if(isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['username']){
+    $pageTitle = "Profiel " . htmlspecialchars($_GET['user']);}
+//in het andere geval wanneer profile.php bezocht wordt zonder user in de querystring, stuur bezoeker door (link zo deelbaar voor anderen)
+else if(!isset($_GET['user'])){
     $_GET['user'] = $_SESSION['login']['username'];
     header('location: profile.php?user=' . $_GET['user']);
     //in het andere geval wil de ingelogde gebruiker zijn eigen profiel bekijken. Toon gepaste titel.
-} else {
+}else{
     $pageTitle = "Mijn profiel";
 }
 
@@ -55,19 +72,15 @@ else if (!isset($_GET['user'])) {
             <div class="card-background">
             </div>
             <div class="useravatar">
-                <img alt=""
-                     src="../img/uploads/profile-pictures/<?php echo htmlspecialchars($user->profilePictureOnProfile()); ?>">
+                <img alt="" src="../img/uploads/profile-pictures/<?php echo htmlspecialchars($user->profilePictureOnProfile()); ?>">
             </div>
-            <div class="card-info"><span class="card-title"><?php echo htmlspecialchars($pageTitle); ?></span>
+            <div class="card-info"> <span class="card-title"><?php echo htmlspecialchars($pageTitle); ?></span>
 
             </div>
-            <?php if (isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['username']): ?>
+            <?php if(isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['username']): ?>
                 <div>
                     <form action="" method="post">
-                        <a href="?user=<?php echo $_GET['user']; ?>&id=<?php echo $user->getIdFromProfile() ?>"
-                           class="likeBtn btn btn-success follow-btn"><i
-                                class="<?php echo $user->isFollowing() == 0 ? 'fa fa-plus-circle' : 'fa fa-times' ?> fa-lg"></i><?php echo $user->isFollowing() == 0 ? ' Volg deze gebruiker' : ' Niet meer volgen' ?>
-                        </a>
+                        <a  style="margin-top: 20px" href="?user=<?php echo $_GET['user'];?>&id=<?php echo $user->getIdFromProfile() ?>" class="likeBtn btn btn-info"><i class="<?php echo $user->isFollowing() == 0 ? 'fa fa-plus-circle' :'fa fa-times' ?> fa-lg"></i><?php echo $user->isFollowing() == 0 ? ' Volg deze gebruiker' : ' Niet meer volgen' ?></a>
                     </form>
                 </div>
 
@@ -75,24 +88,17 @@ else if (!isset($_GET['user'])) {
         </div>
         <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
             <div class="btn-group" role="group">
-                <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span
-                        class="fa fa-camera" aria-hidden="true"></span>
-                    <div class="hidden-xs">
-                        <strong><?php echo $post->countPostsForEachuser(); ?></strong> <?php echo $post->countPostsForEachuser() == 1 ? 'foto' : 'foto\'s' ?>
-                    </div>
+                <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="fa fa-camera" aria-hidden="true"></span>
+                    <div class="hidden-xs"><strong><?php echo $post->countPostsForEachuser(); ?></strong> <?php echo $post->countPostsForEachuser() == 1 ? 'foto' : 'foto\'s' ?></div>
                 </button>
             </div>
             <div class="btn-group" role="group">
-                <button type="button" id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span
-                        class="fa fa-users" aria-hidden="true"></span>
-                    <div class="hidden-xs">
-                        <strong><?php echo $user->countFollowers(); ?></strong><?php echo $user->countFollowers() == 1 ? ' volger' : ' volgers' ?>
-                    </div>
+                <button type="button" id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="fa fa-users" aria-hidden="true"></span>
+                    <div class="hidden-xs"><strong><?php echo $user->countFollowers(); ?></strong><?php echo $user->countFollowers() == 1 ? ' volger' : ' volgers' ?></div>
                 </button>
             </div>
             <div class="btn-group" role="group">
-                <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span
-                        class="fa fa-user" aria-hidden="true"></span>
+                <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="fa fa-user" aria-hidden="true"></span>
                     <div class="hidden-xs"><strong><?php echo $user->countFollowing(); ?></strong> volgend</div>
                 </button>
             </div>
@@ -102,36 +108,46 @@ else if (!isset($_GET['user'])) {
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="tab1">
                     <div class="row img-list">
-                        <?php foreach ($userPosts as $userPost): ?>
+                        <?php foreach($userPosts as $userPost): ?>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <a data-id="<?php echo $userPost['post_id'] ?>" class="thumbnail picturelist">
-                                    <img class="thumb <?php echo $userPost['photo_effect']; ?>"
-                                         src="../img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>"
-                                         alt="">
+                                    <img class="thumb <?php echo $userPost['photo_effect']; ?>" src="../img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" alt="">
                                 </a>
                             </div>
                         <?php endforeach ?>
-                        <p class="fb"><?php echo !empty($feedback) ? $feedback : '' ?></p>
+                        <p class="fb"><?php echo !empty($feedback) ? $feedback : ''?></p>
                     </div>
                 </div>
                 <div class="tab-pane fade in" id="tab2">
-                    <h3>volgers</h3>
+                    <?php foreach($followers as $follower): ?>
+                    <div class="user-block"">
+                    <a href="/imdstagram/explore/profile.php?user=<?php echo $follower['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $follower['profile_picture'] ?>" alt="<">
+                        <span class="username"><?php echo $follower['username']; ?></span></a>
                 </div>
-                <div class="tab-pane fade in" id="tab3">
-                    <h3>volgend</h3>
-                </div>
+                <?php endforeach ?>
+                <p class="fb"><?php echo !empty($followerfb) ? $followerfb : ''?></p>
             </div>
+            <div class="tab-pane fade in" id="tab3">
+                <?php foreach($followings as $following): ?>
+                <div class="user-block profile-block"">
+                <a href="/imdstagram/explore/profile.php?user=<?php echo $following['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $follower['profile_picture'] ?>" alt="<">
+                    <span class="username"><?php echo $following['username']; ?></span></a>
+            </div>
+            <?php endforeach ?>
+            <p class="fb"><?php echo !empty($followingfb) ? $followingfb : ''?></p>
         </div>
     </div>
-    <?php include_once('../inc/footer.inc.php'); ?>
-    <script>
-        $(document).ready(function () {
-            $(".btn-pref .btn").click(function () {
-                $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
-                $(this).removeClass("btn-default").addClass("btn-primary");
-            });
+</div>
+
+<?php include_once('../inc/footer.inc.php'); ?>
+<script>
+    $(document).ready(function() {
+        $(".btn-pref .btn").click(function () {
+            $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+            $(this).removeClass("btn-default").addClass("btn-primary");
         });
-    </script>
+    });
+</script>
 
 </body>
 </html>
