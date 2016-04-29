@@ -4,7 +4,7 @@ include_once('../../inc/feedbackbox.inc.php');
 include_once('../../classes/Upload.class.php');
 
 // uploaden van foto
-if(isset($_POST['btnUploadProfilePicture'])) {
+if (isset($_POST['btnUploadProfilePicture'])) {
 
     //ophalen afbeelding tyupe
     $profilePhotoArr = $_FILES["uploaded_profielfoto"];
@@ -19,38 +19,41 @@ if(isset($_POST['btnUploadProfilePicture'])) {
 
     //checken of we een bestand hebben en error geen 0 is
     if ((!empty($profilePhotoArr)) && ($profilePhotoError == 0)) {
-        try{
+        try {
             $upload = new Upload();
 
             //controleer geldig afbeeldingsformaat
-                //bestandsnaam ophalen
-                $filename = basename($profilephotoName);
-                //extentie ophalen +1 => .jpg => jpg
-                $extensionFile = substr($filename, strrpos($filename, '.') + 1);
-                $validExtensions = array("jpg", "png", "gif", "jpeg");
-                $validTypes = array("image/jpeg", "image/png", "image/gif");
+            //bestandsnaam ophalen
+            $filename = basename($profilephotoName);
+            //extentie ophalen +1 => .jpg => jpg
+            $extensionFile = substr($filename, strrpos($filename, '.') + 1);
+            $validExtensions = array("jpg", "png", "gif", "jpeg");
+            $validTypes = array("image/jpeg", "image/png", "image/gif");
 
-                $isValidExtension = $upload->isValidExtension($validExtensions, $extensionFile);
-                $isValidType = $upload->isValidType($validTypes, $profilePhotoType);
+            $isValidExtension = $upload->isValidExtension($validExtensions, $extensionFile);
+            $isValidType = $upload->isValidType($validTypes, $profilePhotoType);
 
-                if($isValidType === true && $isValidExtension === true){
+            if ($isValidType === true && $isValidExtension === true) {
+                //security met getimagesize kan gekeken worden of de inhoud geen script, maar wel een echte afbeelding is
+                if ($upload->isImageNotAScript($profilePhotoTmpName) === false) {
+                    $feedback = buildFeedbackBox("danger", "hackpoging gedetecteerd. Alleen echte afbeeldingen worden geaccepteerd.");
+                } else {
                     //controleer of bestand niet te groot is
                     $isValidSize = $upload->isValidSize($profilePhotoSize, $maxBytes);
-                    if($isValidSize){
-
+                    if ($isValidSize) {
 
                         //Nieuwe locatie en naam bepalen tmp folder naar uiteindelijke folder
                         $dbFileName = "profile-picture_userid-" . $_SESSION['login']['userid'];
                         $dbFullFileName = $dbFileName . "." . $extensionFile;
                         $newnameTillId = "../../img/uploads/profile-pictures/" . $dbFileName;
-                        $fullNewName =  $newnameTillId . "." . $extensionFile;
+                        $fullNewName = $newnameTillId . "." . $extensionFile;
 
 
                         //Kijk of file al bestaat. Profielfoto mag overschreven worden, maar zo kunnen we extra query vermeiden
 
                         $uploadSucces = false;
 
-                        if(!file_exists($fullNewName)){
+                        if (!file_exists($fullNewName)) {
                             //oud bestand? Dit moet gewist worden
                             //als nieuwe naam niet bestaat kijken of er nog oude file is en die wissen
                             //glob: 'Find pathnames matching a pattern'
@@ -66,11 +69,11 @@ if(isset($_POST['btnUploadProfilePicture'])) {
                             $upload->setMSProfilePicture($dbFullFileName);
                             $uploadProfilePhoto = $upload->saveProfilePicture();
 
-                            if($uploadProfilePhoto){
+                            if ($uploadProfilePhoto) {
                                 $uploadSucces = true;
                             }
 
-                        }else{
+                        } else {
                             //het bestand bestaat, mag overschreven worden + geen query nodig
                             $uploadFile = $upload->uploadFile($profilePhotoTmpName, $fullNewName);
                             $uploadSucces = true;
@@ -78,20 +81,21 @@ if(isset($_POST['btnUploadProfilePicture'])) {
 
 
                         //indien upload (incl db) geslaagd is, dan sessie aanpassen en successboodschap tonen
-                        if($uploadSucces){
+                        if ($uploadSucces) {
                             $_SESSION['login']['profilepicture'] = $dbFullFileName;
                             $feedback = buildFeedbackBox("success", "Je profielfo is gewijzigd.");
                         }
 
 
-                    }else{
+                    } else {
                         $feedback = buildFeedbackBox("danger", "de profielfoto mag niet groter zijn dan 500KB.");
                     }
-                }else{
-                    $feedback = buildFeedbackBox("danger", "de profielfoto is geen geldige afbeelding. Alleen jpg, png en gif bestanden zijn toegestaan.");
                 }
+            } else {
+                $feedback = buildFeedbackBox("danger", "de profielfoto is geen geldige afbeelding. Alleen jpg, png en gif bestanden zijn toegestaan.");
+            }
 
-        }catch(Exception $e){
+        } catch (Exception $e) {
             $feedback = $e->getMessage();
             $feedback = buildFeedbackBox("danger", $feedback);
         }

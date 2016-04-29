@@ -146,10 +146,12 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
 
         foreach ($arrLocations as $arrItem) {
             $showLocationsName = $arrItem['post_location'];
+            //$showLocationPicture = $arrItem['post_photo'];
 
             $showLocations = "<article class=\"col-xs-12 col-sm-4 col-md-3\">";
             $showLocations .= "<a class='thumbnail picturelist' href='/imdstagram/explore/index.php?location=" . htmlspecialchars($showLocationsName) . "'>";
             $showLocations .= "<div class='vet'>" . htmlspecialchars($showLocationsName) . "</div>";
+            //$showLocations .= "<img src='img/uploads/post-pictures/" . $showLocationPicture . "' alt='Locatie " . htmlspecialchars($showLocationsName) . "'>";
             $showLocations .= "</a></article>";
             echo $showLocations;
         }

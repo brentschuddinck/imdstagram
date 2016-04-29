@@ -102,6 +102,15 @@ class Upload
     }
 
 
+    public function isImageNotAScript($p_sPostTmpName){
+        if(!getimagesize($p_sPostTmpName)){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
     public function uploadFile($p_sFileTmpName, $p_sFileNewName)
     {
 

@@ -152,6 +152,9 @@ aside {
     margin-bottom: 10px;
 }
 
+.status-upload .alert{
+    margin-bottom: 0;
+}
 
 .container-fluid {
     padding: 0;
@@ -477,6 +480,8 @@ body .no-padding {
     color: #999;
     font-size: 13px;
 }
+
+
 
 .user-block .description span{
     font-family: "Arimo", sans-serif;
@@ -852,6 +857,10 @@ input[type='file'] {
 
 .show a:hover{
     background-color: #d9534f;
+}
+
+#description{
+    font-size: 1.6rem;
 }
 
 @media screen and (min-width: 480px){
