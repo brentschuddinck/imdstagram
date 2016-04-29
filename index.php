@@ -7,7 +7,7 @@ $post = new Post();
 $showPosts = $post->getAllPosts();
 
 if(empty($showPost)){
-    $feedback = buildFeedbackBox("leeg", "vul je tijdlijn door <a href=''>foto's toe te voegen</a> of door <a href=''>kenissen en vrienden te volgen</a>.");
+    $feedback = buildFeedbackBox("leeg", "vul je tijdlijn door <a href='upload.php'>foto's toe te voegen</a> en vrienden te volgen. Je kan vrienden, locaties en tags zoeken via het zoekmanu bovenaan de pagina.");
 }
 
 if(isset($_POST['btnLikePicture'])) {
