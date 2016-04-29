@@ -121,11 +121,7 @@ include_once('../inc/feedbackbox.inc.php');
             <div class="tab-pane fade in" id="tab2">
                 <?php foreach($followers as $follower): ?>
                     <div class="user-block"">
-<<<<<<< HEAD
-                    <a href="/imdstagram/explore/profile.php?user=<?php echo $follower['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $follower['profile_picture'] ?>" alt="Profielfoto">
-=======
                         <a href="/imdstagram/explore/profile.php?user=<?php echo $follower['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $follower['profile_picture'] ?>" alt="<">
->>>>>>> 86fac4915c564e96ee7340545023c310770c841d
                         <span class="username"><?php echo $follower['username']; ?></span></a>
                     </div>
                 <?php endforeach ?>
@@ -133,18 +129,12 @@ include_once('../inc/feedbackbox.inc.php');
             </div>
             <div class="tab-pane fade in" id="tab3">
                 <?php foreach($followings as $following): ?>
-<<<<<<< HEAD
-                <div class="user-block profile-block"">
-                <a href="/imdstagram/explore/profile.php?user=<?php echo $following['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $follower['profile_picture'] ?>" alt="Profielfoto">
-                    <span class="username"><?php echo $following['username']; ?></span></a>
-=======
                     <div class="user-block profile-block"">
                     <a href="/imdstagram/explore/profile.php?user=<?php echo $following['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $following['profile_picture'] ?>" alt="<">
                         <span class="username"><?php echo $following['username']; ?></span></a>
                     </div>
                 <?php endforeach ?>
                 <p class="fb"><?php echo !empty($followingfb) ? $followingfb : ''?></p>
->>>>>>> 86fac4915c564e96ee7340545023c310770c841d
             </div>
         </div>
     </div>
