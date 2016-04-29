@@ -16,13 +16,28 @@ include_once('../inc/feedbackbox.inc.php');
     if(!empty($_GET['id'])){
     $user->setMIUserId($_GET['id']);
     $user->followUser();
+    header('location: profile.php?user=' . $_GET['user']);
+
     }
 
-    if(empty($userPosts) && $post->countPostsForEachuser() > 0){
+    $followers = $user->getFollowers();
+    $followings = $user->getFollowing();
+
+if(empty($userPosts) && $post->countPostsForEachuser() > 0){
         $feedback = 'Dit account is privé, stuur een volg verzoek om de foto\'s van deze gebruiker te zien.';
     }elseif(empty($userPosts) && $post->countPostsForEachuser() == 0){
         $feedback = 'Deze gebruiker heeft nog geen foto\'s geplaatst.';
     }
+
+    if(empty($followings) && $user->countFollowing() == 0){
+        $followingfb = 'Deze gebruiker volgt nog niemand';
+    }
+
+
+    if(empty($userPosts) && $user->countFollowers() == 0){
+        $followerfb = 'Deze gebruiker heeft nog geen volgers';
+    }
+
 
 
     //welk profiel opvragen?
@@ -102,10 +117,21 @@ include_once('../inc/feedbackbox.inc.php');
                 </div>
             </div>
             <div class="tab-pane fade in" id="tab2">
-                <h3>volgers</h3>
+                <ul>
+                <?php foreach($followers as $follower): ?>
+                <li><?php echo $follower['username'] ?></li>
+                <?php endforeach ?>
+                </ul>
+                <p class="fb"><?php echo !empty($followerfb) ? $followerfb : ''?></p>
             </div>
             <div class="tab-pane fade in" id="tab3">
-                <h3>volgend</h3>
+                <ul>
+                <?php foreach($followings as $following): ?>
+                    <li><?php echo $following['username'] ?></li>
+                <?php endforeach ?>
+                </ul>
+                <p class="fb"><?php echo !empty($followingfb) ? $followingfb : ''?></p>
+
             </div>
         </div>
     </div>

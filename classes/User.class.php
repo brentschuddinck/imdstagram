@@ -423,6 +423,16 @@ class User
         return $result;
     }
 
+    public function getFollowers(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT u.username, u.profile_picture FROM user u, following f WHERE u.user_id = f.user_id
+                                      AND f.follows = (SELECT user_id FROM user WHERE username = :username)");
+        $statement->bindValue(':username', $this->m_sUsername);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
     public function countFollowing(){
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT COUNT(user_id) FROM following WHERE user_id = (SELECT user_id FROM user WHERE username = :username)");
@@ -431,5 +441,16 @@ class User
         $result = $statement->fetchColumn();
         return $result;
     }
+
+    public function getFollowing(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT u.username, u.profile_picture FROM user u, following f WHERE u.user_id = f.follows
+                                      AND f.user_id = (SELECT user_id FROM user WHERE username = :username)");
+        $statement->bindValue(':username', $this->m_sUsername);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
 }
 ?>
