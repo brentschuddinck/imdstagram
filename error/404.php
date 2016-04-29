@@ -1,4 +1,5 @@
 <?php
+    include_once('../inc/sessiecontrole.inc.php');
 ?><!doctype html>
 <html lang="nl">
 <head>
