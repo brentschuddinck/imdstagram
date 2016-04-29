@@ -95,7 +95,7 @@ include_once('../inc/feedbackbox.inc.php');
         <?php if(isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['username']): ?>
         <div>
             <form action="" method="post">
-                <a  style="margin-top: 20px" href="?user=<?php echo $_GET['user'];?>&id=<?php echo $user->getIdFromProfile() ?>" class="likeBtn btn btn-primary"><i class="<?php echo $user->isFollowing() == 0 ? 'fa fa-plus-circle' :'fa fa-times' ?> fa-lg"></i><?php echo $user->isFollowing() == 0 ? ' Volg deze gebruiker' : ' Niet meer volgen' ?></a>
+                <a  style="margin-top: 20px" href="?user=<?php echo $_GET['user'];?>&id=<?php echo $user->getIdFromProfile() ?>" class="likeBtn btn btn-primary"><i class="<?php echo $user->isFollowing() == 0 ? 'fa fa-user-plus' :'fa fa-user-times' ?> fa-lg"></i><?php echo $user->isFollowing() == 0 ? ' Volg deze gebruiker' : ' Niet meer volgen' ?></a>
             </form>
         </div>
 
@@ -113,7 +113,7 @@ include_once('../inc/feedbackbox.inc.php');
             </button>
         </div>
         <div class="btn-group" role="group">
-            <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="fa fa-user" aria-hidden="true"></span>
+            <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="fa fa-smile-o fa-lg" aria-hidden="true"></span>
                 <div class="hidden-xs"><strong><?php echo $user->countFollowing(); ?></strong> volgend</div>
             </button>
         </div>

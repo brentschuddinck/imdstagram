@@ -61,7 +61,7 @@ if(isset($_GET['delete']) && !empty($_GET['delete'])){
                         <span class="description"><?php echo $post->timePosted($showPost['post_date']);?> <?php  echo !empty($showPost['post_location']) ? '-' : '' ?> <span class="<?php echo !empty($showPost['post_location']) ? 'fa fa-map-marker' : '' ?>"><?php echo " " . $showPost['post_location']; ?></span></span>
                     </div>
                     <div class="box-tools">
-                        <div class="<?php echo $showPost['p.user_id'] == $_SESSION['login']['userid'] ? 'show' :'hidden' ?>">
+                        <div class="<?php echo $showPost['user_id'] != $_SESSION['login']['userid'] ? 'show' :'hidden' ?>">
                             <a href="?delete=<?php echo $showPost['post_id'];?>" type="button" class="btn btn-box-tool" title="post verwijderen" data-target="#confirm-delete"><i class="fa fa-trash-o fa-lg"></i></a>
                         </div>
 

@@ -102,12 +102,13 @@ class Post{
     // posts (van vrienden) die op timeline van gebruiker komen
     public function getAllPosts(){
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT * FROM post p, following f WHERE p.user_id = f.follows AND f.user_id = :userId ORDER BY post_date DESC LIMIT 20");
+        $statement = $conn->prepare("SELECT * FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE p.user_id = :userId OR f.user_id = :userId ORDER BY post_date DESC LIMIT 20");
         $statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->execute();
         $result = $statement->fetchAll();
         return $result;
     }
+
     // get username from poster
     public function usernameFromPost(){
         $conn = Db::getInstance();
