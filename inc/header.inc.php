@@ -10,6 +10,26 @@
                 <a class="navbar-brand" href="/imdstagram/index.php">IMDSTAGRAM</a>
             </div>
 
+            <!-- Gebruiker is niet ingelogd  -->
+            <?php if (!isset($_SESSION['login']) || $_SESSION['login']['loggedin'] != 1): ?>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <!-- is huidige pagina verschillend van login -->
+                    <?php if(basename($_SERVER['PHP_SELF']) != "login.php"): ?>
+                    <a class="btn btn-nouser" href="/imdstagram/login.php">Inloggen</a>
+                    <?php endif; ?>
+
+                    <!-- is huidige pagina verschillende van registreer -->
+                    <?php if(basename($_SERVER['PHP_SELF']) != "register.php"): ?>
+                        <a class="btn btn-nouser" href="/imdstagram/register.php">Registreer</a>
+                    <?php endif; ?>
+                </ul>
+            </div>
+            <?php endif; ?>
+            <!-- Einde gebruiker is niet ingelogd -->
+
+
             <!-- toon extra elementen wanneer ingelogd -->
             <?php if (isset($_SESSION['login']) && $_SESSION['login']['loggedin'] == 1): ?>
                 <div class="navbar-collapse collapse">
