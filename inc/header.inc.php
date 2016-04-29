@@ -11,17 +11,17 @@
             </div>
 
             <!-- Gebruiker is niet ingelogd  -->
-            <?php if (!isset($_SESSION['login']) || $_SESSION['login']['loggedin'] != 1): ?>
+            <?php if (!isset($_SESSION['login']) || $_SESSION['login']['loggedin'] != 1): $huidigepagina = basename($_SERVER['PHP_SELF']); ?>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
 
                     <!-- is huidige pagina verschillend van login -->
-                    <?php if(basename($_SERVER['PHP_SELF']) != "login.php"): ?>
+                    <?php if($huidigepagina != "login.php"): ?>
                     <a class="btn btn-nouser" href="/imdstagram/login.php">Inloggen</a>
                     <?php endif; ?>
 
                     <!-- is huidige pagina verschillende van registreer -->
-                    <?php if(basename($_SERVER['PHP_SELF']) != "register.php"): ?>
+                    <?php if($huidigepagina != "register.php"): ?>
                         <a class="btn btn-nouser" href="/imdstagram/register.php">Registreer</a>
                     <?php endif; ?>
                 </ul>
