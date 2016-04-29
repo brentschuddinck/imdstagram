@@ -94,7 +94,7 @@ include_once('classes/Upload.class.php');
 <?php include_once('inc/header.inc.php'); ?>
 
 <div class="container uploads">
-    <div class="col-sm-6 col-sm-offset-3 col-md-8 col-md-offset-2">
+    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
 
     <div class="row">
         <h1>Upload foto</h1>
@@ -113,8 +113,8 @@ include_once('classes/Upload.class.php');
                         ?>
                         <input type="hidden" name="location" id="location" value="">
 
-                        <label for="description">Bericht dat je met je foto wil meesturen:</label>
-                        <textarea name="description" id="description" maxlength="1000" placeholder="Beschrijving foto"  autofocus required title="voeg een beschrijving toe aan je foto." ><?php echo isset($_POST['description']) && empty($_FILES['postPhoto']['name']) ? htmlspecialchars($_POST['description']) : '' ?></textarea>
+                        <label for="description">Bericht bij je foto:</label>
+                        <textarea name="description" id="description" maxlength="1000" placeholder="Bericht dat bij je foto zal worden getoond"  autofocus required title="voeg een beschrijving toe aan je foto." ><?php echo isset($_POST['description']) && empty($_FILES['postPhoto']['name']) ? htmlspecialchars($_POST['description']) : '' ?></textarea>
                         <span><p id="charCount" class="help-block ">Je bericht heeft de limiet van 1000 karakters bereikt.</p></span>
 
                         <label for="file">Bladeren naar een afbeelding:</label>
