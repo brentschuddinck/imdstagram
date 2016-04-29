@@ -331,8 +331,6 @@ class User
     }
 
 
-
-
     public function UsernameAvailable()
     {
         //database connectie
@@ -348,16 +346,17 @@ class User
             //query went ok
             if ($statement->rowCount() == 0) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }else{
+        } else {
             throw new Exception("Door een technisch probleem kan de geldigheid van de gebruikersnaam niet gecontroleerd worden. De instellingen zijn niet opgeslagen. Onze excuses voor dit ongemakt.");
         }
 
     }
 
-    public function profilePictureOnProfile(){
+    public function profilePictureOnProfile()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT profile_picture FROM user WHERE username = :username");
         $statement->bindValue(':username', $this->m_sUsername);
@@ -366,6 +365,71 @@ class User
         return $result;
     }
 
-}
+    public function getIdFromProfile(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT user_id FROM user WHERE username = :username ");
+        $statement->bindValue(':username', $this->m_sUsername);
+        $statement->execute();
+        $result = $statement->fetchColumn();
+        return $result;
+    }
 
+    public function isFollowing(){
+        $userid = $_SESSION['login']['userid'];
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT * FROM following WHERE user_id = :userId AND follows = (SELECT user_id FROM user WHERE username = :username)");
+        $statement->bindValue(':userId', $userid);
+        $statement->bindValue(':username', $this->m_sUsername);
+        $statement->execute();
+        $result = $statement->rowCount();
+        return $result;
+    }
+
+    public function followUser()
+    {
+        $userid = $_SESSION['login']['userid'];
+        $conn = Db::getInstance();
+        $statementCheckIfFollows = $conn->prepare("SELECT * FROM following WHERE user_id = :userId AND follows = :follows");
+        $statementCheckIfFollows->bindValue(':userId', $userid);
+        $statementCheckIfFollows->bindValue(':follows', $this->m_iUserId);
+        $statementCheckIfFollows->execute();
+
+
+        // nog geen rijen, user heeft post nog niet geliked
+        if ($statementCheckIfFollows->rowCount() == 0) {
+            $statememtInsertFollow = $conn->prepare("INSERT INTO following (user_id, follows, accepted) VALUES (:userId, :follows, true)");
+            $statememtInsertFollow->bindValue(':userId', $userid);
+            $statememtInsertFollow->bindValue(':follows', $this->m_iUserId);
+            $statememtInsertFollow->execute();
+            $result = $statememtInsertFollow->fetchAll();
+            return $result;
+            // 1 rij: user heeft de pos al geliked en wil nu disliken
+        } else {
+            $statementDeleteFollow = $conn->prepare("DELETE FROM following WHERE user_id = :userId AND follows = :follows");
+            $statementDeleteFollow->bindValue(':userId', $userid);
+            $statementDeleteFollow->bindValue(':follows', $this->m_iUserId);
+            $statementDeleteFollow->execute();
+            $result = $statementDeleteFollow->fetchAll();
+            return $result;
+        }
+    }
+
+    public function countFollowers(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT COUNT(follows) FROM following WHERE follows = (SELECT user_id FROM user WHERE username = :username)");
+        $statement->bindValue(':username', $this->m_sUsername);
+        $statement->execute();
+        $result = $statement->fetchColumn();
+        return $result;
+    }
+
+    public function countFollowing(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT COUNT(user_id) FROM following WHERE user_id = (SELECT user_id FROM user WHERE username = :username)");
+        $statement->bindValue(':username', $this->m_sUsername);
+        $statement->execute();
+        $result = $statement->fetchColumn();
+        return $result;
+    }
+}
 ?>
