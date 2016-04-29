@@ -80,7 +80,7 @@ else if(!isset($_GET['user'])){
             <?php if(isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['username']): ?>
                 <div>
                     <form action="" method="post">
-                        <a  style="margin-top: 20px" href="?user=<?php echo $_GET['user'];?>&id=<?php echo $user->getIdFromProfile() ?>" class="likeBtn btn btn-info"><i class="<?php echo $user->isFollowing() == 0 ? 'fa fa-plus-circle' :'fa fa-times' ?> fa-lg"></i><?php echo $user->isFollowing() == 0 ? ' Volg deze gebruiker' : ' Niet meer volgen' ?></a>
+                        <a  style="margin-top: 20px" href="?user=<?php echo $_GET['user'];?>&id=<?php echo $user->getIdFromProfile() ?>" class="likeBtn btn btn-primary"><i class="<?php echo $user->isFollowing() == 0 ? 'fa fa-plus-circle' :'fa fa-times' ?> fa-lg"></i><?php echo $user->isFollowing() == 0 ? ' Volg deze gebruiker' : ' Niet meer volgen' ?></a>
                     </form>
                 </div>
 
@@ -121,7 +121,7 @@ else if(!isset($_GET['user'])){
                 <div class="tab-pane fade in" id="tab2">
                     <?php foreach($followers as $follower): ?>
                     <div class="user-block"">
-                    <a href="/imdstagram/explore/profile.php?user=<?php echo $follower['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $follower['profile_picture'] ?>" alt="<">
+                    <a href="/imdstagram/explore/profile.php?user=<?php echo $follower['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $follower['profile_picture'] ?>" alt="Profielfoto">
                         <span class="username"><?php echo $follower['username']; ?></span></a>
                 </div>
                 <?php endforeach ?>
@@ -130,7 +130,7 @@ else if(!isset($_GET['user'])){
             <div class="tab-pane fade in" id="tab3">
                 <?php foreach($followings as $following): ?>
                 <div class="user-block profile-block"">
-                <a href="/imdstagram/explore/profile.php?user=<?php echo $following['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $follower['profile_picture'] ?>" alt="<">
+                <a href="/imdstagram/explore/profile.php?user=<?php echo $following['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $follower['profile_picture'] ?>" alt="Profielfoto">
                     <span class="username"><?php echo $following['username']; ?></span></a>
             </div>
             <?php endforeach ?>
