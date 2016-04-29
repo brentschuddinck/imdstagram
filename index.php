@@ -5,6 +5,11 @@ include_once('inc/feedbackbox.inc.php');
 
 $post = new Post();
 $showPosts = $post->getAllPosts();
+
+if(empty($showPost)){
+    $feedback = buildFeedbackBox("leeg", "vul je tijdlijn door <a href=''>foto's toe te voegen</a> of door <a href=''>kenissen en vrienden te volgen</a>.");
+}
+
 if(isset($_POST['btnLikePicture'])) {
     $post->likePost();
 }
@@ -49,6 +54,7 @@ if(isset($_GET['delete']) && !empty($_GET['delete'])){
 
 <div class="container bootstrap">
     <div class="col-sm-12 col-md-8 col-md-offset-2">
+        <?php if(isset($feedback) && !empty($feedback)){ echo $feedback; } ?>
         <?php foreach($showPosts as $showPost): ?>
             <?php $post->setMSPostId($showPost['post_id']);?>
 
