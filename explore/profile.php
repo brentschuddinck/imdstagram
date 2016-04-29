@@ -41,16 +41,23 @@ include_once('../inc/feedbackbox.inc.php');
     // feedback voor als een profiel nog geen foto's, volgers of nog niemand volgt
     if(empty($userPosts) && $post->countPostsForEachuser() > 0){
             $feedback = 'Dit account is privé, stuur een volg verzoek om de foto\'s van deze gebruiker te zien.';
-        }elseif(empty($userPosts) && $post->countPostsForEachuser() == 0){
-            $feedback = 'Deze gebruiker heeft nog geen foto\'s geplaatst.';
-        }
+        }elseif(empty($userPosts) && $post->countPostsForEachuser() == 0 && $_GET['user'] == $_SESSION['login']['username']){
+        $feedback = 'Je hebt nog geen foto\'s geplaatst.';
 
-    if(empty($followers) && $user->countFollowers() == 0){
-        $followerfb = 'Deze gebruiker heeft nog geen volgers';
+    }elseif(empty($userPosts) && $post->countPostsForEachuser() == 0 ){
+        $feedback = 'Deze gebruiker heeft nog geen foto\'s geplaatst.';
     }
 
-    if(empty($followings) && $user->countFollowing() == 0){
-        $followingfb = 'Deze gebruiker volgt nog niemand';
+    if(empty($followers) && $user->countFollowers() == 0 && $_GET['user'] != $_SESSION['login']['username']){
+        $followerfb = 'Deze gebruiker heeft nog geen volgers.';
+    }elseif( empty($followers) && $user->countFollowers() == 0){
+        $followerfb = 'Je hebt nog geen volgers.';
+    }
+
+    if(empty($followings) && $user->countFollowing() == 0 && $_GET['user'] != $_SESSION['login']['username']){
+        $followingfb = 'Deze gebruiker volgt nog niemand.';
+    }elseif( empty($followings) && $user->countFollowing() == 0){
+        $followingfb = 'Je volgt nog niemand.';
     }
 
 
