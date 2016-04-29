@@ -248,6 +248,7 @@ class Post{
             }
         }
 
+    // toon de foto's van een bepaalde persoon op profielpagina
     public function getPostsForEachuser(){
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT * FROM post p WHERE user_id = (SELECT user_id FROM user WHERE username = :username AND private = false)
@@ -260,6 +261,7 @@ class Post{
         return $result;
     }
 
+    // tellen van het aantal posts dat een bepaalde persoon heeft
     public function countPostsForEachuser(){
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT COUNT(*) FROM post p WHERE user_id = (SELECT user_id FROM user WHERE username = :username )");
@@ -269,6 +271,7 @@ class Post{
         return $result;
     }
 
+    // post deleten, enkel als de post van de ingelogde gebruiker is
     public function deletePost(){
         $conn = Db::getInstance();
         $statement = $conn->prepare("DELETE FROM post WHERE post_id = :postId AND user_id = :userId");
