@@ -254,7 +254,8 @@ class Post{
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT * FROM post p WHERE user_id = (SELECT user_id FROM user WHERE username = :username AND private = false)
                                       OR user_id = (SELECT u.user_id FROM user u, following f WHERE u.username = :username AND private = true AND u.user_id = f.follows AND f.user_id = :userid AND f.accepted = true)
-                                      OR user_id = (SELECT user_id FROM user WHERE username = :username AND private = true AND user_id = :userid) ORDER BY post_date DESC");
+                                      OR user_id = (SELECT user_id FROM user WHERE username = :username AND private = true AND user_id = :userid)
+                                      ORDER BY post_date DESC");
         $statement->bindValue(':username', $this->m_sUsernamePosts);
         $statement->bindValue(':userid', $_SESSION['login']['userid']);
         $statement->execute();
@@ -276,6 +277,16 @@ class Post{
     public function deletePost(){
         $conn = Db::getInstance();
         $statement = $conn->prepare("DELETE FROM post WHERE post_id = :postId AND user_id = :userId");
+        $statement->bindValue(':postId', $this->m_sPostId);
+        $statement->bindValue(':userId', $_SESSION['login']['userid']);
+        $statement->execute();
+    }
+
+
+    //check of locatie bestaat
+    public function locationAvailable(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT ");
         $statement->bindValue(':postId', $this->m_sPostId);
         $statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->execute();

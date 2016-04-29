@@ -25,6 +25,10 @@ function buildFeedbackBox($p_sFeedbackType, $p_sFeedbackMessage){
             $errorTitle = "Info: ";
             break;
 
+        case "leeg":
+            $errorTitle = "Het is hier leeg... ";
+            break;
+
         //type warning voor waarschuwingen
         case "warning":
             $errorTitle = "Opgelet: ";
