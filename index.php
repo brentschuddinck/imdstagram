@@ -62,9 +62,9 @@ if(isset($_GET['delete']) && !empty($_GET['delete'])){
             <div class="box box-widget">
                 <div class="box-header with-border">
                     <div class="user-block">
-                        <img class="img-circle" src="img/uploads/profile-pictures/<?php echo htmlspecialchars($post->userImgFromPost()); ?>" alt="User Image">
-                        <span class="username"><a href="/imdstagram/explore/profile.php?user=<?php echo $post->usernameFromPost();?>"><?php echo $post->usernameFromPost(); ?></a></span>
-                        <span class="description"><?php echo $post->timePosted($showPost['post_date']);?> <?php  echo !empty($showPost['post_location']) ? '-' : '' ?> <span class="<?php echo !empty($showPost['post_location']) ? 'fa fa-map-marker' : '' ?>"><?php echo " " . $showPost['post_location']; ?></span></span>
+                        <a href="/imdstagram/explore/profile.php?user=<?php echo htmlspecialchars($post->usernameFromPost());?>"><img class="img-circle" src="img/uploads/profile-pictures/<?php echo htmlspecialchars($post->userImgFromPost()); ?>" alt="User Image"></a>
+                        <span class="username"><a href="/imdstagram/explore/profile.php?user=<?php echo htmlspecialchars($post->usernameFromPost());?>"><?php echo htmlspecialchars($post->usernameFromPost()); ?></a></span>
+                        <span class="description"><?php echo $post->timePosted($showPost['post_date']);?> <?php echo !empty($showPost['post_location']) ? '-' : '' ?> <span class="<?php echo !empty($showPost['post_location']) ? 'fa fa-map-marker' : '' ?>"><?php echo " <a href='explore/location=". htmlspecialchars($showPost['post_location']) ."'>". htmlspecialchars($showPost['post_location']) ."</a>"; ?></span></span>
                     </div>
                     <div class="box-tools">
                         <div class="<?php echo $showPost['user_id'] != $_SESSION['login']['userid'] ? 'show' :'hidden' ?>">
@@ -92,7 +92,7 @@ if(isset($_GET['delete']) && !empty($_GET['delete'])){
                 <div class="box-body">
                     <img class="img-responsive pad <?php echo htmlspecialchars($showPost['photo_effect']); ?>" src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
                     <p><?php echo htmlspecialchars($showPost['post_description']) ?></p>
-                    <a href="?click=<?php echo $showPost['post_id'];?>" data-id="<?php echo $showPost['post_id'] ?>" class="likeBtn btn btn-xs <?php echo $post->isLiked() == true ? 'liked ' : 'btn-default '?>"><i class="fa fa-heart-o fa-lg"></i> vind ik leuk</a>
+                    <a href="?click=<?php echo $showPost['post_id'];?>" data-id="<?php echo $showPost['post_id'] ?>" class="likeBtn btn btn-sm <?php echo $post->isLiked() == true ? 'liked ' : 'btn-default '?>"><i class="fa fa-heart-o fa-lg"></i> vind ik leuk</a>
                     <span class="pull-right text-muted showLikes"><?php echo $post->showLikes();?> <?php echo $post->showLikes() == 1 ? 'like' : 'likes' ?> </span>
                 </div>
                 <div class="box-footer box-comments">

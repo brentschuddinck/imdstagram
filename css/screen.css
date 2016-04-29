@@ -520,6 +520,10 @@ body .no-padding {
     display: block;
 }
 
+.box-body p{
+    margin-top: 15px;
+}
+
 .pad {
     margin: 10px 0;
 }
@@ -593,6 +597,7 @@ input[type="checkbox"]{
     background-color: #1abc9c;
     color: #fff;
 }
+
 
 
 @media screen and (min-width: 760px) {
@@ -839,7 +844,15 @@ input[type='file'] {
     margin-right: 6px;
 }
 
+.show a{
+    width: 30px;
+    height: 30px;
+    padding-top: 6px;
+}
 
+.show a:hover{
+    background-color: #d9534f;
+}
 
 @media screen and (min-width: 480px){
 
