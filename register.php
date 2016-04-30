@@ -13,7 +13,7 @@ $madeAccount = false;
 if (isset($_POST['Register']) && !empty($_POST['Register'])) {
 
     //invoervariabelen
-    $fullname = $_POST['naam']; //ucwords zet de eerste letter van elk woord in een hoofdletter
+    $fullname = ucwords($_POST['naam']); //ucwords zet de eerste letter van elk woord in een hoofdletter
     $email = $_POST['email'];
     $username = strtolower($_POST['gebruikersnaam']);
     $password = $_POST['wachtwoord'];
