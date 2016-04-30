@@ -151,17 +151,17 @@ include_once('../inc/feedbackbox.inc.php');
             </div>
             <div class="tab-pane fade in" id="tab2">
                 <?php if(isset($_GET['user']) && $_GET['user'] == $_SESSION['login']['username']): ?>
-                    <p style="text-align: center">vriendschapsverzoeken</p>
+                    <h2 style="text-align: center">vriendschapsverzoeken</h2>
                     <?php foreach($requests as $request): ?>
                 <div class="friendRequests">
                 <div class="user-block"">
                     <a href="/imdstagram/explore/profile.php?user=<?php echo $request['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $request['profile_picture'] ?>" alt="<">
                         <span class="username"><?php echo $request['username']; ?></span></a>
-                    <span class="description acceptBtn"><a href="?user=<?php echo $_SESSION['login']['username'];?>&acceptId=<?php echo $request['user_id']; ?>">accepteer</a></span>
+                    <span class="description acceptBtn"><a href="?user=<?php echo $_SESSION['login']['username'];?>&acceptId=<?php echo $request['user_id']; ?>"><li class="fa fa-user-plus"></li> Accepteer</a></span>
                     </div>
                 </div>
             <?php endforeach ?>
-                <p style="text-align: center">volgers</p>
+                <h2 style="text-align: center">volgers</h2>
                 <?php endif ?>
                 <?php foreach($followers as $follower): ?>
                     <div class="user-block"">
