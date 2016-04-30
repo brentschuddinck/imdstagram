@@ -5,7 +5,7 @@ include_once('classes/Validation.class.php');
 include_once('classes/Search.class.php');
 
 
-if (isset($_GET['search']) && !empty($_GET['search'])) {
+if (isset($_GET['search']) && !empty($_GET['search']) && count($_GET) === 1) {
 
     $searchTerm = $_GET['search'];
 
@@ -15,7 +15,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
     $validation = new Validation();
 
 
-    if($searchTerm[0] === '#'){
+    if($searchTerm === '#'){
         $isValidSearchTerm = $validation->isValidHashtag($searchTerm);
     }else{
         $isValidSearchTerm = $validation->isValidSearchTerm($searchTerm);
@@ -96,10 +96,9 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
 
 
 <!-- start photowall -->
-<div class="container search">
+<div class="container search search-def">
     <div class="row">
-        <div class="col-sm-3 col-md-2"></div>
-        <div class="col-sm-6 col-md-8">
+        <div class="col-sm-6 col-sm-offset-3 col-md-8 col-md-offset-2">
             <h1 class="centreer tekst"><?php echo htmlspecialchars($pageTitle); ?></h1>
             <?php if (isset($amountOfSearchResults) && $amountOfSearchResults > 0) {
                 echo "<div class='centreer tekst search nmessages vet'>" . htmlspecialchars($amountOfSearchResults) . " resultaten</div>";
@@ -124,9 +123,9 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         foreach ($arrTags as $arrItem) {
             $showTagName = $arrItem['tag_name'];
 
-            $showTags = "<article class=\"col-xs-6 col-sm-4 col-md-3\">";
-            $showTags .= "<a class='thumbnail picturelist' href='/imdstagram/explore/index.php?tag=" . $showTagName . "'>";
-            $showTags .= "<div class='vet'>" . $showTagName . "</div>";
+            $showTags = "<article class=\"col-xs-12 col-sm-4 col-md-3\">";
+            $showTags .= "<a class='thumbnail picturelist' href='/imdstagram/explore/tag.php?tag=" . $showTagName . "'>";
+            $showTags .= "<div class='vet'>#" . $showTagName . "</div>";
             //$showLocations .= "<img src='img/uploads/profile-pictures/". $showLocationsProfilePicture ."' alt='Profielfoto van ". $showLocationsFullName ."'>";
             $showTags .= "</a></article>";
             echo $showTags;
@@ -149,7 +148,7 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
             //$showLocationPicture = $arrItem['post_photo'];
 
             $showLocations = "<article class=\"col-xs-12 col-sm-4 col-md-3\">";
-            $showLocations .= "<a class='thumbnail picturelist' href='/imdstagram/explore/index.php?location=" . htmlspecialchars($showLocationsName) . "'>";
+            $showLocations .= "<a class='thumbnail picturelist' href='/imdstagram/explore/location.php?location=" . htmlspecialchars($showLocationsName) . "'>";
             $showLocations .= "<div class='vet'>" . htmlspecialchars($showLocationsName) . "</div>";
             //$showLocations .= "<img src='img/uploads/post-pictures/" . $showLocationPicture . "' alt='Locatie " . htmlspecialchars($showLocationsName) . "'>";
             $showLocations .= "</a></article>";

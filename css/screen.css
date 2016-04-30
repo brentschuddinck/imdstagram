@@ -211,7 +211,12 @@ aside {
 
 
 .login-form{
-    margin-bottom: 50px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.fb-form{
+    margin-bottom: 5px;
 }
 
 
@@ -300,10 +305,14 @@ aside {
     margin-top: -30px;
 }
 
+
 .container.search h2{
     text-align: center;
 }
 
+.container.search-def{
+    margin-top: 25px;
+}
 
 /*
 @-webkit-keyframes scale{
@@ -603,9 +612,22 @@ input[type="checkbox"]{
     color: #fff;
 }
 
+.likeBtn{
+    margin-bottom: 15px;
+}
 
+.btn-more-results{
+    margin: 5px 0 30px 0;
+    width: 100%;
+    text-align: center;
+}
 
 @media screen and (min-width: 760px) {
+
+    .container.search-def{
+        margin-top: 0;
+    }
+
     .container{
         padding: 0;
     }
@@ -863,6 +885,10 @@ input[type='file'] {
     font-size: 1.6rem;
 }
 
+.col-sm-12{
+    padding-bottom: 0;
+}
+
 @media screen and (min-width: 480px){
 
     .status-upload .btn-success{
@@ -878,6 +904,10 @@ input[type='file'] {
 
 
 @media screen and (min-width: 760px){
+    .search.nmessages{
+        margin-bottom: 10px;
+    }
+
     .col-sm-12{
         padding: 0;
     }

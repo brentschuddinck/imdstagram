@@ -10,10 +10,22 @@ class Post{
     private $m_sPostId;
     private $m_sUsernamePosts;
     private $m_sLocation;
+    private $m_sTag;
     private $m_sEffect;
 
 
     // setters & getters
+
+    public function getMSTag()
+    {
+        return $this->m_sTag;
+    }
+
+    public function setMSTag($m_sTag)
+    {
+        $this->m_sTag = $m_sTag;
+    }
+
 
     public function getMSEffect()
     {
@@ -108,6 +120,35 @@ class Post{
         $result = $statement->fetchAll();
         return $result;
     }
+
+    // get all location posts
+    public function getAllLocationPosts(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (post_location = :location AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
+        $statement->bindValue(':userId', $_SESSION['login']['userid']);
+        $statement->bindValue(':location', $this->getMSLocation());
+        if($statement->execute()){
+            $result = $statement->fetchAll();
+            return $result;
+        }else{
+            throw new Exception("er kunnen momenteel geen posts opgevraagd woren. Onze exuses voor dit ongemak.");
+        }
+    }
+
+    // get all location posts
+    public function getAllTagPosts(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (tag_name = :tagname AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
+        $statement->bindValue(':userId', $_SESSION['login']['userid']);
+        $statement->bindValue(':tagname', $this->getMSTag());
+        if($statement->execute()){
+            $result = $statement->fetchAll();
+            return $result;
+        }else{
+            throw new Exception("er kunnen momenteel geen posts opgevraagd woren. Onze exuses voor dit ongemak.");
+        }
+    }
+
 
     // get username from poster
     public function usernameFromPost(){
@@ -286,10 +327,18 @@ class Post{
     //check of locatie bestaat
     public function locationAvailable(){
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT ");
-        $statement->bindValue(':postId', $this->m_sPostId);
-        $statement->bindValue(':userId', $_SESSION['login']['userid']);
-        $statement->execute();
+        $statement = $conn->prepare("SELECT DISTINCT post_location FROM post WHERE post_location = :location");
+        $statement->bindValue(':location', $this->getMSLocation());
+        if ($statement->execute()) {
+            //query went ok
+            if ($statement->rowCount() != 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            throw new Exception("Door een technisch probleem kan de geldigheid van de locatie niet gecontroleerd worden. Onze excuses voor dit ongemakt.");
+        }
     }
 
 

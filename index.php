@@ -7,7 +7,7 @@ $post = new Post();
 $showPosts = $post->getAllPosts();
 
 if(empty($showPosts)){
-    $feedback = buildFeedbackBox("leeg", "vul je tijdlijn door <a href='upload.php'>foto's toe te voegen</a> en vrienden te volgen. Je kan vrienden, locaties en tags zoeken via het zoekmanu bovenaan de pagina.");
+    $feedback = buildFeedbackBox("leeg", "vul je tijdlijn door <a href='upload.php'>foto's toe te voegen</a> en vrienden te volgen. Je kan vrienden, locaties en tags zoeken via het zoekveld bovenaan de pagina.");
 }
 
 if(isset($_POST['btnLikePicture'])) {
@@ -27,8 +27,6 @@ if(isset($_GET['delete']) && !empty($_GET['delete'])){
     /*$post->deletePostPicture($deletePostId);*/
     header('Location: index.php');
 }
-
-
 
 ?><!doctype html>
 <html lang="nl">
@@ -64,7 +62,7 @@ if(isset($_GET['delete']) && !empty($_GET['delete'])){
                     <div class="user-block">
                         <a href="/imdstagram/explore/profile.php?user=<?php echo htmlspecialchars($post->usernameFromPost());?>"><img class="img-circle" src="img/uploads/profile-pictures/<?php echo htmlspecialchars($post->userImgFromPost()); ?>" alt="User Image"></a>
                         <span class="username"><a href="/imdstagram/explore/profile.php?user=<?php echo htmlspecialchars($post->usernameFromPost());?>"><?php echo htmlspecialchars($post->usernameFromPost()); ?></a></span>
-                        <span class="description"><?php echo $post->timePosted($showPost['post_date']);?> <?php echo !empty($showPost['post_location']) ? '-' : '' ?> <span class="<?php echo !empty($showPost['post_location']) ? 'fa fa-map-marker' : '' ?>"><?php echo " <a href='explore/location=". htmlspecialchars($showPost['post_location']) ."'>". htmlspecialchars($showPost['post_location']) ."</a>"; ?></span></span>
+                        <span class="description"><?php echo $post->timePosted($showPost['post_date']);?> <?php echo !empty($showPost['post_location']) ? '-' : '' ?> <span class="<?php echo !empty($showPost['post_location']) ? 'fa fa-map-marker' : '' ?>"><?php echo " <a href='explore/location.php?location=". htmlspecialchars($showPost['post_location']) ."'>". htmlspecialchars($showPost['post_location']) ."</a>"; ?></span></span>
                     </div>
                     <div class="box-tools">
                         <div class="<?php echo $showPost['user_id'] != $_SESSION['login']['userid'] ? 'show' :'hidden' ?>">
@@ -125,6 +123,9 @@ if(isset($_GET['delete']) && !empty($_GET['delete'])){
                 </div>
             </div>
         <?php endforeach ?>
+        <?php if(count($showPosts) >20) : ?>
+        <a href="#" class="btn btn-primary btn-more-results btn-md">Toon meer resultaten</a>
+        <?php endif; ?>
     </div>
 </div>
 <!-- einde photowall -->

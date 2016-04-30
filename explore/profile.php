@@ -9,7 +9,7 @@ include_once('../inc/feedbackbox.inc.php');
     $user = new User();
 
     //detecteer of er een user is
-    if(isset($_GET['user']) && !empty($_GET['user'])){
+    if(isset($_GET['user']) && !empty($_GET['user']) && count($_GET) === 1){
         $username = $_GET['user'];
 
         //kijk of deze gebruiker bestaat
