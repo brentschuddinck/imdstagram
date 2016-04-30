@@ -2,24 +2,20 @@
 include_once('../inc/sessiecontrole.inc.php');
 include_once('../inc/feedbackbox.inc.php');
 include_once('../classes/Validation.class.php');
-include_once('../classes/Post.class.php');
-
-$tag = $_GET['tag'];
-
+include_once('../classes/Search.class.php');
 
 if (isset($_GET['tag']) && !empty($_GET['tag']) && count($_GET) === 1) {
-
+    $tag = $_GET['tag'];
     $amountOfSearchResults = 0;
 
 //controleer geldige locatie
-    $post = new Post();
+    $search = new Search();
     $validation = new Validation();
 
-    if ($validation->isValidSearchTerm($tag)) {
+    if ($validation->isValidHashtag($tag)) {
         try {
-            $post->setMStag($tag);
-            $userPosts = $post->getAlltagPosts();
-            echo print_r($userPosts);
+            $search->setMStag($tag);
+            $userPosts = $search->getAllTagPosts();
             $amountOfSearchResults = count($userPosts);
         } catch (Exception $e) {
             $feedback = buildFeedbackBox("danger", $e->getMessage());

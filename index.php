@@ -21,10 +21,15 @@ if(isset($_GET['click']) && !empty($_GET['click']) ){
 }
 
 if(isset($_GET['delete']) && !empty($_GET['delete'])){
-    $deletePostId = $_GET['delete'];
-    $post->setMSPostId($deletePostId);
-    $post->deletePost();
-    /*$post->deletePostPicture($deletePostId);*/
+    try{
+        $deletePostId = $_GET['delete'];
+        $post->setMSPostId($deletePostId);
+        $postToDelete = $post->getSinglePost();
+        $post->deletePostImage($postToDelete);
+        $post->deletePost();
+    }catch(Exception $e){
+        $feedback = buildFeedbackBox("danger", $e->getMessage());
+    }
     header('Location: index.php');
 }
 

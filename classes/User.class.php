@@ -464,8 +464,7 @@ class User
     //gegevens ophalen van personen die je volgt
     public function getFollowing(){
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT u.username, u.profile_picture FROM user u, following f WHERE u.user_id = f.follows
-                                      AND f.user_id = (SELECT user_id FROM user WHERE username = :username)");
+        $statement = $conn->prepare("SELECT u.username, u.profile_picture FROM user u, following f WHERE u.user_id = f.follows AND f.user_id = (SELECT user_id FROM user WHERE username = :username)");
         $statement->bindValue(':username', $this->m_sUsername);
         $statement->execute();
         $result = $statement->fetchAll();

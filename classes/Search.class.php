@@ -1,9 +1,63 @@
 <?php
 include_once('Db.class.php');
 
-class Search{
+class Search
+{
 
     private $m_sSearchTerm;
+    private $m_sTag;
+    private $m_sLocation;
+    private $m_sUserid;
+
+    /**
+     * @return mixed
+     */
+    public function getMSUserid()
+    {
+        return $this->m_sUserid;
+    }
+
+    /**
+     * @param mixed $m_sUserid
+     */
+    public function setMSUserid($m_sUserid)
+    {
+        $this->m_sUserid = $m_sUserid;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getMSLocation()
+    {
+        return $this->m_sLocation;
+    }
+
+    /**
+     * @param mixed $m_sLocation
+     */
+    public function setMSLocation($m_sLocation)
+    {
+        $this->m_sLocation = $m_sLocation;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getMSTag()
+    {
+        return $this->m_sTag;
+    }
+
+    /**
+     * @param mixed $m_sTag
+     */
+    public function setMSTag($m_sTag)
+    {
+        $this->m_sTag = $m_sTag;
+    }
 
 
     public function getMSSearchTerm()
@@ -17,8 +71,8 @@ class Search{
     }
 
 
-
-    public function zoekResultaten(){
+    public function zoekResultaten()
+    {
         //database connectie
         $conn = Db::getInstance();
 
@@ -42,17 +96,48 @@ class Search{
                 $arrResult['location'] = $statementSearchInLocation->fetchAll(PDO::FETCH_ASSOC);
                 $arrResult['user'] = $statementSearchInUser->fetchAll(PDO::FETCH_ASSOC);
                 return $arrResult;
-            }
-
-            else{
+            } else {
                 //er zijn geen zoekresultaten gevonden
                 return false;
             }
 
-        }else{
+        } else {
             throw new Exception("door een technisch probleem kunnen er geen zoekopdrachten uitgevoerd worden. Onze excuses voor het ongemak.");
         }
     }
+
+
+    // get all location posts
+    public function getAllTagPosts()
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE tag_name = :tagname AND (p.user_id = :userId OR f.user_id = :userId) ORDER BY post_date DESC LIMIT 200");
+        $statement->bindValue(':userId', $_SESSION['login']['userid']);
+        $statement->bindValue(':tagname', $this->getMSTag());
+        if ($statement->execute()) {
+            $result = $statement->fetchAll();
+            return $result;
+        } else {
+            throw new Exception("er kunnen momenteel geen posts opgevraagd woren. Onze exuses voor dit ongemak.");
+        }
+    }
+
+
+    // get all location posts
+    public function getAllLocationPosts()
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (post_location = :location AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
+        $statement->bindValue(':userId', $this->getMSUserid());
+        $statement->bindValue(':location', $this->getMSLocation());
+        if ($statement->execute()) {
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } else {
+            throw new Exception("er kunnen momenteel geen posts opgevraagd woren. Onze exuses voor dit ongemak.");
+        }
+    }
+
 
 
 }

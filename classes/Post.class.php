@@ -155,21 +155,6 @@ class Post
         }
     }
 
-    // get all location posts
-    public function getAllTagPosts()
-    {
-        $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (tag_name = :tagname AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
-        $statement->bindValue(':userId', $_SESSION['login']['userid']);
-        $statement->bindValue(':tagname', $this->getMSTag());
-        if ($statement->execute()) {
-            $result = $statement->fetchAll();
-            return $result;
-        } else {
-            throw new Exception("er kunnen momenteel geen posts opgevraagd woren. Onze exuses voor dit ongemak.");
-        }
-    }
-
 
     // get username from poster
     public function usernameFromPost()
@@ -379,19 +364,54 @@ class Post
         $statement = $conn->prepare("SELECT post_photo FROM post WHERE user_id = :userid");
         $statement->bindValue(':userid', $this->getMSUserId());
         $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_COLUMN);
+        $result = $statement->fetch(PDO::FETCH_COLUMN);
         return $result;
     }
 
 
-    //delete profile picture
+
+    //delete all post picture
     public function deleteProfilePosts($p_sPicture)
     {
         $path = "/imdstagram/img/uploads/post-pictures/";
         if (unlink($_SERVER['DOCUMENT_ROOT'] . "" . $path .$p_sPicture)) {
             return true;
         } else {
-            throw new Exception("Je account is gewist, maar er blijven nog files achter. Gelieve contact op te nemen met de beheerder van IMDstagram om je account definitief te wissen.");
+            throw new Exception("Er blijven nog files achter. Gelieve contact op te nemen met de beheerder van IMDstagram om je file definitief te wissen.");
+        }
+    }
+
+
+
+    //get single post picture
+    public function getSinglePost(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT post_photo FROM post WHERE post_id = :postid");
+        $statement->bindValue(':postid', $this->m_sPostId);
+        if($statement->execute()){
+            $result = $statement->fetch(PDO::FETCH_COLUMN);
+            return $result;
+        }else{
+            throw new Exception("je bestand is kon niet van de server gewist worden.");
+        }
+
+    }
+
+
+    //delete single post picture
+    public function deletePostImage($p_sPicture)
+    {
+        $path = "/imdstagram/img/uploads/post-pictures/";
+        $fullpath = $_SERVER['DOCUMENT_ROOT'] . $path . $p_sPicture;
+
+        if(file_exists($fullpath)){
+            if (unlink($fullpath)) {
+                return true;
+            } else {
+                throw new Exception("je bestand is gewist uit de database, maar blijft nog op onze server staan. Gelieve contact op te nemen met de beheerder van IMDstagram om je file definitief te wissen.");
+            }
+        }else{
+            return true;
         }
     }
 

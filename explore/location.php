@@ -2,7 +2,7 @@
 include_once('../inc/sessiecontrole.inc.php');
 include_once('../inc/feedbackbox.inc.php');
 include_once('../classes/Validation.class.php');
-include_once('../classes/Post.class.php');
+include_once('../classes/Search.class.php');
 
 $location = $_GET['location'];
 
@@ -12,14 +12,15 @@ if (isset($_GET['location']) && !empty($_GET['location']) && count($_GET) === 1)
     $amountOfSearchResults = 0;
 
 //controleer geldige locatie
-    $post = new Post();
+    $search = new Search();
     $validation = new Validation();
 
     if ($validation->isValidSearchTerm($location)) {
         try {
-            $post->setMSLocation($location);
-            $userPosts = $post->getAllLocationPosts();
-            echo print_r($userPosts);
+            $search->setMSLocation($location);
+            $search->setMSUserid($_SESSION['login']['userid']);
+            $userPosts = $search->getAllLocationPosts();
+            print_r($userPosts);
             $amountOfSearchResults = count($userPosts);
         } catch (Exception $e) {
             $feedback = buildFeedbackBox("danger", $e->getMessage());
