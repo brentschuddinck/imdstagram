@@ -14,7 +14,7 @@ if (isset($_POST['btnUploadProfilePicture'])) {
     $profilePhotoTmpName = $profilePhotoArr["tmp_name"]; //the location in which the file is temporarily stored on the server
     $profilePhotoError = $profilePhotoArr["error"]; //an error code resulting from the file upload
 
-    $maxBytes = 512000; //1024 x 500 = 512000 bytes = 500KB. Maximale bestandsgrootte dat we willen toestaan
+    $maxBytes = 5242880; //1024 x 500 = 512000 bytes = 500KB. Maximale bestandsgrootte dat we willen toestaan
     //$uploadQualityInPct = 60; //algemeen genomen zoals we doen bij Photoshop export van afbeeldingen naar het web
 
     //checken of we een bestand hebben en error geen 0 is
@@ -88,7 +88,7 @@ if (isset($_POST['btnUploadProfilePicture'])) {
 
 
                     } else {
-                        $feedback = buildFeedbackBox("danger", "de profielfoto mag niet groter zijn dan 500KB.");
+                        $feedback = buildFeedbackBox("danger", "de profielfoto mag niet groter zijn dan 5MB.");
                     }
                 }
             } else {
