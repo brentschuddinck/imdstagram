@@ -27,12 +27,21 @@ include_once('../inc/feedbackbox.inc.php');
 
     $user = new User();
     $user->setMSUsername($username);
-
+    print_r($user->isAccepted());
     if(!empty($_GET['id'])){
     $user->setMIUserId($_GET['id']);
     $user->followUser();
     header('location: profile.php?user=' . $_GET['user']);
 
+    }
+
+    $requests = $user->getFriendRequests();
+
+    //accepteer friend requests
+    if(isset($_GET['acceptId']) && !empty($_GET['acceptId'])){
+        $user->setMIAcceptId($_GET['acceptId']);
+        $user->acceptFriendRequest();
+        header('location: profile.php?user=' . $_GET['user']);
     }
 
     $followers = $user->getFollowers();
@@ -102,7 +111,7 @@ include_once('../inc/feedbackbox.inc.php');
         <?php if(isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['username']): ?>
         <div>
             <form action="" method="post">
-                <a  style="margin-top: 20px" href="?user=<?php echo $_GET['user'];?>&id=<?php echo $user->getIdFromProfile() ?>" class="likeBtn btn btn-primary"><i class="<?php echo $user->isFollowing() == 0 ? 'fa fa-user-plus' :'fa fa-user-times' ?> fa-lg"></i><?php echo $user->isFollowing() == 0 ? ' Volg deze gebruiker' : ' Niet meer volgen' ?></a>
+                <a  style="margin-top: 20px" href="?user=<?php echo $_GET['user'];?>&id=<?php echo $user->getIdFromProfile() ?>" class="likeBtn btn btn-primary"><i class="<?php if($user->isFollowing() == 0){echo 'fa fa-user-plus';}elseif($user->isFollowing() == 1 && $user->isAccepted() == true){echo 'fa fa-user-times';}elseif($user->isFollowing() == 1 && $user->isAccepted() == false){echo 'fa fa-envelope-o';} ?> fa-lg"></i><?php if($user->isFollowing() == 0){echo ' volg deze gebruiker';}elseif($user->isFollowing() == 1 && $user->isAccepted() == true){echo ' niet meer volgen';}elseif($user->isFollowing() == 1 && $user->isAccepted() == false){echo ' verzoek verstuurd';} ?></a>
             </form>
         </div>
 
@@ -141,6 +150,19 @@ include_once('../inc/feedbackbox.inc.php');
                 </div>
             </div>
             <div class="tab-pane fade in" id="tab2">
+                <?php if(isset($_GET['user']) && $_GET['user'] == $_SESSION['login']['username']): ?>
+                    <p style="text-align: center">vriendschapsverzoeken</p>
+                    <?php foreach($requests as $request): ?>
+                <div class="friendRequests">
+                <div class="user-block"">
+                    <a href="/imdstagram/explore/profile.php?user=<?php echo $request['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $request['profile_picture'] ?>" alt="<">
+                        <span class="username"><?php echo $request['username']; ?></span></a>
+                    <span class="description acceptBtn"><a href="?user=<?php echo $_SESSION['login']['username'];?>&acceptId=<?php echo $request['user_id']; ?>">accepteer</a></span>
+                    </div>
+                </div>
+            <?php endforeach ?>
+                <p style="text-align: center">volgers</p>
+                <?php endif ?>
                 <?php foreach($followers as $follower): ?>
                     <div class="user-block"">
                         <a href="/imdstagram/explore/profile.php?user=<?php echo $follower['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $follower['profile_picture'] ?>" alt="<">
@@ -154,6 +176,7 @@ include_once('../inc/feedbackbox.inc.php');
                     <div class="user-block profile-block"">
                     <a href="/imdstagram/explore/profile.php?user=<?php echo $following['username'];?>"><img class="img-circle" src="../img/uploads/profile-pictures/<?php echo $following['profile_picture'] ?>" alt="<">
                         <span class="username"><?php echo $following['username']; ?></span></a>
+
                     </div>
                 <?php endforeach ?>
                 <p class="fb"><?php echo !empty($followingfb) ? $followingfb : ''?></p>

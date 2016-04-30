@@ -15,10 +15,23 @@ class User
     private $m_iUserAccountState;
     private $m_sProfilePicture;
     private $m_iUserId;
+    private $m_iAcceptId;
+
+
 
 
     //getters en setters
 
+    public function getMIAcceptId()
+    {
+        return $this->m_iAcceptId;
+    }
+
+
+    public function setMIAcceptId($m_iAcceptId)
+    {
+        $this->m_iAcceptId = $m_iAcceptId;
+    }
 
     public function getMSProfilePicture()
     {
@@ -400,9 +413,21 @@ class User
         return $result;
     }
 
+    public function isAccepted(){
+        $userid = $_SESSION['login']['userid'];
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT accepted FROM following WHERE user_id = :userId AND follows = (SELECT user_id FROM user WHERE username = :username)");
+        $statement->bindValue(':userId', $userid);
+        $statement->bindValue(':username', $this->m_sUsername);
+        $statement->execute();
+        $result = $statement->fetchColumn();
+        return $result;
+    }
+
     // user volgen
     public function followUser()
     {
+
         $userid = $_SESSION['login']['userid'];
         $conn = Db::getInstance();
         $statementCheckIfFollows = $conn->prepare("SELECT * FROM following WHERE user_id = :userId AND follows = :follows");
@@ -410,18 +435,32 @@ class User
         $statementCheckIfFollows->bindValue(':follows', $this->m_iUserId);
         $statementCheckIfFollows->execute();
 
+        $statementPrivate = $conn->prepare('SELECT private FROM user WHERE user_id = :userId');
+        $statementPrivate->bindValue(':userId', $this->m_iUserId);
+        $statementPrivate->execute();
+        $private = $statementPrivate->fetchColumn();
+
 
         // nog geen rijen, user volgt deze persoon nog niet
-        if ($statementCheckIfFollows->rowCount() == 0) {
+        if ($statementCheckIfFollows->rowCount() == 0 && $private == false) {
             $statememtInsertFollow = $conn->prepare("INSERT INTO following (user_id, follows, accepted) VALUES (:userId, :follows, true)");
             $statememtInsertFollow->bindValue(':userId', $userid);
             $statememtInsertFollow->bindValue(':follows', $this->m_iUserId);
             $statememtInsertFollow->execute();
             $result = $statememtInsertFollow->fetchAll();
             return $result;
+
+        }elseif($statementCheckIfFollows->rowCount() == 0 && $private == true){
+            $statememtInsertFollow = $conn->prepare("INSERT INTO following (user_id, follows, accepted) VALUES (:userId, :follows, false)");
+            $statememtInsertFollow->bindValue(':userId', $userid);
+            $statememtInsertFollow->bindValue(':follows', $this->m_iUserId);
+            $statememtInsertFollow->execute();
+            $result = $statememtInsertFollow->fetchAll();
+            return $result;
+
             // 1 rij: user volgt deze persoon al
-        } else {
-            $statementDeleteFollow = $conn->prepare("DELETE FROM following WHERE user_id = :userId AND follows = :follows");
+        } elseif($statementCheckIfFollows->rowCount() > 0) {
+            $statementDeleteFollow = $conn->prepare("DELETE FROM following WHERE user_id = :userId AND follows = :follows AND accepted = true");
             $statementDeleteFollow->bindValue(':userId', $userid);
             $statementDeleteFollow->bindValue(':follows', $this->m_iUserId);
             $statementDeleteFollow->execute();
@@ -433,7 +472,7 @@ class User
     // tel het aantal followers
     public function countFollowers(){
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT COUNT(follows) FROM following WHERE follows = (SELECT user_id FROM user WHERE username = :username)");
+        $statement = $conn->prepare("SELECT COUNT(follows) FROM following WHERE follows = (SELECT user_id FROM user WHERE username = :username) AND accepted = true");
         $statement->bindValue(':username', $this->m_sUsername);
         $statement->execute();
         $result = $statement->fetchColumn();
@@ -444,17 +483,35 @@ class User
     public function getFollowers(){
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT u.username, u.profile_picture FROM user u, following f WHERE u.user_id = f.user_id
-                                      AND f.follows = (SELECT user_id FROM user WHERE username = :username)");
+                                      AND f.follows = (SELECT user_id FROM user WHERE username = :username) AND accepted = true");
         $statement->bindValue(':username', $this->m_sUsername);
         $statement->execute();
         $result = $statement->fetchAll();
         return $result;
     }
 
+    public function getFriendRequests(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT u.user_id, u.username, u.profile_picture FROM user u, following f WHERE u.user_id = f.user_id
+                                      AND f.follows = (SELECT user_id FROM user WHERE username = :username) AND accepted = false");
+        $statement->bindValue(':username', $this->m_sUsername);
+        $statement->execute();
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
+    public function acceptFriendRequest(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("UPDATE following SET accepted = true WHERE user_id = :acceptedId AND follows = :userId");
+        $statement->bindValue(':acceptedId', $this->m_iAcceptId);
+        $statement->bindValue(':userId', $_SESSION['login']['userid']);
+        $statement->execute();
+    }
+
     // tellen van het aantal following
     public function countFollowing(){
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT COUNT(user_id) FROM following WHERE user_id = (SELECT user_id FROM user WHERE username = :username)");
+        $statement = $conn->prepare("SELECT COUNT(user_id) FROM following WHERE user_id = (SELECT user_id FROM user WHERE username = :username) AND accepted = true");
         $statement->bindValue(':username', $this->m_sUsername);
         $statement->execute();
         $result = $statement->fetchColumn();
@@ -464,7 +521,8 @@ class User
     //gegevens ophalen van personen die je volgt
     public function getFollowing(){
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT u.username, u.profile_picture FROM user u, following f WHERE u.user_id = f.follows AND f.user_id = (SELECT user_id FROM user WHERE username = :username)");
+        $statement = $conn->prepare("SELECT u.username, u.profile_picture FROM user u, following f WHERE u.user_id = f.follows
+                                      AND f.user_id = (SELECT user_id FROM user WHERE username = :username AND accepted = true)");
         $statement->bindValue(':username', $this->m_sUsername);
         $statement->execute();
         $result = $statement->fetchAll();

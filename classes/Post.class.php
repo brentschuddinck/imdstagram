@@ -133,7 +133,8 @@ class Post
     public function getAllPosts()
     {
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT * FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE p.user_id = :userId OR f.user_id = :userId ORDER BY post_date DESC LIMIT 20");
+        $statement = $conn->prepare("SELECT * FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE p.user_id = :userId
+                                    OR f.user_id = :userId AND accepted = true ORDER BY post_date DESC LIMIT 20");
         $statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->execute();
         $result = $statement->fetchAll();
