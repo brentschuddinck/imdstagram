@@ -2,7 +2,8 @@
 
 include_once('Db.class.php');
 
-class Post{
+class Post
+{
 
     // member variabelen
     private $m_sDescription;
@@ -12,9 +13,21 @@ class Post{
     private $m_sLocation;
     private $m_sTag;
     private $m_sEffect;
+    private $m_sUserId;
 
 
     // setters & getters
+
+    public function getMSUserId()
+    {
+        return $this->m_sUserId;
+    }
+
+    public function setMSUserId($m_sUserId)
+    {
+        $this->m_sUserId = $m_sUserId;
+    }
+
 
     public function getMSTag()
     {
@@ -71,21 +84,25 @@ class Post{
     }
 
 
-    public function getMSDescription(){
+    public function getMSDescription()
+    {
         return $this->m_sDescription;
     }
 
 
-    public function setMSDescription($m_sDescription){
+    public function setMSDescription($m_sDescription)
+    {
         $this->m_sDescription = $m_sDescription;
     }
 
 
-    public function getMSImageName(){
+    public function getMSImageName()
+    {
         return $this->m_sImageName;
     }
 
-    public function setMSImageName($m_sImageName){
+    public function setMSImageName($m_sImageName)
+    {
         $this->m_sImageName = $m_sImageName;
     }
 
@@ -93,7 +110,8 @@ class Post{
     // functies
 
     // uploaden van foto met beschrijving
-    public function postPhoto(){
+    public function postPhoto()
+    {
         // database connectie
         $conn = Db::getInstance();
         $statement = $conn->prepare("INSERT INTO post (post_description, post_photo, post_date, post_location, user_id, photo_effect) VALUES(:description, :uploadPhoto, :postDate, :location, :userId, :effect)");
@@ -112,7 +130,8 @@ class Post{
     }
 
     // posts (van vrienden) die op timeline van gebruiker komen
-    public function getAllPosts(){
+    public function getAllPosts()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT * FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE p.user_id = :userId OR f.user_id = :userId ORDER BY post_date DESC LIMIT 20");
         $statement->bindValue(':userId', $_SESSION['login']['userid']);
@@ -122,36 +141,39 @@ class Post{
     }
 
     // get all location posts
-    public function getAllLocationPosts(){
+    public function getAllLocationPosts()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (post_location = :location AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
         $statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->bindValue(':location', $this->getMSLocation());
-        if($statement->execute()){
+        if ($statement->execute()) {
             $result = $statement->fetchAll();
             return $result;
-        }else{
+        } else {
             throw new Exception("er kunnen momenteel geen posts opgevraagd woren. Onze exuses voor dit ongemak.");
         }
     }
 
     // get all location posts
-    public function getAllTagPosts(){
+    public function getAllTagPosts()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (tag_name = :tagname AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
         $statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->bindValue(':tagname', $this->getMSTag());
-        if($statement->execute()){
+        if ($statement->execute()) {
             $result = $statement->fetchAll();
             return $result;
-        }else{
+        } else {
             throw new Exception("er kunnen momenteel geen posts opgevraagd woren. Onze exuses voor dit ongemak.");
         }
     }
 
 
     // get username from poster
-    public function usernameFromPost(){
+    public function usernameFromPost()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT username FROM user u, post p WHERE u.user_id = p.user_id AND p.post_id = :currentPost");
         $statement->bindValue(':currentPost', $this->m_sPostId);
@@ -161,8 +183,10 @@ class Post{
 
 
     }
+
     // get user profiel picture from poster
-    public function userImgFromPost(){
+    public function userImgFromPost()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT profile_picture FROM user u, post p WHERE u.user_id = p.user_id AND p.post_id = :currentPost");
         $statement->bindValue(':currentPost', $this->m_sPostId);
@@ -173,7 +197,8 @@ class Post{
     }
 
     // like function
-    public function likePost(){
+    public function likePost()
+    {
         $userid = $_SESSION['login']['userid'];
         $conn = Db::getInstance();
         $statementCheckIfLiked = $conn->prepare("SELECT * FROM likes WHERE post_id = :postId AND user_id = :userId");
@@ -183,7 +208,7 @@ class Post{
 
 
         // nog geen rijen, user heeft post nog niet geliked
-        if($statementCheckIfLiked->rowCount() == 0){
+        if ($statementCheckIfLiked->rowCount() == 0) {
             $statememtInsertLike = $conn->prepare("INSERT INTO likes (liked, post_id, user_id) VALUES (:liked, :postId, :userId)");
             $statememtInsertLike->bindValue(':liked', true);
             $statememtInsertLike->bindValue(':postId', $this->m_sPostId);
@@ -192,7 +217,7 @@ class Post{
             $result = $statememtInsertLike->fetchAll();
             return $result;
             // meer als 1 rij: user heeft de pos al geliked en wil nu disliken
-        }else{
+        } else {
             $statementUpdateLike = $conn->prepare("DELETE FROM likes WHERE post_id = :postId AND user_id = :userId");
             $statementUpdateLike->bindValue(':postId', $this->m_sPostId);
             $statementUpdateLike->bindValue(':userId', $userid);
@@ -203,7 +228,8 @@ class Post{
 
     }
 
-    public function showLikes(){
+    public function showLikes()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT COUNT(*) FROM likes WHERE liked = true AND post_id = :currentPostId ");
         $statement->bindValue(':currentPostId', $this->m_sPostId);
@@ -213,7 +239,8 @@ class Post{
 
     }
 
-    public function isLiked(){
+    public function isLiked()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT liked FROM likes WHERE post_id = :currentPostId AND user_id = :userId ");
         $statement->bindValue(':currentPostId', $this->m_sPostId);
@@ -224,7 +251,8 @@ class Post{
     }
 
     // reformat timestamp
-    public function timePosted($p_postedTime){
+    public function timePosted($p_postedTime)
+    {
 
         $postedTime = strtotime($p_postedTime); //parse textual datetime description into UNIX timestamp
         $currentTime = time(); //Returns the current time measured in the number of seconds since the Unix Epoch
@@ -232,66 +260,66 @@ class Post{
         // bereken seconds tussen time atm en posted time
         $timeDifference = $currentTime - $postedTime;
 
-        $seconds = $timeDifference ;
+        $seconds = $timeDifference;
         //floor rond naar beneden af
-        $minutes = floor($timeDifference / 60 );
+        $minutes = floor($timeDifference / 60);
         $hours = floor($timeDifference / 3600);
-        $days = floor($timeDifference / 86400 );
+        $days = floor($timeDifference / 86400);
         $weeks = floor($timeDifference / 604800);
-        $months = floor($timeDifference / 2628000 );
-        $years = floor($timeDifference / 31536000 );
+        $months = floor($timeDifference / 2628000);
+        $years = floor($timeDifference / 31536000);
 
 
-
-        if($seconds <= 60){
+        if ($seconds <= 60) {
             return "zojuist";
 
-        }else if($minutes <= 59){
-            if($minutes==1){
+        } else if ($minutes <= 59) {
+            if ($minutes == 1) {
                 return "1 minuut geleden";
-            }else{
+            } else {
                 return "$minutes minuten geleden";
             }
 
-        }else if($hours <= 23){
-            if($hours==1){
+        } else if ($hours <= 23) {
+            if ($hours == 1) {
                 return "1 uur geleden";
-            }else{
+            } else {
                 return "$hours uur geleden";
             }
 
-        }else if($days <= 6){
-            if($days==1){
+        } else if ($days <= 6) {
+            if ($days == 1) {
                 return "gisteren";
-            }else{
+            } else {
                 return "$days dagen geleden";
             }
 
-        }else if($weeks <= 3){
-            if($weeks==1){
+        } else if ($weeks <= 3) {
+            if ($weeks == 1) {
                 return "een week geleden";
-            }else{
+            } else {
                 return "$weeks weken geleden";
             }
 
-        }else if($months <= 11){
-            if($months==1){
+        } else if ($months <= 11) {
+            if ($months == 1) {
                 return "een maand geleden";
-            }else{
+            } else {
                 return "$months maanden geleden";
             }
 
-        }else{
-            if($years==1){
+        } else {
+            if ($years == 1) {
                 return "een jaar geleden";
-            }else{
+            } else {
                 return "$years jaar geleden";
             }
         }
     }
 
     // toon de foto's van een bepaalde persoon op profielpagina
-    public function getPostsForEachuser(){
+    public function getPostsForEachuser()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT * FROM post p WHERE user_id = (SELECT user_id FROM user WHERE username = :username AND private = false)
                                       OR user_id = (SELECT u.user_id FROM user u, following f WHERE u.username = :username AND private = true AND u.user_id = f.follows AND f.user_id = :userid AND f.accepted = true)
@@ -305,7 +333,8 @@ class Post{
     }
 
     // tellen van het aantal posts dat een bepaalde persoon heeft
-    public function countPostsForEachuser(){
+    public function countPostsForEachuser()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT COUNT(*) FROM post p WHERE user_id = (SELECT user_id FROM user WHERE username = :username )");
         $statement->bindValue(':username', $this->m_sUsernamePosts);
@@ -315,7 +344,8 @@ class Post{
     }
 
     // post deleten, enkel als de post van de ingelogde gebruiker is
-    public function deletePost(){
+    public function deletePost()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("DELETE FROM post WHERE post_id = :postId AND user_id = :userId");
         $statement->bindValue(':postId', $this->m_sPostId);
@@ -325,7 +355,8 @@ class Post{
 
 
     //check of locatie bestaat
-    public function locationAvailable(){
+    public function locationAvailable()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT DISTINCT post_location FROM post WHERE post_location = :location");
         $statement->bindValue(':location', $this->getMSLocation());
@@ -342,11 +373,26 @@ class Post{
     }
 
 
-    /*public function deletePostPicture(){
+    public function getAllPostsFromUser()
+    {
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT post_photo FROM post WHERE post_id = :postId");
-        $statement->bindValue(':postId', $this->m_sPostId);
+        $statement = $conn->prepare("SELECT post_photo FROM post WHERE user_id = :userid");
+        $statement->bindValue(':userid', $this->getMSUserId());
         $statement->execute();
-    }*/
+        $result = $statement->fetchAll(PDO::FETCH_COLUMN);
+        return $result;
+    }
+
+
+    //delete profile picture
+    public function deleteProfilePosts($p_sPicture)
+    {
+        $path = "/imdstagram/img/uploads/post-pictures/";
+        if (unlink($_SERVER['DOCUMENT_ROOT'] . "" . $path .$p_sPicture)) {
+            return true;
+        } else {
+            throw new Exception("Je account is gewist, maar er blijven nog files achter. Gelieve contact op te nemen met de beheerder van IMDstagram om je account definitief te wissen.");
+        }
+    }
 
 }

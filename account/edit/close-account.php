@@ -2,6 +2,7 @@
 include_once('../../inc/sessiecontrole.inc.php');
 include_once('../../inc/feedbackbox.inc.php');
 include_once('../../classes/User.class.php');
+include_once('../../classes/Post.class.php');
 include_once('../../classes/Validation.class.php');
 
 
@@ -18,12 +19,33 @@ if (isset($_POST['deleteAccount']) &&
 
     //daarna kijken of oude wachtwoord klopt
     $deleteUserAccount = new User();
+    $deleteUserPosts = new Post();
     $deleteUserAccount->setMIUserId($iUserId);
     $deleteUserAccount->setMSWachtwoord($sPassword);
 
     try {
         if ($deleteUserAccount->deleteAccount()) {
-            $feedback = buildFeedbackBox("success", "Je account en de daarbij horende gegevens zijn gewist. <a href='/imdstagram/logout.php'>Log uit</a>.");
+
+            $userProfilePicture = $_SESSION['login']['profilepicture'];
+            $userid = $_SESSION['login']['userid'];
+
+            if($userProfilePicture != 'default.png'){
+                $deleteUserAccount->setMSProfilePicture($userProfilePicture);
+                $deleteUserAccount->deleteProfilePicture();
+            }
+
+            if(!empty($userid)){
+                $deleteUserPosts->setMSUserId($userid);
+                $allPostsFromUser = $deleteUserPosts->getAllPostsFromUser();
+                if(!empty($allPostsFromUser)){
+                    foreach($allPostsFromUser as $postFromUser){
+                        $deleteUserPosts->deleteProfilePosts($postFromUser);
+                    }
+                }
+            }
+
+            $_SESSION['login']['loggedin'] = 0;
+            $feedback = buildFeedbackBox("success", "Je account en de daarbij horende gegevens zijn volledig gewist. <a href='/imdstagram/logout.php'>Log uit</a>.");
             header('location: /imdstagram/logout.php');
         }
     } catch (Exception $e) {

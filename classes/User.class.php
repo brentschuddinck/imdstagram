@@ -13,10 +13,22 @@ class User
     private $m_sPassword;
     private $m_sNewPassword;
     private $m_iUserAccountState;
+    private $m_sProfilePicture;
     private $m_iUserId;
 
 
     //getters en setters
+
+
+    public function getMSProfilePicture()
+    {
+        return $this->m_sProfilePicture;
+    }
+
+    public function setMSProfilePicture($m_sProfilePicture)
+    {
+        $this->m_sProfilePicture = $m_sProfilePicture;
+    }
 
 
     public function getMSNewPassword()
@@ -459,6 +471,31 @@ class User
         $result = $statement->fetchAll();
         return $result;
     }
+
+
+    //delete profile picture
+    public function deleteProfilePicture(){
+        $p_sProfilePicture = $this->getMSProfilePicture();
+        $pathToProfilePicture = "/imdstagram/img/uploads/profile-pictures/";
+        $fullypath = $pathToProfilePicture . $p_sProfilePicture;
+        unlink($_SERVER['DOCUMENT_ROOT'] . "". $fullypath);
+        if($this->testIfFileIsDeleted($fullypath)){
+            $_SESSION['login']['profilepicture'] = "default.png";
+            return true;
+        }else{
+            throw new Exception("Je account is gewist, maar er blijven nog files achter. Gelieve contact op te nemen met de beheerder van IMDstagram om je account definitief te wissen.");
+        }
+    }
+
+    //test of file verwijderd is
+    public function testIfFileIsDeleted($p_sFile){
+        if(!file_exists ( $p_sFile )){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 }
 ?>
