@@ -25,10 +25,10 @@ if (isset($_GET['tag']) && !empty($_GET['tag']) && count($_GET) === 1) {
             $feedback = buildFeedbackBox("danger", $e->getMessage());
         }
     } else {
-        header('tag: /imdstagram/error/404.php');
+        header('location: /imdstagram/error/404.php');
     }
 } else {
-    header('tag: /imdstagram/error/404.php');
+    header('location: /imdstagram/error/404.php');
 }
 
 
