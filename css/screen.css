@@ -783,6 +783,10 @@ input[type="checkbox"]{
     display: block;
     width: 200px;
 }
+#tab2 p,
+#tab2 h2{
+    text-align: center;
+}
 
 .acceptBtn{
     background-color: #1abc9c;

@@ -151,7 +151,8 @@ include_once('../inc/feedbackbox.inc.php');
             </div>
             <div class="tab-pane fade in" id="tab2">
                 <?php if(isset($_GET['user']) && $_GET['user'] == $_SESSION['login']['username']): ?>
-                    <h2 style="text-align: center">vriendschapsverzoeken</h2>
+                    <h2>vriendschapsverzoeken</h2>
+                    <p><?php echo empty($requests) ? 'Je hebt geen vriendschapsverzoeken':'' ?></p>
                     <?php foreach($requests as $request): ?>
                 <div class="friendRequests">
                 <div class="user-block"">
@@ -161,7 +162,7 @@ include_once('../inc/feedbackbox.inc.php');
                     </div>
                 </div>
             <?php endforeach ?>
-                <h2 style="text-align: center">volgers</h2>
+                <h2>volgers</h2>
                 <?php endif ?>
                 <?php foreach($followers as $follower): ?>
                     <div class="user-block"">
