@@ -47,28 +47,27 @@ include_once('classes/User.class.php');
 
 
 
-        <form class="login-form" action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
 
+
+
+
+            <!-- start login met facebook -->
+            <!--<form action="fb-login/login.php" method="POST" class="login-form">
+                <div class="form-group fb-form">
+                    <input type="submit" name="fblogin" id="fblogin" value="Aanmelden met Facebook" class="btn btn-info btn-lg btn-block">
+                    <label class="login-field-icon fui-facebook" for="fblogin"></label>
+                </div>
+            </form>-->
+            <!-- einde login met facebook -->
+
+
+        <form class="login-form" action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
             <?php
             //toon errorboodschap
             if (!empty($feedback)) {
                 echo $feedback;
             }
             ?>
-
-
-            <!-- start login met facebook -->
-
-            <!--<div class="form-group">
-                <input name="fblogin" id="fblogin" value="Login met Facebook" class="btn btn-primary btn-lg btn-block">
-                <label class="login-field-icon fui-facebook" for="fblogin"></label>
-
-            </div>-->
-
-            <!-- einde login met facebook -->
-
-
-
             <div class="form-group">
                 <input type="email" name="gebruikeremail" id="gebruikeremail" class="form-control login-field"
                        value="<?php echo isset($_POST['gebruikeremail']) ? htmlspecialchars($_POST['gebruikeremail']) : '' ?>"
