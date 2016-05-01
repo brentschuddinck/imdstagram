@@ -19,7 +19,6 @@ if (isset($_GET['tag']) && !empty($_GET['tag']) && count($_GET) === 1) {
             $search->setMStag($tag);
             $search->setMSUserid($_SESSION['login']['userid']);
             $userPosts = $search->getAllTagPosts();
-            print_r($userPosts);
             $amountOfSearchResults = count($userPosts);
             $search->splitBigNumberAmountOfResults($amountOfSearchResults);
         } catch (Exception $e) {

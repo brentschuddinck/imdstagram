@@ -83,12 +83,16 @@ if (isset($_GET['flag']) && !empty($_GET['flag'])) {
 
 <div class="container bootstrap">
     <div class="col-sm-12 col-md-8 col-md-offset-2">
-        <?php if (isset($feedback) && !empty($feedback)) {
-            echo $feedback;
-        } ?>
+        <?php if (isset($feedback) && !empty($feedback)) { echo $feedback; } ?>
         <?php foreach ($showPosts as $showPost): ?>
-            <?php $post->setMSPostId($showPost['post_id']); ?>
-
+            <?php
+            $post->setMSPostId($showPost['post_id']);
+            $cleanPostDescription = htmlspecialchars($showPost['post_description']);
+            $postDescription = $cleanPostDescription;
+            if($post->doesStringContain($postDescription, '#')){
+                $postDescription = $post->hashtag_links($postDescription);
+            }
+            ?>
 
             <div class="box box-widget">
                 <div class="box-header with-border">
@@ -124,7 +128,7 @@ if (isset($_GET['flag']) && !empty($_GET['flag'])) {
                 <div class="box-body">
                     <img class="img-responsive pad <?php echo htmlspecialchars($showPost['photo_effect']); ?>"
                          src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
-                    <p><?php echo htmlspecialchars($showPost['post_description']) ?></p>
+                    <p><?php echo $postDescription; ?></p>
                     <a href="?click=<?php echo $showPost['post_id']; ?>" data-id="<?php echo $showPost['post_id'] ?>"
                        class="likeBtn btn btn-sm <?php echo $post->isLiked() == true ? 'liked ' : 'btn-default ' ?>"><i
                             class="fa fa-heart-o fa-lg"></i> vind ik leuk</a>

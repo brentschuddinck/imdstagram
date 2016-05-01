@@ -37,9 +37,9 @@ if (!empty($_POST['description']) && !empty($_FILES['postPhoto']['name'])) {
         if ($ValidType && $ValidExtension) {
 
             //security met getimagesize kan gekeken worden of de inhoud geen script, maar wel een echte afbeelding is
-            if($uploadPost->isImageNotAScript($postPhotoTmpName) === false){
+            if ($uploadPost->isImageNotAScript($postPhotoTmpName) === false) {
                 $feedback = buildFeedbackBox("danger", "hackpoging gedetecteerd. Alleen echte afbeeldingen worden geaccepteerd.");
-            }else{
+            } else {
                 //check dat bestand  niet te groot is
                 $ValidSize = $uploadPost->isValidSize($postPhotoSize, $maxBytes);
 
@@ -60,8 +60,33 @@ if (!empty($_POST['description']) && !empty($_FILES['postPhoto']['name'])) {
                         $post->setMSImageName($FullFileName);
                         $post->setMSLocation($_POST['location']);
                         $post->setMSEffect($_POST['effect']);
-                        $post->postPhoto();
-                        $feedback = buildFeedbackBox("success", "Je foto is geplaatst! <a href='/imdstagram/index.php'>Bekijk het resultaat</a>.");
+                        $post->setMSUserId($_SESSION['login']['userid']);
+
+                        if($post->postPhoto()){
+                            if ($post->doesStringContain($post->getMSDescription(), '#')) {
+                                //bevat de geplaatste post een hashtag?
+
+                                //haal id van laatste geposte post op
+                                $postId = $post->getPostIdFromLatestPost();
+                                $post->setMSPostId($postId['post_id']);
+
+
+                                //zoek naar hashtags in post_description en stop ze in een array
+                                $hashtagsInPostDescription = $post->get_hashtags($post->getMSDescription(), $str = 0);
+                                if (!empty($hashtagsInPostDescription)) {
+                                    foreach ($hashtagsInPostDescription as $hashtag) {
+                                        //plaats elke hashtag in de database
+                                        $post->setMSTag($hashtag);
+                                        $post->addTagToDatabase();
+                                    }
+                                }
+                            }
+                            $feedback = buildFeedbackBox("success", "Je foto is geplaatst! <a href='/imdstagram/index.php'>Bekijk het resultaat</a>.");
+
+                        }else{
+                            $feedback = buildFeedbackBox("danger", "er is iets misgelopen bij het plaatsen van je post. Onze excuses voor het ongemak. Probeer het later opnieuw.");
+                        }
+
                     } else {
                         $feedback = buildFeedbackBox("danger", "er is iets misgelopen bij het plaatsen van je post. Onze excuses voor het ongemak. Probeer het later opnieuw.");
                     }

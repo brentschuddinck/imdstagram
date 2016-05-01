@@ -124,8 +124,11 @@ class Post
         $statement->bindValue(":effect", $this->m_sEffect);
 
         //execute statement
-        $statement->execute();
-
+        if($statement->execute()){
+            return true;
+        }else{
+            throw new Exception("door een technisch probleem kan je post niet geplaatst worden. Onze excuses voor dit ongemak.");
+        }
 
     }
 
@@ -136,7 +139,7 @@ class Post
         $statement = $conn->prepare("SELECT * FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (p.user_id = :userId OR (f.user_id = :userId AND accepted = true)) AND p.inappropriate < 3 ORDER BY post_date DESC LIMIT 20");
         $statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->execute();
-        $result = $statement->fetchAll();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
@@ -148,7 +151,7 @@ class Post
         $statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->bindValue(':location', $this->getMSLocation());
         if ($statement->execute()) {
-            $result = $statement->fetchAll();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } else {
             throw new Exception("er kunnen momenteel geen posts opgevraagd woren. Onze exuses voor dit ongemak.");
@@ -459,6 +462,71 @@ class Post
         } else {
             throw new Exception("de post kon niet gerapporteerd worden. Probeer later opnieuw.");
         }
+    }
+
+
+
+    public function get_hashtags($p_sString, $str = 1) {
+        preg_match_all('/#(\w+)/', $p_sString, $matches);
+        $i = 0;
+        $keywords = "";
+        $keyword = "";
+        if ($str) {
+            foreach ($matches[1] as $match) {
+                $count = count($matches[1]);
+                $keywords .= "$match";
+                $i++;
+                if ($count > $i) $keywords .= ", ";
+            }
+        } else {
+            foreach ($matches[1] as $match) {
+                $keyword[] = $match;
+            }
+            $keywords = $keyword;
+        }
+        return $keywords;
+    }
+
+
+    public function hashtag_links($p_sString) {
+        preg_match_all('/#(\w+)/', $p_sString, $matches);
+        //$string = $p_sString; //moet anders indien # enkel typen dan wordt posttext niet getoond indien gelijkgesteld aan lege string of error
+        foreach ($matches[1] as $match) {
+            $p_sString = str_replace("#$match", "<a href='/imdstagram/explore/tag.php?tag=$match'>#$match</a>", "$p_sString");
+        }
+        return $p_sString;
+    }
+
+
+    public function doesStringContain($p_sString, $p_sMatchToFind){
+        if(strpos($p_sString, $p_sMatchToFind) !== false ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    public function getPostIdFromLatestPost(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT post_id from post WHERE user_id = :userid ORDER BY post_date DESC LIMIT 1");
+        $statement->bindValue(':userid', $this->getMSUserId());
+
+        if($statement->execute()){
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }else{
+            throw new Exception("door een technisch probleem kan je post niet geplaatst worden. Onze excuses voor het ongamek.");
+        }
+
+    }
+
+    public function addTagToDatabase(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("INSERT INTO tag (tag_name, post_id) VALUES (:tagname, :postid)");
+        $statement->bindValue(':tagname', $this->getMSTag());
+        $statement->bindValue(':postid', $this->getMSPostId());
+        $statement->execute();
     }
 
 }

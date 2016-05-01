@@ -82,7 +82,6 @@ class Search
         $statementSearchInTag = $conn->prepare("SELECT DISTINCT tag_name FROM tag WHERE tag_name LIKE concat('%', :searchterm, '%') limit 20");
         $statementSearchInLocation = $conn->prepare("SELECT DISTINCT post_location FROM post WHERE post_location LIKE concat(:searchterm, '%') limit 20");
 
-
         // bind value
         $statementSearchInUser->bindValue(":searchterm", $this->m_sSearchTerm, PDO::PARAM_STR);
         $statementSearchInTag->bindValue(":searchterm", $this->m_sSearchTerm, PDO::PARAM_STR);
@@ -111,11 +110,11 @@ class Search
     public function getAllTagPosts()
     {
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (inappropriate < 3) AND (post_location = :location AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
-        $statement->bindValue(':userId', $_SESSION['login']['userid']);
+        $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post WHERE (inappropriate < 3) AND (post_description LIKE concat('%', :tagname, '%')) ORDER BY post_date DESC LIMIT 200");
+        //$statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->bindValue(':tagname', $this->getMSTag());
         if ($statement->execute()) {
-            $result = $statement->fetchAll();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } else {
             throw new Exception("door een technisch probleem kunnen er kunnen momenteel geen posts opgevraagd woren. Onze exuses voor dit ongemak.");
@@ -127,9 +126,11 @@ class Search
     public function getAllLocationPosts()
     {
         $conn = Db::getInstance();
+        //$statement = $conn->prepare("SELECT * FROM post p LEFT JOIN following f ON p.user_id = f.follows LEFT JOIN user u ON p.user_id = u.user_id WHERE p.post_location = :location AND (p.user_id = :userId OR (p.user_id = (SELECT user_id from user WHERE private = 0)) OR (f.user_id = :userId AND accepted = true)) AND (p.inappropriate < 3 OR p.user_id = :userId) ORDER BY post_date DESC LIMIT 20");
         $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (inappropriate < 3) AND (post_location = :location AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
+        //$statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (p.inappropriate < 3 OR p.user_id = :userId) AND (post_location = :location) AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
         $statement->bindValue(':userId', $this->getMSUserid());
-        $statement->bindValue(':location', $this->getMSLocation());
+        $statement->bindValue(':location', $this->m_sLocation);
         if ($statement->execute()) {
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
             return $result;
