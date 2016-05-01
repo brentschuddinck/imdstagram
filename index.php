@@ -135,7 +135,7 @@ if (isset($_GET['flag']) && !empty($_GET['flag'])) {
                     <span
                         class="pull-right text-muted showLikes"><?php echo $post->showLikes(); ?><?php echo $post->showLikes() == 1 ? 'like' : 'likes' ?> </span>
                 </div>
-                <div class="box-footer box-comments">
+                <!--<div class="box-footer box-comments">
                     <div class="box-comment">
                         <img class="img-circle img-sm"
                              src="img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>"
@@ -171,7 +171,7 @@ if (isset($_GET['flag']) && !empty($_GET['flag'])) {
                             <div class="clearfix"></div>
                         </div>
                     </form>
-                </div>
+                </div>-->
             </div>
         <?php endforeach ?>
         <?php if (count($showPosts) > 20) : ?>
