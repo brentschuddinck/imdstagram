@@ -29,7 +29,7 @@ if (isset($_GET['search']) && !empty($_GET['search']) && count($_GET) === 1) {
             $search = new Search();
             $search->setMSSearchTerm($searchTerm);
             //$isResultaatGevonden = $search->zoekResultaten();
-            $arrResult = $search->zoekResultaten();
+            $arrResult = $search->searchResults();
 
             if ($arrResult) {
                 //er zijn resultaten gevonden

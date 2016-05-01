@@ -71,7 +71,7 @@ class Search
     }
 
 
-    public function zoekResultaten()
+    public function searchResults()
     {
         //database connectie
         $conn = Db::getInstance();
