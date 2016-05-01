@@ -16,9 +16,9 @@ $dbconnection = new PDO("mysql:host=178.62.241.17; dbname=imdstagram", "imdstagr
 - classes gebruiken
 
 ## Features verdelen
-- Brent: 1, 4, 7, 10, 13, 16, level 4
-- Ben: 2, 5, 8, 11, 14,17 level 4
-- Daphné: 3, 6, 9, 12, 15, level 4
+- Brent: 1, 3, 4, 7, 10, 12, 13, 16, level 4 (delete account and all related information)
+- Ben: 2, 5, 8, 11, 14, 17, level 4
+- Daphné: [oorspronkelijk: 3 (Brent gedaan), 6, 9, 12 (brent gedaan), 15, level 4]
 
 ## Nieuwe PHP file aanmaken
 - Helemaal bovenaan sessiecontrole.php includen op elke standaard PHP pagina.
