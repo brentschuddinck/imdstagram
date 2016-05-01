@@ -743,7 +743,7 @@ input[type="checkbox"]{
     margin-top: 10px;
 }
 
-.card.hovercard .card-info .card-title {
+.card.hovercard {
     padding:0 5px;
     font-size: 2.6em;
     font-weight: bold;
@@ -754,14 +754,22 @@ input[type="checkbox"]{
     border-radius: 4px;
 }
 
+.card-info span{
+    font-size: 2em;
+    color: #34495e;
+    margin: 10px 0;
+}
 
-.card.hovercard .card-info {
+
+.card.hovercard{
     overflow: hidden;
     font-size: 12px;
     line-height: 20px;
     color: #737373;
     text-overflow: ellipsis;
 }
+
+
 .card.hovercard .bottom {
     padding: 0 20px;
     margin-bottom: 17px;
@@ -773,6 +781,10 @@ input[type="checkbox"]{
 .fb{
     text-align: center;
     font-size: 17px;
+}
+
+.hovercard{
+    margin-bottom: 20px;
 }
 
 #tab2 .user-block,
@@ -791,7 +803,19 @@ input[type="checkbox"]{
 .acceptBtn{
     background-color: #1abc9c;
     text-align: center;
+    border-radius: 4px;
+    height: 34px;
 }
+
+.acceptBtn a{
+    height: 34px;
+    padding: 34px;
+}
+
+.acceptBtn li{
+    margin-top: 10px;
+}
+
 .acceptBtn a{
     color: #ffffff;
 }
@@ -906,6 +930,11 @@ input[type='file'] {
 .col-sm-12{
     padding-bottom: 0;
 }
+
+.tab-pane h2{
+    margin: 15px 0;
+}
+
 
 @media screen and (min-width: 480px){
 

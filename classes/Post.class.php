@@ -306,7 +306,7 @@ class Post
     public function getPostsForEachuser()
     {
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT * FROM post p WHERE user_id = (SELECT user_id FROM user WHERE username = :username AND private = false)
+        $statement = $conn->prepare("SELECT * FROM post p WHERE user_id = (SELECT user_id FROM user WHERE (username = :username AND private = false))
                                       OR user_id = (SELECT u.user_id FROM user u, following f WHERE u.username = :username AND private = true AND u.user_id = f.follows AND f.user_id = :userid AND f.accepted = true)
                                       OR user_id = (SELECT user_id FROM user WHERE username = :username AND private = true AND user_id = :userid)
                                       ORDER BY post_date DESC");

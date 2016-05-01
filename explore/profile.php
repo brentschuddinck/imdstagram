@@ -27,7 +27,7 @@ include_once('../inc/feedbackbox.inc.php');
 
     $user = new User();
     $user->setMSUsername($username);
-    print_r($user->isAccepted());
+    //print_r($user->isAccepted());
     if(!empty($_GET['id'])){
     $user->setMIUserId($_GET['id']);
     $user->followUser();
@@ -151,7 +151,7 @@ include_once('../inc/feedbackbox.inc.php');
             </div>
             <div class="tab-pane fade in" id="tab2">
                 <?php if(isset($_GET['user']) && $_GET['user'] == $_SESSION['login']['username']): ?>
-                    <h2>vriendschapsverzoeken</h2>
+                    <h2>Verzoeken</h2>
                     <p><?php echo empty($requests) ? 'Je hebt geen vriendschapsverzoeken':'' ?></p>
                     <?php foreach($requests as $request): ?>
                 <div class="friendRequests">
@@ -162,7 +162,7 @@ include_once('../inc/feedbackbox.inc.php');
                     </div>
                 </div>
             <?php endforeach ?>
-                <h2>volgers</h2>
+                <h2>Volgers</h2>
                 <?php endif ?>
                 <?php foreach($followers as $follower): ?>
                     <div class="user-block"">
