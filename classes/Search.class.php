@@ -111,14 +111,14 @@ class Search
     public function getAllTagPosts()
     {
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE tag_name = :tagname AND (p.user_id = :userId OR f.user_id = :userId) ORDER BY post_date DESC LIMIT 200");
+        $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (inappropriate < 3) AND (post_location = :location AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
         $statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->bindValue(':tagname', $this->getMSTag());
         if ($statement->execute()) {
             $result = $statement->fetchAll();
             return $result;
         } else {
-            throw new Exception("er kunnen momenteel geen posts opgevraagd woren. Onze exuses voor dit ongemak.");
+            throw new Exception("door een technisch probleem kunnen er kunnen momenteel geen posts opgevraagd woren. Onze exuses voor dit ongemak.");
         }
     }
 
@@ -127,15 +127,21 @@ class Search
     public function getAllLocationPosts()
     {
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (post_location = :location AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
+        $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (inappropriate < 3) AND (post_location = :location AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
         $statement->bindValue(':userId', $this->getMSUserid());
         $statement->bindValue(':location', $this->getMSLocation());
         if ($statement->execute()) {
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } else {
-            throw new Exception("er kunnen momenteel geen posts opgevraagd woren. Onze exuses voor dit ongemak.");
+            throw new Exception("door een technisch probleem kunnen er momenteel geen posts opgevraagd woren. Onze exuses voor dit ongemak.");
         }
+    }
+
+
+    public function splitBigNumberAmountOfResults($p_iAmountOfResults){
+        $splittedAmountOfResults = number_format($p_iAmountOfResults, 0, '.', '.'); //duizendtallen scheiden met punt
+        return $splittedAmountOfResults;
     }
 
 

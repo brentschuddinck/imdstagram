@@ -22,6 +22,7 @@ if (isset($_GET['location']) && !empty($_GET['location']) && count($_GET) === 1)
             $userPosts = $search->getAllLocationPosts();
             print_r($userPosts);
             $amountOfSearchResults = count($userPosts);
+            $search->splitBigNumberAmountOfResults($amountOfSearchResults);
         } catch (Exception $e) {
             $feedback = buildFeedbackBox("danger", $e->getMessage());
         }

@@ -4,10 +4,9 @@ include_once('../inc/feedbackbox.inc.php');
 include_once('../classes/Validation.class.php');
 include_once('../classes/Search.class.php');
 
-$location = $_GET['location'];
+$tag = $_GET['tag'];
 
-
-if (isset($_GET['location']) && !empty($_GET['location']) && count($_GET) === 1) {
+if (isset($_GET['tag']) && !empty($_GET['tag']) && count($_GET) === 1) {
 
     $amountOfSearchResults = 0;
 
@@ -15,21 +14,22 @@ if (isset($_GET['location']) && !empty($_GET['location']) && count($_GET) === 1)
     $search = new Search();
     $validation = new Validation();
 
-    if ($validation->isValidSearchTerm($location)) {
+    if ($validation->isValidSearchTerm($tag)) {
         try {
-            $search->setMSLocation($location);
+            $search->setMStag($tag);
             $search->setMSUserid($_SESSION['login']['userid']);
-            $userPosts = $search->getAllLocationPosts();
+            $userPosts = $search->getAllTagPosts();
             print_r($userPosts);
             $amountOfSearchResults = count($userPosts);
+            $search->splitBigNumberAmountOfResults($amountOfSearchResults);
         } catch (Exception $e) {
             $feedback = buildFeedbackBox("danger", $e->getMessage());
         }
     } else {
-        header('Location: /imdstagram/error/404.php');
+        header('location: /imdstagram/error/404.php');
     }
 } else {
-    header('Location: /imdstagram/error/404.php');
+    header('location: /imdstagram/error/404.php');
 }
 
 
@@ -37,7 +37,7 @@ if (isset($_GET['location']) && !empty($_GET['location']) && count($_GET) === 1)
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Zoeken naar posts in <?php echo htmlspecialchars($location); ?></title>
+    <title>Zoeken naar posts in <?php echo htmlspecialchars($tag); ?></title>
     <meta name="description">
     <?php include_once('../inc/style.inc.php'); ?>
 </head>
@@ -46,11 +46,11 @@ if (isset($_GET['location']) && !empty($_GET['location']) && count($_GET) === 1)
 <?php include_once('../inc/header.inc.php'); ?>
 
 
-<!-- start location feed -->
+<!-- start tag feed -->
 <div class="container search">
     <div class="row">
         <div class="col-sm-12">
-            <h1 class="centreer tekst"><?php echo htmlspecialchars($location); ?></h1>
+            <h1 class="centreer tekst"><?php echo htmlspecialchars($tag); ?></h1>
             <div class='centreer tekst search nmessages vet'><?php echo $amountOfSearchResults ?> resultaten</div>
             <br/>
 
@@ -78,7 +78,7 @@ if (isset($_GET['location']) && !empty($_GET['location']) && count($_GET) === 1)
 
 
 </div>
-<!-- einde location feed -->
+<!-- einde tag feed -->
 
 
 <?php include_once('../inc/footer.inc.php'); ?>

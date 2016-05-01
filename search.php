@@ -46,7 +46,7 @@ if (isset($_GET['search']) && !empty($_GET['search']) && count($_GET) === 1) {
                 $totalCount = $userCount + $tagCount + $locationCount;
 
                 $amountOfSearchResults = $totalCount; //tel gevonden resultaten (enkel eerste 20 getoond!)
-                $amountOfSearchResults = number_format($amountOfSearchResults, 0, '.', '.'); //duizendtallen scheiden met punt
+                $search->splitBigNumberAmountOfResults($amountOfSearchResults);
 
                 //query toont enkel de eerste 20 resultaten per onderdeel. Indien een van deze de maxima bereikt, toon melding, maar voer toch uit
                 $maxRecords = 20;

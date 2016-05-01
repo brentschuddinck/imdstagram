@@ -48,9 +48,6 @@ include_once('classes/User.class.php');
 
 
 
-
-
-
             <!-- start login met facebook -->
             <!--<form action="fb-login/login.php" method="POST" class="login-form">
                 <div class="form-group fb-form">
