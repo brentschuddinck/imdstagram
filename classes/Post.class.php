@@ -336,7 +336,11 @@ class Post
         $statement = $conn->prepare("DELETE FROM post WHERE post_id = :postId AND user_id = :userId");
         $statement->bindValue(':postId', $this->m_sPostId);
         $statement->bindValue(':userId', $_SESSION['login']['userid']);
-        $statement->execute();
+        if ($statement->execute()) {
+            return true;
+        } else {
+            throw new Exception("De post kan niet gewist worden. Probeer later opnieuw.");
+        }
     }
 
 
@@ -370,12 +374,11 @@ class Post
     }
 
 
-
     //delete all post picture
     public function deleteProfilePosts($p_sPicture)
     {
         $path = "/imdstagram/img/uploads/post-pictures/";
-        if (unlink($_SERVER['DOCUMENT_ROOT'] . "" . $path .$p_sPicture)) {
+        if (unlink($_SERVER['DOCUMENT_ROOT'] . "" . $path . $p_sPicture)) {
             return true;
         } else {
             throw new Exception("Er blijven nog files achter. Gelieve contact op te nemen met de beheerder van IMDstagram om je file definitief te wissen.");
@@ -383,16 +386,16 @@ class Post
     }
 
 
-
     //get single post picture
-    public function getSinglePost(){
+    public function getSinglePost()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT post_photo FROM post WHERE post_id = :postid");
         $statement->bindValue(':postid', $this->m_sPostId);
-        if($statement->execute()){
+        if ($statement->execute()) {
             $result = $statement->fetch(PDO::FETCH_COLUMN);
             return $result;
-        }else{
+        } else {
             throw new Exception("je bestand is kon niet van de server gewist worden.");
         }
 
@@ -405,14 +408,57 @@ class Post
         $path = "/imdstagram/img/uploads/post-pictures/";
         $fullpath = $_SERVER['DOCUMENT_ROOT'] . $path . $p_sPicture;
 
-        if(file_exists($fullpath)){
+        if (file_exists($fullpath)) {
             if (unlink($fullpath)) {
                 return true;
             } else {
                 throw new Exception("je bestand is gewist uit de database, maar blijft nog op onze server staan. Gelieve contact op te nemen met de beheerder van IMDstagram om je file definitief te wissen.");
             }
-        }else{
+        } else {
             return true;
+        }
+    }
+
+
+    //flag post
+    public function flagPost()
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("UPDATE post SET inappropriate = inappropriate + 1 WHERE post_id = :postid");
+        $statement->bindValue(':postid', $this->getMSPostId());
+        if ($statement->execute()) {
+            return true;
+        } else {
+            throw new Exception("de post kon niet gerapporteerd worden. Probeer later opnieuw.");
+        }
+    }
+
+
+    public function addUsersWhoFlagged()
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("INSERT INTO flag (post_id, user_id) VALUES (:postid, :userid)");
+        $statement->bindValue(':postid', $this->getMSPostId());
+        $statement->bindValue(':userid', $_SESSION['login']['userid']);
+        $statement->execute();
+    }
+
+
+    //user flagged already or not
+    public function checkIfUserAlreadyFlagged()
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT post_id, user_id FROM flag WHERE post_id = :postid and user_id = :userid");
+        $statement->bindValue(':postid', $this->getMSPostId());
+        $statement->bindValue(':userid', $_SESSION['login']['userid']);
+        if ($statement->execute()) {
+            if ($statement->rowCount() == 0) {
+                return true;
+            }else{
+                throw new Exception("je hebt deze post in het verleden al eens gerapporteerd. Je kan dezelfde psot maar 1 keer rapporteren.");
+            }
+        } else {
+            throw new Exception("de post kon niet gerapporteerd worden. Probeer later opnieuw.");
         }
     }
 
