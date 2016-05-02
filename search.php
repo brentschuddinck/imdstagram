@@ -21,8 +21,11 @@ if (isset($_GET['search']) && !empty($_GET['search']) && count($_GET) === 1) {
         $isValidSearchTerm = $validation->isValidSearchTerm($searchTerm);
     }
 
-
     if ($isValidSearchTerm) {
+        //verwijder # uit zoekresultaat om error te voorkomen
+        $searchTerm = str_replace('#', '', $searchTerm);
+        $searchTerm = str_replace('%23', '', $searchTerm);
+
         //zoekwoord is geldig (tekst, cijfers, #, no-white-space)
         //zoeken naar resultaten
         try {

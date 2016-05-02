@@ -4,9 +4,8 @@ include_once('../inc/feedbackbox.inc.php');
 include_once('../classes/Validation.class.php');
 include_once('../classes/Search.class.php');
 
-$tag = $_GET['tag'];
-
 if (isset($_GET['tag']) && !empty($_GET['tag']) && count($_GET) === 1) {
+    $tag = $_GET['tag'];
 
     $amountOfSearchResults = 0;
 
@@ -15,6 +14,10 @@ if (isset($_GET['tag']) && !empty($_GET['tag']) && count($_GET) === 1) {
     $validation = new Validation();
 
     if ($validation->isValidSearchTerm($tag)) {
+
+        $tag = str_replace('#', '', $tag);
+        $tag = str_replace('%23', '', $tag);
+
         try {
             $search->setMStag($tag);
             $search->setMSUserid($_SESSION['login']['userid']);
@@ -36,7 +39,7 @@ if (isset($_GET['tag']) && !empty($_GET['tag']) && count($_GET) === 1) {
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Zoeken naar posts in <?php echo htmlspecialchars($tag); ?></title>
+    <title>Zoeken naar posts met hashtag <?php echo '#' . htmlspecialchars($tag); ?></title>
     <meta name="description">
     <?php include_once('../inc/style.inc.php'); ?>
 </head>
@@ -49,7 +52,7 @@ if (isset($_GET['tag']) && !empty($_GET['tag']) && count($_GET) === 1) {
 <div class="container search">
     <div class="row">
         <div class="col-sm-12">
-            <h1 class="centreer tekst"><?php echo htmlspecialchars($tag); ?></h1>
+            <h1 class="centreer tekst"><?php echo '#' . htmlspecialchars($tag); ?></h1>
             <div class='centreer tekst search nmessages vet'><?php echo $amountOfSearchResults ?> resultaten</div>
             <br/>
 

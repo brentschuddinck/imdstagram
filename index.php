@@ -133,7 +133,7 @@ if (isset($_GET['flag']) && !empty($_GET['flag'])) {
                        class="likeBtn btn btn-sm <?php echo $post->isLiked() == true ? 'liked ' : 'btn-default ' ?>"><i
                             class="fa fa-heart-o fa-lg"></i> vind ik leuk</a>
                     <span
-                        class="pull-right text-muted showLikes"><?php echo $post->showLikes(); ?><?php echo $post->showLikes() == 1 ? 'like' : 'likes' ?> </span>
+                        class="pull-right text-muted showLikes"><?php echo $post->showLikes(); ?><?php echo $post->showLikes() == 1 ? ' like' : ' likes' ?> </span>
                 </div>
                 <!--<div class="box-footer box-comments">
                     <div class="box-comment">
