@@ -110,7 +110,7 @@ class Search
     public function getAllTagPosts()
     {
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post WHERE (inappropriate < 3) AND (post_description LIKE concat('%', :tagname, '%')) ORDER BY post_date DESC LIMIT 200");
+        $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo, post_description FROM post WHERE (inappropriate < 3) AND (post_description LIKE '%' :tagname '%') ORDER BY post_date DESC LIMIT 200");
         //$statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->bindValue(':tagname', $this->getMSTag());
         if ($statement->execute()) {
@@ -127,9 +127,11 @@ class Search
     {
         $conn = Db::getInstance();
         //$statement = $conn->prepare("SELECT * FROM post p LEFT JOIN following f ON p.user_id = f.follows LEFT JOIN user u ON p.user_id = u.user_id WHERE p.post_location = :location AND (p.user_id = :userId OR (p.user_id = (SELECT user_id from user WHERE private = 0)) OR (f.user_id = :userId AND accepted = true)) AND (p.inappropriate < 3 OR p.user_id = :userId) ORDER BY post_date DESC LIMIT 20");
-        $statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (inappropriate < 3) AND (post_location = :location AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
+        //$statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (inappropriate < 3) AND (post_location = :location AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
         //$statement = $conn->prepare("SELECT post_id, photo_effect, post_photo FROM post p LEFT JOIN following f ON p.user_id = f.follows WHERE (p.inappropriate < 3 OR p.user_id = :userId) AND (post_location = :location) AND (p.user_id = :userId OR f.user_id = :userId)) ORDER BY post_date DESC LIMIT 200");
-        $statement->bindValue(':userId', $this->getMSUserid());
+        //$statement = $conn->prepare("SELECT post_id, post_description, post_photo, photo_effect, post_location, user_id FROM post WHERE post_location = :location ORDER BY post_date DESC");
+        $statement = $conn->prepare("SELECT * FROM post INNER JOIN user ON post.user_id = user.user_id WHERE post.post_location = :location");
+        //$statement->bindValue(':userId', $this->getMSUserid());
         $statement->bindValue(':location', $this->m_sLocation);
         if ($statement->execute()) {
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);

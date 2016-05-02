@@ -457,7 +457,7 @@ class Post
             if ($statement->rowCount() == 0) {
                 return true;
             }else{
-                throw new Exception("je hebt deze post in het verleden al eens gerapporteerd. Je kan dezelfde psot maar 1 keer rapporteren.");
+                throw new Exception("je hebt deze post in het verleden al eens gerapporteerd. Je kan dezelfde post maar 1 keer rapporteren.");
             }
         } else {
             throw new Exception("de post kon niet gerapporteerd worden. Probeer later opnieuw.");

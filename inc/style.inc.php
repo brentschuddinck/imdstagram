@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/imdstagram/css/bootstrap.min.css">
 <link rel="stylesheet" href="/imdstagram/css/flat-ui.css">
+<link rel="stylesheet" href="/imdstagram/css/ekko-lightbox.css">
 <link rel="stylesheet" href="/imdstagram/css/screen.css">
 <link rel="stylesheet" href="/imdstagram/css/cssgram.min.css">
 <link href="https://fonts.googleapis.com/css?family=Arimo:700,400" rel="stylesheet" type="text/css">

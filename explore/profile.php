@@ -140,10 +140,12 @@ include_once('../inc/feedbackbox.inc.php');
             <div class="tab-pane fade in active" id="tab1">
                 <div class="row img-list">
                     <?php foreach($userPosts as $userPost): ?>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                            <a data-id="<?php echo $userPost['post_id'] ?>" class="thumbnail picturelist">
-                                <img class="thumb <?php echo $userPost['photo_effect']; ?>" src="../img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" alt="">
-                            </a>
+                        <?php $userPost['post_description'] = htmlspecialchars($userPost['post_description']); ?>
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+
+                                <a href="/imdstagram/img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" data-toggle="lightbox" data-gallery="multiimages" data-title="<?php echo "<a><img  class='img-circle img-circle-detail' src='/imdstagram/img/uploads/profile-pictures/". htmlspecialchars($user->profilePictureOnProfile()) ."'></a>" . "</a>"  . "<a href='/imdstagram/explore/profile.php?user=".  htmlspecialchars($_GET['user']) ."'>" . htmlspecialchars($_GET['user']) . "</a>"; ?>" data-footer="<?php echo $post->hashtag_links(htmlspecialchars($userPost['post_description'])); ?>" class="thumbnail picturelist">
+                                    <img src="/imdstagram/img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" class="img-responsive <?php echo $userPost['photo_effect']; ?>">
+                                </a>
                             </div>
                     <?php endforeach ?>
                    <p class="fb"><?php echo !empty($feedback) ? $feedback : ''?></p>
@@ -194,6 +196,8 @@ include_once('../inc/feedbackbox.inc.php');
         });
     });
 </script>
-
+<!-- lightbox required components -->
+<script src="/imdstagram/js/lightbox-style.js"></script>
+<script src="/imdstagram/js/lightbox-call.js"></script>
 </body>
 </html>

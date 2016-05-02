@@ -3,6 +3,8 @@ include_once('../inc/sessiecontrole.inc.php');
 include_once('../inc/feedbackbox.inc.php');
 include_once('../classes/Validation.class.php');
 include_once('../classes/Search.class.php');
+include_once('../classes/Post.class.php');
+include_once('../classes/User.class.php');
 
 if (isset($_GET['tag']) && !empty($_GET['tag']) && count($_GET) === 1) {
     $tag = $_GET['tag'];
@@ -12,6 +14,8 @@ if (isset($_GET['tag']) && !empty($_GET['tag']) && count($_GET) === 1) {
 //controleer geldige locatie
     $search = new Search();
     $validation = new Validation();
+    $post = new Post();
+    $user = new User();
 
     if ($validation->isValidSearchTerm($tag)) {
 
@@ -67,11 +71,11 @@ if (isset($_GET['tag']) && !empty($_GET['tag']) && count($_GET) === 1) {
 
     <?php if (isset($userPosts) && !empty($userPosts)) : ?>
 
-        <?php foreach ($userPosts as $userPost): ?>
+        <?php foreach ($userPosts as $userPost) : ?>
+            <?php $userPost['post_description'] = htmlspecialchars($userPost['post_description']); ?>
             <div class="col-xs-12 col-sm-4 col-md-3">
-                <a data-id="<?php echo $userPost['post_id'] ?>" class="thumbnail picturelist">
-                    <img class="thumb <?php echo $userPost['photo_effect']; ?>"
-                         src="../img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" alt="">
+                <a href="/imdstagram/img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" data-toggle="lightbox" data-gallery="multiimages" data-title="<?php /*echo "<a><img  class='img-circle img-circle-detail' src='/imdstagram/img/uploads/profile-pictures/". htmlspecialchars($userPost['profile_picture']) ."'></a>" . "</a>"  . "<a href='/imdstagram/explore/profile.php?user=". htmlspecialchars($userPost['username']) ."'>" . htmlspecialchars($userPost['username']) . "</a>";*/ ?>" data-footer="<?php echo $post->hashtag_links(htmlspecialchars($userPost['post_description'])); ?>" class="thumbnail picturelist">
+                    <img src="/imdstagram/img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" class="img-responsive <?php echo $userPost['photo_effect']; ?>">
                 </a>
             </div>
         <?php endforeach; ?>
@@ -84,6 +88,8 @@ if (isset($_GET['tag']) && !empty($_GET['tag']) && count($_GET) === 1) {
 
 
 <?php include_once('../inc/footer.inc.php'); ?>
-
+<!-- lightbox required components -->
+<script src="/imdstagram/js/lightbox-style.js"></script>
+<script src="/imdstagram/js/lightbox-call.js"></script>
 </body>
 </html>
