@@ -2,9 +2,13 @@
 include_once('inc/sessiecontrole.inc.php');
 include_once('classes/Post.class.php');
 include_once('inc/feedbackbox.inc.php');
+include_once('classes/Comment.class.php');
+
 
 $post = new Post();
 $showPosts = $post->getAllPosts();
+
+
 
 if (empty($showPosts)) {
     $feedback = buildFeedbackBox("leeg", "vul je tijdlijn door <a href='upload.php'>foto's toe te voegen</a> en vrienden te volgen. Je kan vrienden, locaties en tags zoeken via het zoekveld bovenaan de pagina.");
@@ -19,6 +23,8 @@ if (isset($_GET['click']) && !empty($_GET['click'])) {
     $post->setMSPostId($getclick);
     $post->likePost();
 }
+
+
 
 if (isset($_GET['delete']) && !empty($_GET['delete'])) {
     try {
@@ -54,6 +60,12 @@ if (isset($_GET['flag']) && !empty($_GET['flag'])) {
 }
 
 
+if(!empty($_POST['commentPostId']) && !empty($_POST['commentDescription']))    {
+    $comment->setMSComment($_POST['commentDescription']);
+    $comment->setMIUserId($_SESSION['login']['userid']);
+    $comment->setMIPostId($_POST['commentPostId']);
+    $comment->postComment();
+}
 
 
 
@@ -87,6 +99,9 @@ if (isset($_GET['flag']) && !empty($_GET['flag'])) {
         <?php foreach ($showPosts as $showPost): ?>
             <?php
             $post->setMSPostId($showPost['post_id']);
+            $comment = new Comment();
+            $comment->setMIPostId($showPost['post_id']);
+            $postComments = $comment->getAllComments();
             $cleanPostDescription = htmlspecialchars($showPost['post_description']);
             $postDescription = $cleanPostDescription;
             if($post->doesStringContain($postDescription, '#')){
@@ -135,43 +150,39 @@ if (isset($_GET['flag']) && !empty($_GET['flag'])) {
                     <span
                         class="pull-right text-muted showLikes"><?php echo $post->showLikes(); ?><?php echo $post->showLikes() == 1 ? ' like' : ' likes' ?> </span>
                 </div>
-                <!--<div class="box-footer box-comments">
+                <div id="allComments">
+                <?php foreach( $postComments as $postComment){ ?>
+                <div class="box-footer box-comments">
                     <div class="box-comment">
+                        <a href="explore/profile.php?user=<?php echo $postComment['username']; ?>">
                         <img class="img-circle img-sm"
-                             src="img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>"
+                             src="img/uploads/profile-pictures/<?php echo $postComment['profile_picture']; ?>"
                              alt="User Image">
                         <div class="comment-text">
-          <span class="username">anyone
-          <span class="text-muted pull-right">8:03</span>
-          </span>comment 1
-                        </div>
-                    </div>
-
-                    <div class="box-comment">
-                        <img class="img-circle img-sm"
-                             src="img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>"
-                             alt="User Image">
-                        <div class="comment-text">
-          <span class="username">Someone
-          <span class="text-muted pull-right">8:03</span>
-          </span>comment 2
+                          <span class="username"><?php echo $postComment['username']; ?>
+                        </a>
+                          <span class="text-muted pull-right"><?php echo $post->timePosted($postComment['comment_date']); ?></span>
+                          <?php echo $postComment['comment_description']; ?>
                         </div>
                     </div>
                 </div>
+                <?php } ?>
+                </div>
                 <div class="box-footer">
-                    <form action="#" method="post">
+                    <form action="" method="post">
                         <img class="img-responsive img-circle img-sm"
                              src="img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>"
                              alt="Alt Text">
                         <div class="img-push">
-                            <input type="text" class="form-control input-sm" placeholder="Schrijf een reactie...">
-                            <button type="submit" name="submit" class="btn btn-success green comment"><i
+                            <input type="hidden" name="commentPostId" value="<?php echo $showPost['post_id'] ?>">
+                            <input id="commentDescription" type="text" name="commentDescription" class="form-control input-sm" placeholder="Schrijf een reactie...">
+                            <button data-id="<?php echo $showPost['post_id'] ?>" name="submit" class="btn btn-success green comment"><i
                                     class="reply"></i>Reageer
                             </button>
                             <div class="clearfix"></div>
                         </div>
                     </form>
-                </div>-->
+                </div>
             </div>
         <?php endforeach ?>
         <?php if (count($showPosts) > 20) : ?>
@@ -184,5 +195,7 @@ if (isset($_GET['flag']) && !empty($_GET['flag'])) {
 
 <?php include_once('inc/footer.inc.php'); ?>
 <script src="js/ajax/liking-a-post.js"></script>
+<script src="js/ajax/comment-on-post.js"></script>
+
 </body>
 </html>
