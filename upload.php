@@ -156,9 +156,9 @@ if (!empty($_POST['description']) && !empty($_FILES['postPhoto']['name'])) {
                         <label for="file">Bladeren naar een afbeelding:</label>
                         <input type="file" id="file" name="postPhoto" accept="image/*;capture=camera">
 
-                        <label for="effect">Versterk je foto met een effect:</label>
+                        <label for="effect" id="label-effect">Versterk je foto met een effect:</label>
                         <select name="effect" id="effect">
-                            <option value="default">Geen effect</option>
+                            <option value="default">Geen effect (standaard)</option>
                             <option value="_1977">1977</option>
                             <option value="aden">Aden</option>
                             <option value="brooklyn">Brooklyn</option>
@@ -181,15 +181,13 @@ if (!empty($_POST['description']) && !empty($_FILES['postPhoto']['name'])) {
                             <option value="walden">Walden</option>
                             <option value="willow">Willow</option>
                             <option value="xpro2">Xpro2</option>
-                        </select><br>
+                        </select>
 
                         <div id="send">
                             <label for="submit">Plaats je foto:</label>
                             <button type="submit" name="submit" id="submit" class="btn btn-success green"><i
                                     class="fa fa-reply"></i>Plaats je foto
                             </button>
-                            <br>
-                            <hr>
                         </div>
 
 

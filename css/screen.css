@@ -36,7 +36,7 @@ h1, h2, h3, h4, h5, h6, .navbar-brand, .name-label, .card-title {
 h1 {
     font-size: 3em;
     margin-bottom: 40px;
-    margin-top: 5px;
+    margin-top: 30px;
 }
 
 .preferences h1{
@@ -357,7 +357,11 @@ aside {
     margin-bottom: 5px;
 }
 
-
+noscript{
+    font-style: italic;
+    font-size: 1.4rem;
+    display: block;
+}
 
 .btn-success:hover{
     background-color: #2f4154;
@@ -837,15 +841,33 @@ input[type="checkbox"]{
 
 
 .image-preview{
-    max-width: 100%;
-    max-height: 500px;
-    padding: 0;
-    margin-bottom: 20px;
+    max-height: 100px;
+}
+
+.effect-name{
+    font-size: 1.5rem;
+    margin-left: 5px;
+}
+
+.preview-block-corner{
+    border: 5px solid transparent;
+    margin-bottom: 10px;
 }
 
 
+
+.preview-block-corner img:first-child{
+    margin-left: 0;
+    border: 0;
+}
+
+.preview-block-corner:hover{
+    border: 5px solid #1ABC9C;
+}
+
 .status-upload form{
     margin-bottom: 20px;
+    padding-bottom: 15px;
 }
 
 .status-upload{
@@ -945,6 +967,16 @@ input[type='file'] {
     font-size: 1.4em;
 }
 
+.preview-gallery{
+    overflow-x: scroll;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.image-preview:hover{
+    cursor: pointer;
+}
+
 @media screen and (min-width: 480px){
 
     .status-upload .btn-success{
@@ -954,6 +986,10 @@ input[type='file'] {
     select#effect{
         width: 300px;
         padding: 5px;
+    }
+
+    .image-preview{
+        max-height: 175px;
     }
 
 }
@@ -970,6 +1006,14 @@ input[type='file'] {
 
     input[type='file'] {
         color: #000;
+    }
+
+    .image-preview{
+        max-height: 200px;
+    }
+
+    h1{
+        margin-top: 0px;
     }
 
 }

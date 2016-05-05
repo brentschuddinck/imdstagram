@@ -1,4 +1,16 @@
 $(document).ready(function () {
+
+    /*disable select box if browser support javascript*/
+    $('select').css('display', 'none');
+
+    /*melding eerst foto toevoegen*/
+    $('#label-effect').css('display', 'none');
+
+    /*Array van effecten*/
+    var arrEffects = document.getElementById('effect').options;
+    //alert(arrEffects[0].value); //=> Value of the first option
+
+
     function readURL(input) {
         if (input.files && input.files[0]) {
 
@@ -35,7 +47,17 @@ $(document).ready(function () {
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    $('#send').append("<div class='wrapper-preview'><h2>Preview foto</h2><img class='image-preview'></div>");
+                    $('#label-effect').css('display', 'block');
+
+                    var previewblock = $("#send");
+                    previewblock.before("<div class='wrapper-preview'><div class='preview-gallery'>");
+
+                    for(var i = 0; i < arrEffects.length; i++){
+                        $('.preview-gallery').append("<div class='preview-block'><div class='effect-name'>" + arrEffects[i].text + "</div><div class='preview-block-corner'><img class='image-preview " + arrEffects[i].text.toLowerCase() +"'></div>");
+                    }
+
+                    $('.preview-gallery').after("</div></div></div>");
+
                     $('.image-preview').attr('src', e.target.result);
                 }
 
