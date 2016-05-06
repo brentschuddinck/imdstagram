@@ -60,10 +60,11 @@ class Comment{
 
     public function getAllComments(){
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT * FROM comment c, user u WHERE c.user_id = u.user_id AND c.post_id = :postId ORDER BY comment_date");
+        $statement = $conn->prepare("SELECT FROM comment c, user u WHERE c.user_id = u.user_id AND c.post_id = :postId ORDER BY comment_date");
         $statement->bindValue(':postId', $this->m_iPostId);
         $statement->execute();
-        $result = $statement->fetchAll();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
 }

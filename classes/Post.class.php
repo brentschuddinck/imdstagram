@@ -394,16 +394,34 @@ class Post
     public function getSinglePost()
     {
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT post_photo FROM post WHERE post_id = :postid");
+        $statement = $conn->prepare("SELECT post_photo, user_id FROM post WHERE post_id = :postid");
         $statement->bindValue(':postid', $this->m_sPostId);
         if ($statement->execute()) {
-            $result = $statement->fetch(PDO::FETCH_COLUMN);
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } else {
             throw new Exception("je bestand is kon niet van de server gewist worden.");
         }
 
     }
+
+
+
+
+    public function getSinglePostDetail()
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT * FROM post WHERE post_id = :postid");
+        $statement->bindValue(':postid', $this->m_sPostId);
+        if ($statement->execute()) {
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } else {
+            throw new Exception("de post kan niet worden opgevraagd.");
+        }
+
+    }
+
 
 
     //delete single post picture

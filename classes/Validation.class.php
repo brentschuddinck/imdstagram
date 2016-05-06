@@ -116,6 +116,14 @@ class Validation
         }
     }
 
+    public function isValidId($p_iId){
+        if(is_int($p_iId)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }
 
 ?>

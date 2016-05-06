@@ -5,7 +5,7 @@ $(document).ready(function(){
         var postId = link.data('id');
 
         //ajax call
-        $.post("ajax/like-photo.php", {id: postId}).done(function(response) {
+        $.post("/imdstagram/ajax/like-photo.php", {id: postId}).done(function(response) {
             if(response.status == "working"){
                 if(response.like == 1){
                     link.next(".showLikes").text(response.like + " " + "like");

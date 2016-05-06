@@ -163,7 +163,7 @@
         always_show_close: !0,
         no_related: !1,
         scale_height: !0,
-        loadingMessage: "Loading...",
+        loadingMessage: "Laden...",
         onShow: function () {
         },
         onShown: function () {
