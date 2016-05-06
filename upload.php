@@ -121,6 +121,7 @@ if (!empty($_POST['description']) && !empty($_FILES['postPhoto']['name'])) {
     <?php include_once('inc/style.inc.php'); ?>
     <link rel="stylesheet" href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css">
 
+
 </head>
 <body class="template">
 <?php include_once('inc/header.inc.php'); ?>
@@ -157,8 +158,9 @@ if (!empty($_POST['description']) && !empty($_FILES['postPhoto']['name'])) {
                         <input type="file" id="file" name="postPhoto" accept="image/*;capture=camera">
 
                         <label for="effect" id="label-effect">Versterk je foto met een effect:</label>
+                        <noscript>Tip: schakel JavaScript in om een preview van je foto met gekozen effect te kunnen bekijken.</noscript>
                         <select name="effect" id="effect">
-                            <option value="default">Geen effect (standaard)</option>
+                            <option value="default">Geen effect</option>
                             <option value="_1977">1977</option>
                             <option value="aden">Aden</option>
                             <option value="brooklyn">Brooklyn</option>
@@ -190,7 +192,6 @@ if (!empty($_POST['description']) && !empty($_FILES['postPhoto']['name'])) {
                             </button>
                         </div>
 
-
                     </form>
                 </div><!-- Status Upload  -->
             </div><!-- Widget Area -->
@@ -202,7 +203,10 @@ if (!empty($_POST['description']) && !empty($_FILES['postPhoto']['name'])) {
 <?php include_once('inc/footer.inc.php'); ?>
 <script src="js/charCount.js"></script>
 <script src="js/uploadPostPreview.js"></script>
-<script src="js/effectPreview.js"></script>
+<!--<script src="js/effectPreview.js"></script>-->
 <script src="js/postLocation.js"></script>
+
+
+
 </body>
 </html>

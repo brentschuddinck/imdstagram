@@ -46,27 +46,60 @@ $(document).ready(function () {
             if(checkFileType()){
                 var reader = new FileReader();
 
-                reader.onload = function (e) {
-                    $('#label-effect').css('display', 'block');
+                $('#label-effect').css('display', 'block');
 
-                    var previewblock = $("#send");
-                    previewblock.before("<div class='wrapper-preview'><div class='preview-gallery'>");
+                var previewblock = $("#send");
+                previewblock.before("<div class='wrapper-preview'><div class='preview-gallery'>");
+
+
+
+                reader.onload = function (e) {
+
+
+
+                    var effectselected = "";
 
                     for(var i = 0; i < arrEffects.length; i++){
-                        $('.preview-gallery').append("<div class='preview-block'><div class='effect-name'>" + arrEffects[i].text + "</div><div class='preview-block-corner'><img class='image-preview " + arrEffects[i].text.toLowerCase() +"'></div>");
-                    }
 
-                    $('.preview-gallery').after("</div></div></div>");
+                        if(i != 0){
+                            effectselected = "";
+                        }else{
+                            effectselected = "effect-selected";
+                        }
+
+                        $('.preview-gallery').append("<div class='preview-block'><div class='effect-name'>" + arrEffects[i].text + "</div><div class='preview-block-corner " + effectselected  + "'><img class='image-preview " + arrEffects[i].text.toLowerCase() +"'></div>");
+                    }
 
                     $('.image-preview').attr('src', e.target.result);
                 }
 
+                $('.preview-gallery').after("</div></div></div>");
+
                 reader.readAsDataURL(input.files[0]);
             }
+
         }
     }
 
-    $("#file").change(function () {
+        $("#file").change(function () {
         readURL(this);
     });
+
+
+
+
+
+    $(document).on('click', '.image-preview', function(){
+        //detecteer hoeveelste element geklikt werd
+        var selectedEffectElement = $('.image-preview').index(this);
+        //alert( $('.image-preview').index(this) );
+
+        //wijzig huidige omkadering naar geselecteerd element
+        $(".preview-block-corner").removeClass("effect-selected");
+        $(".preview-block-corner").eq(selectedEffectElement).addClass("effect-selected");
+
+        //pas element aan in onzichtbare lijst (wel getoond als js uitgeschakeld is om toch effect te kunnen toevoegen)
+        $("#effect").prop('selectedIndex', selectedEffectElement);
+    });
+
 });

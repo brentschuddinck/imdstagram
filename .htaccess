@@ -3,10 +3,21 @@
 #RewriteCond %{HTTPS} !=on
 #RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
 
-#2do: directe toegang tot ajax, classes en inc blokkeren.
+#2do: directe toegang tot ajax, classes en inc blokkeren. Redirecen 404.
 ErrorDocument 404 /imdstagram/error/404.php
 ErrorDocument 403 /imdstagram/error/404.php
 
 #blokkeer indexes
 Options -Indexes
 
+#caching
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/x-icon "access plus 31536000 seconds"
+  ExpiresByType text/css "access plus 2592000 seconds"
+  ExpiresByType text/javascript "access plus 86400 seconds"
+  ExpiresByType application/x-javascript "access plus 86400 seconds"
+  ExpiresByType image/gif "access plus 3600 seconds"
+  ExpiresByType image/jpeg "access plus 3600 seconds"
+  ExpiresByType image/png "access plus 3600 seconds"
+</IfModule>
