@@ -52,6 +52,7 @@ if (isset($_GET['flag']) && !empty($_GET['flag'])) {
                 $post->addUsersWhoFlagged();
                 $feedback = buildFeedbackBox("success", "Bedankt! De post is gerapporteerd.");
                 header('Location: index.php');
+                header('Location: index.php');
             }
         }
     } catch (Exception $e) {
@@ -154,15 +155,15 @@ if(!empty($_POST['commentPostId']) && !empty($_POST['commentDescription']))    {
                 <?php foreach( $postComments as $postComment){ ?>
                 <div class="box-footer box-comments">
                     <div class="box-comment">
-                        <a href="explore/profile.php?user=<?php echo $postComment['username']; ?>">
+                        <a href="explore/profile.php?user=<?php echo htmlspecialchars($postComment['username']); ?>">
                         <img class="img-circle img-sm"
-                             src="img/uploads/profile-pictures/<?php echo $postComment['profile_picture']; ?>"
+                             src="img/uploads/profile-pictures/<?php echo htmlspecialchars($postComment['profile_picture']); ?>"
                              alt="User Image">
                         <div class="comment-text">
-                          <span class="username"><?php echo $postComment['username']; ?>
+                          <span class="username"><?php echo htmlspecialchars($postComment['username']); ?>
                         </a>
-                          <span class="text-muted pull-right"><?php echo $post->timePosted($postComment['comment_date']); ?></span>
-                          <?php echo $postComment['comment_description']; ?>
+                          <span class="text-muted pull-right"><?php echo htmlspecialchars($post->timePosted($postComment['comment_date'])); ?></span>
+                          <?php echo htmlspecialchars($postComment['comment_description']); ?>
                         </div>
                     </div>
                 </div>

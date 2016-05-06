@@ -1,12 +1,26 @@
 $(document).ready(function(){
 
+    //htmlspecialchars equivalent
+    function escapeHtml(text) {
+        var map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+    }
+
 
     $(".comment").on("click", function(e){
 
         var link = $(this);
         var postId = link.data('id');
 
-        var comment = $('#commentDescription').val();
+        var commentbad = $('#commentDescription').val();
+        var comment = escapeHtml(commentbad);
 
         //ajax call
         if(comment.length > 0) {
