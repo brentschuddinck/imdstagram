@@ -31,10 +31,14 @@ if (isset($_GET['delete']) && !empty($_GET['delete'])) {
         $deletePostId = $_GET['delete'];
         $post->setMSPostId($deletePostId);
         $postToDelete = $post->getSinglePost();
-        $post->deletePostImage($postToDelete);
-        if($post->deletePost()){
-            $feedback = buildFeedbackBox("success", "De post is verwijderd.");
-            header('Location: index.php');
+        if($postToDelete[0]['user_id'] == $_SESSION['login']['userid']){
+            if($post->deletePost()){
+                $post->deletePostImage($postToDelete[0]['post_photo']);
+                $feedback = buildFeedbackBox("success", "De post is verwijderd.");
+                //header("Location: location.php?location=". $location);
+            }
+        }else{
+            $feedback = buildFeedbackBox("danger", "je kan enkel posts wissen die je zelf geplaatst hebt.");
         }
     } catch (Exception $e) {
         $feedback = buildFeedbackBox("danger", $e->getMessage());
@@ -51,7 +55,6 @@ if (isset($_GET['flag']) && !empty($_GET['flag'])) {
             if($post->flagPost()){
                 $post->addUsersWhoFlagged();
                 $feedback = buildFeedbackBox("success", "Bedankt! De post is gerapporteerd.");
-                header('Location: index.php');
                 header('Location: index.php');
             }
         }
@@ -98,98 +101,98 @@ if(!empty($_POST['commentPostId']) && !empty($_POST['commentDescription']))    {
     <div class="col-sm-12 col-md-8 col-md-offset-2">
         <?php if (isset($feedback) && !empty($feedback)) { echo $feedback; } ?>
         <?php foreach ($showPosts as $showPost): ?>
-            <?php
-            $post->setMSPostId($showPost['post_id']);
-            $comment = new Comment();
-            $comment->setMIPostId($showPost['post_id']);
-            $postComments = $comment->getAllComments();
-            $cleanPostDescription = htmlspecialchars($showPost['post_description']);
-            $postDescription = $cleanPostDescription;
-            if($post->doesStringContain($postDescription, '#')){
-                $postDescription = $post->hashtag_links($postDescription);
-            }
-            ?>
+        <?php
+        $post->setMSPostId($showPost['post_id']);
+        $comment = new Comment();
+        $comment->setMIPostId($showPost['post_id']);
+        $postComments = $comment->getAllComments();
+        $cleanPostDescription = htmlspecialchars($showPost['post_description']);
+        $postDescription = $cleanPostDescription;
+        if($post->doesStringContain($postDescription, '#')){
+            $postDescription = $post->hashtag_links($postDescription);
+        }
+        ?>
 
-            <div class="box box-widget">
-                <div class="box-header with-border">
-                    <div class="user-block">
-                        <a href="/imdstagram/explore/profile.php?user=<?php echo htmlspecialchars($post->usernameFromPost()); ?>"><img
-                                class="img-circle"
-                                src="img/uploads/profile-pictures/<?php echo htmlspecialchars($post->userImgFromPost()); ?>"
-                                alt="User Image"></a>
+        <div class="box box-widget">
+            <div class="box-header with-border">
+                <div class="user-block">
+                    <a href="/imdstagram/explore/profile.php?user=<?php echo htmlspecialchars($post->usernameFromPost()); ?>"><img
+                            class="img-circle"
+                            src="img/uploads/profile-pictures/<?php echo htmlspecialchars($post->userImgFromPost()); ?>"
+                            alt="User Image"></a>
                         <span class="username"><a
                                 href="/imdstagram/explore/profile.php?user=<?php echo htmlspecialchars($post->usernameFromPost()); ?>"><?php echo htmlspecialchars($post->usernameFromPost()); ?></a></span>
                         <span
                             class="description"><?php echo $post->timePosted($showPost['post_date']); ?> <?php echo !empty($showPost['post_location']) ? '-' : '' ?>
                             <span
                                 class="<?php echo !empty($showPost['post_location']) ? 'fa fa-map-marker' : '' ?>"><?php echo " <a href='explore/location.php?location=" . htmlspecialchars($showPost['post_location']) . "'>" . htmlspecialchars($showPost['post_location']) . "</a>"; ?></span></span>
-                    </div>
-                    <div class="box-tools">
-                        <div
-                            class="<?php echo $showPost['user_id'] != $_SESSION['login']['userid'] ? 'hidden' : 'show' ?>">
-                            <a href="?flag=<?php echo $showPost['post_id']; ?>" type="button" class="btn btn-box-tool"
-                               title="post rapporteren" data-target="#confirm-flag"><i
-                                    class="fa fa-exclamation fa-lg flagpost"></i></a>
-                        </div>
-                        <div
-                            class="<?php echo $showPost['user_id'] != $_SESSION['login']['userid'] ? 'show' : 'hidden' ?>">
-                            <a href="?delete=<?php echo $showPost['post_id']; ?>" type="button" class="btn btn-box-tool"
-                               title="post verwijderen" data-target="#confirm-delete"><i
-                                    class="fa fa-trash-o fa-lg deletepost"></i></a>
-                        </div>
-                    </div>
-
-
                 </div>
-                <div class="box-body">
-                    <img class="img-responsive pad <?php echo htmlspecialchars($showPost['photo_effect']); ?>"
-                         src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
-                    <p><?php echo $postDescription; ?></p>
-                    <a href="?click=<?php echo $showPost['post_id']; ?>" data-id="<?php echo $showPost['post_id'] ?>"
-                       class="likeBtn btn btn-sm <?php echo $post->isLiked() == true ? 'liked ' : 'btn-default ' ?>"><i
-                            class="fa fa-heart-o fa-lg"></i> vind ik leuk</a>
+                <div class="box-tools">
+                    <div
+                        class="<?php echo $showPost['user_id'] != $_SESSION['login']['userid'] ? 'hidden' : 'show' ?>">
+                        <a href="?flag=<?php echo $showPost['post_id']; ?>" type="button" class="btn btn-box-tool"
+                           title="post rapporteren" data-target="#confirm-flag"><i
+                                class="fa fa-exclamation fa-lg flagpost"></i></a>
+                    </div>
+                    <div
+                        class="<?php echo $showPost['user_id'] != $_SESSION['login']['userid'] ? 'show' : 'hidden' ?>">
+                        <a href="?delete=<?php echo $showPost['post_id']; ?>" type="button" class="btn btn-box-tool"
+                           title="post verwijderen" data-target="#confirm-delete"><i
+                                class="fa fa-trash-o fa-lg deletepost"></i></a>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="box-body">
+                <img class="img-responsive pad <?php echo htmlspecialchars($showPost['photo_effect']); ?>"
+                     src="img/uploads/post-pictures/<?php echo $showPost['post_photo'] ?>" alt="Photo">
+                <p><?php echo $postDescription; ?></p>
+                <a href="?click=<?php echo $showPost['post_id']; ?>" data-id="<?php echo $showPost['post_id'] ?>"
+                   class="likeBtn btn btn-sm <?php echo $post->isLiked() == true ? 'liked ' : 'btn-default ' ?>"><i
+                        class="fa fa-heart-o fa-lg"></i> vind ik leuk</a>
                     <span
                         class="pull-right text-muted showLikes"><?php echo $post->showLikes(); ?><?php echo $post->showLikes() == 1 ? ' like' : ' likes' ?> </span>
-                </div>
-                <div id="allComments">
+            </div>
+            <div id="allComments">
                 <?php foreach( $postComments as $postComment){ ?>
                 <div class="box-footer box-comments">
                     <div class="box-comment">
-                        <a href="explore/profile.php?user=<?php echo htmlspecialchars($postComment['username']); ?>">
-                        <img class="img-circle img-sm"
-                             src="img/uploads/profile-pictures/<?php echo htmlspecialchars($postComment['profile_picture']); ?>"
-                             alt="User Image">
-                        <div class="comment-text">
-                          <span class="username"><?php echo htmlspecialchars($postComment['username']); ?>
+                        <a href="explore/profile.php?user=<?php echo $postComment['username']; ?>">
+                            <img class="img-circle img-sm"
+                                 src="img/uploads/profile-pictures/<?php echo $postComment['profile_picture']; ?>"
+                                 alt="User Image">
+                            <div class="comment-text">
+                          <span class="username"><?php echo $postComment['username']; ?>
                         </a>
-                          <span class="text-muted pull-right"><?php echo htmlspecialchars($post->timePosted($postComment['comment_date'])); ?></span>
-                          <?php echo htmlspecialchars($postComment['comment_description']); ?>
-                        </div>
+                        <span class="text-muted pull-right"><?php echo $post->timePosted($postComment['comment_date']); ?></span>
+                        <?php echo $postComment['comment_description']; ?>
                     </div>
                 </div>
-                <?php } ?>
-                </div>
-                <div class="box-footer">
-                    <form action="" method="post">
-                        <img class="img-responsive img-circle img-sm"
-                             src="img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>"
-                             alt="Alt Text">
-                        <div class="img-push">
-                            <input type="hidden" name="commentPostId" value="<?php echo $showPost['post_id'] ?>">
-                            <input id="commentDescription" type="text" name="commentDescription" class="form-control input-sm" placeholder="Schrijf een reactie...">
-                            <button data-id="<?php echo $showPost['post_id'] ?>" name="submit" class="btn btn-success green comment"><i
-                                    class="reply"></i>Reageer
-                            </button>
-                            <div class="clearfix"></div>
-                        </div>
-                    </form>
-                </div>
             </div>
-        <?php endforeach ?>
-        <?php if (count($showPosts) > 20) : ?>
-            <a href="#" class="btn btn-primary btn-more-results btn-md">Toon meer resultaten</a>
-        <?php endif; ?>
+            <?php } ?>
+        </div>
+        <div class="box-footer">
+            <form action="" method="post">
+                <img class="img-responsive img-circle img-sm"
+                     src="img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>"
+                     alt="Alt Text">
+                <div class="img-push">
+                    <input type="hidden" name="commentPostId" value="<?php echo $showPost['post_id'] ?>">
+                    <input id="commentDescription" type="text" name="commentDescription" class="form-control input-sm" placeholder="Schrijf een reactie...">
+                    <button data-id="<?php echo $showPost['post_id'] ?>" name="submit" class="btn btn-success green comment"><i
+                            class="reply"></i>Reageer
+                    </button>
+                    <div class="clearfix"></div>
+                </div>
+            </form>
+        </div>
     </div>
+    <?php endforeach ?>
+    <?php /*if (count($showPosts) > 2) :*/ ?>
+    <!--<a href="#" class="btn btn-primary btn-more-results btn-md">Toon meer resultaten</a>-->
+    <?php /*endif;*/ ?>
+</div>
 </div>
 <!-- einde photowall -->
 
