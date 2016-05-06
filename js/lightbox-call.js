@@ -37,6 +37,7 @@ $(document).ready(function ($) {
         return $(this).ekkoLightbox({
             onShown: function() {
                 var lb = this;
+
                 $(lb.modal_content).on('click', '.modal-footer a#jumpit', function(e) {
                     e.preventDefault();
                     lb.navigateTo(2);
@@ -49,6 +50,8 @@ $(document).ready(function ($) {
         });
     });
 
-});/**
+});
+
+/**
  * Created by brent on 2/05/2016.
  */

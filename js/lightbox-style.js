@@ -7,6 +7,8 @@
 (function () {
     "use strict";
     var a, b;
+    var classeffect = "img-responsive";
+
     a = jQuery, b = function (b, c) {
         var d, e, f;
         return this.options = a.extend({
@@ -44,6 +46,7 @@
                     return b.preventDefault(), a.navigate_right()
                 }
             }(this)))), this.options.type ? "image" === this.options.type ? this.preloadImage(this.options.remote, !0) : "youtube" === this.options.type && (b = this.getYoutubeId(this.options.remote)) ? this.showYoutubeVideo(b) : "vimeo" === this.options.type ? this.showVimeoVideo(this.options.remote) : "instagram" === this.options.type ? this.showInstagramVideo(this.options.remote) : "url" === this.options.type ? this.loadRemoteContent(this.options.remote) : "video" === this.options.type ? this.showVideoIframe(this.options.remote) : this.error('Could not detect remote target type. Force the type using data-type="image|youtube|vimeo|instagram|url|video"') : this.detectRemoteType(this.options.remote)) : this.error("No remote target given")
+
         }, strip_stops: function (a) {
             return a.replace(/\./g, "")
         }, strip_spaces: function (a) {
@@ -110,7 +113,14 @@
             return d = new Image, (null == c || c === !0) && (d.onload = function (b) {
                 return function () {
                     var c;
-                    return c = a("<img />"), c.attr("src", d.src), c.addClass("img-responsive"), b.lightbox_body.html(c), b.modal_arrows && b.modal_arrows.css("display", "block"), c.load(function () {
+                    //haal huidig indexnummer op van galleryafbeelding
+                    var galleryindexcurrent = b['gallery_index'];
+                    //verzamel alle elementen met een classenaam img-responsive
+                    var picture = document.getElementsByClassName("img-responsive");
+                    //haal er het element uit van onze index en achterhaal hiervan de classenaam. Indien niet gevonden => fallback img-responsive
+                    var classeffect = picture[galleryindexcurrent].className;
+
+                    return c = a("<img />"), c.attr("src", d.src), c.addClass(classeffect), b.lightbox_body.html(c), b.modal_arrows && b.modal_arrows.css("display", "block"), c.load(function () {
                         return b.options.scale_height ? b.scaleHeight(d.height, d.width) : b.resize(d.width), b.options.onContentLoaded.call(b)
                     })
                 }

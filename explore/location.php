@@ -97,7 +97,7 @@ if (isset($_GET['delete']) && !empty($_GET['delete'])) {
             ?>
             <div class="col-xs-12 col-sm-4 col-md-3">
 
-                <a href="/imdstagram/img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" data-toggle="lightbox" data-gallery="multiimages" data-title="<?php echo "<a><img  class='img-circle img-circle-detail' src='/imdstagram/img/uploads/profile-pictures/". htmlspecialchars($userPost['profile_picture']) ."'></a>" . "</a>"  . "<a href='/imdstagram/explore/profile.php?user=". htmlspecialchars($userPost['username']) ."'>" . htmlspecialchars($userPost['username']) . "</a>"; ?>" data-footer="<?php echo $post->hashtag_links(htmlspecialchars($postDescription)); ?>" class="thumbnail picturelist">
+                <a href="/imdstagram/img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" data-toggle="lightbox" data-gallery="multiimages" data-title="<?php echo "<a><img class='img-circle img-circle-detail' src='/imdstagram/img/uploads/profile-pictures/". htmlspecialchars($userPost['profile_picture']) ."'></a>" . "</a>"  . "<a href='/imdstagram/explore/profile.php?user=". htmlspecialchars($userPost['username']) ."'>" . htmlspecialchars($userPost['username']) . "</a>"; ?>" data-footer="<?php echo $post->hashtag_links(htmlspecialchars($postDescription)); ?>" class="thumbnail picturelist">
                     <img src="/imdstagram/img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" class="img-responsive <?php echo $userPost['photo_effect']; ?>">
                 </a>
             </div>

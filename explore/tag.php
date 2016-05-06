@@ -26,6 +26,8 @@ if (isset($_GET['tag']) && !empty($_GET['tag']) && count($_GET) === 1) {
             $search->setMStag($tag);
             $search->setMSUserid($_SESSION['login']['userid']);
             $userPosts = $search->getAllTagPosts();
+
+            print_r($userPosts);
             $amountOfSearchResults = count($userPosts);
             $search->splitBigNumberAmountOfResults($amountOfSearchResults);
         } catch (Exception $e) {
@@ -74,7 +76,7 @@ if (isset($_GET['tag']) && !empty($_GET['tag']) && count($_GET) === 1) {
         <?php foreach ($userPosts as $userPost) : ?>
             <?php $userPost['post_description'] = htmlspecialchars($userPost['post_description']); ?>
             <div class="col-xs-12 col-sm-4 col-md-3">
-                <a href="/imdstagram/img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" data-toggle="lightbox" data-gallery="multiimages" data-title="<?php /*echo "<a><img  class='img-circle img-circle-detail' src='/imdstagram/img/uploads/profile-pictures/". htmlspecialchars($userPost['profile_picture']) ."'></a>" . "</a>"  . "<a href='/imdstagram/explore/profile.php?user=". htmlspecialchars($userPost['username']) ."'>" . htmlspecialchars($userPost['username']) . "</a>";*/ ?>" data-footer="<?php echo $post->hashtag_links(htmlspecialchars($userPost['post_description'])); ?>" class="thumbnail picturelist">
+                <a href="/imdstagram/img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" data-toggle="lightbox" data-gallery="multiimages" data-title="<?php echo "<a><img class='img-circle img-circle-detail' src='/imdstagram/img/uploads/profile-pictures/". htmlspecialchars($userPost['profile_picture']) ."'></a>" . "</a>"  . "<a href='/imdstagram/explore/profile.php?user=". htmlspecialchars($userPost['username']) ."'>" . htmlspecialchars($userPost['username']) . "</a>"; ?>" data-footer="<?php echo $post->hashtag_links(htmlspecialchars($userPost['post_description'])); ?>" class="thumbnail picturelist">
                     <img src="/imdstagram/img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" class="img-responsive <?php echo $userPost['photo_effect']; ?>">
                 </a>
             </div>
