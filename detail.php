@@ -3,8 +3,7 @@ include_once('classes/Post.class.php');
 include_once('inc/feedbackbox.inc.php');
 include_once('classes/Comment.class.php');
 
-$category = "";    
-    
+$category = "";
 if(isset($_GET['location'])){
     $category = "location";
     $getcategory = htmlspecialchars($_GET[$category]);
@@ -13,9 +12,10 @@ if(isset($_GET['location'])){
     $getcategory = htmlspecialchars($_GET[$category]);
 
 
+
 }else if(isset($_GET['profile'])){
-    $category = "profile";
-    $getcategory = htmlspecialchars($_GET[$category]);
+    $category = "user";
+    $getcategory = htmlspecialchars($_GET["profile"]);
 }else{
     header('location: /imdstagram/error/404.php');
 }

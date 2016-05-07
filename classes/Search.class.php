@@ -129,7 +129,7 @@ class Search
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT * FROM post p, user u WHERE p.user_id = u.user_id AND p.post_location = :location
                                      AND p.inappropriate < 3 AND (u.private = false OR p.user_id = :userId
-                                     OR p.user_id = (SELECT u.user_id FROM user u, following f WHERE private = true AND u.user_id = f.follows AND f.user_id = :userId AND f.accepted = true)) ORDER BY post_date LIMIT 200");
+                                     OR p.user_id = (SELECT u.user_id FROM user u, following f WHERE private = true AND u.user_id = f.follows AND f.user_id = :userId AND f.accepted = true)) ORDER BY post_date DESC LIMIT 200");
         $statement->bindValue(':userId', $_SESSION['login']['userid']);
         $statement->bindValue(':location', $this->m_sLocation);
 

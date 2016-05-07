@@ -836,6 +836,10 @@ input[type=file] {
     margin: 15px 0
 }
 
+.img-circle, .useravatar img{
+    object-fit: cover;
+}
+
 .img-circle-detail {
     width: 40px;
     height: 40px;

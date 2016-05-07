@@ -3,14 +3,25 @@ include_once('../inc/sessiecontrole.inc.php');
 include_once('../classes/Post.class.php');
 include_once('../classes/User.class.php');
 include_once('../inc/feedbackbox.inc.php');
+include_once('../classes/Search.class.php');
+include_once('../classes/Validation.class.php');
 
+if (isset($_GET['user']) && !empty($_GET['user'])) {
 
-    $post = new Post();
+    $username = htmlspecialchars($_GET['user']);
+    $amountOfSearchResults = 0;
+
+//controleer geldige locatie
+    $search = new Search();
     $user = new User();
+    $validation = new Validation();
+    $post = new Post();
 
-    //detecteer of er een user is
-    if(isset($_GET['user']) && !empty($_GET['user']) && count($_GET) === 1){
-        $username = $_GET['user'];
+    if ($validation->isValidSearchTerm($username)) {
+
+
+        $username = str_replace('#', '', $username);
+        $username = str_replace('%23', '', $username);
 
         //kijk of deze gebruiker bestaat
         $user->setMSUsername($username);
@@ -18,9 +29,19 @@ include_once('../inc/feedbackbox.inc.php');
             //hergebruik functie. rows = 0 keert true terug. In deze situatie moet dit 1 zijn.
             header('Location: /imdstagram/error/error404.php');
         }
-    }else{
-        header('Location: /imdstagram/error/error404.php');
+    } else {
+        header('Location: /imdstagram/error/404.php');
     }
+
+
+
+
+
+
+
+
+
+
 
     $post->setMSUsernamePosts($username);
     $userPosts = $post->getPostsForEachUser();
@@ -29,9 +50,9 @@ include_once('../inc/feedbackbox.inc.php');
     $user->setMSUsername($username);
     //print_r($user->isAccepted());
     if(!empty($_GET['id'])){
-    $user->setMIUserId($_GET['id']);
-    $user->followUser();
-    header('location: profile.php?user=' . $_GET['user']);
+        $user->setMIUserId($_GET['id']);
+        $user->followUser();
+        header('location: profile.php?user=' . $_GET['user']);
 
     }
 
@@ -49,8 +70,8 @@ include_once('../inc/feedbackbox.inc.php');
 
     // feedback voor als een profiel nog geen foto's, volgers of nog niemand volgt
     if(empty($userPosts) && $post->countPostsForEachuser() > 0){
-            $feedback = 'Dit account is privé, stuur een volg verzoek om de foto\'s van deze gebruiker te zien.';
-        }elseif(empty($userPosts) && $post->countPostsForEachuser() == 0 && $_GET['user'] == $_SESSION['login']['username']){
+        $feedback = 'Dit account is privé, stuur een volg verzoek om de foto\'s van deze gebruiker te zien.';
+    }elseif(empty($userPosts) && $post->countPostsForEachuser() == 0 && $_GET['user'] == $_SESSION['login']['username']){
         $feedback = 'Je hebt nog geen foto\'s geplaatst.';
 
     }elseif(empty($userPosts) && $post->countPostsForEachuser() == 0 ){
@@ -81,10 +102,99 @@ include_once('../inc/feedbackbox.inc.php');
     else if(!isset($_GET['user'])){
         $_GET['user'] = $_SESSION['login']['username'];
         header('location: profile.php?user=' . $_GET['user']);
-    //in het andere geval wil de ingelogde gebruiker zijn eigen profiel bekijken. Toon gepaste titel.
+        //in het andere geval wil de ingelogde gebruiker zijn eigen profiel bekijken. Toon gepaste titel.
     }else{
         $pageTitle = "Mijn profiel";
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    if (isset($_POST['btnLikePicture'])) {
+        $post->likePost();
+    }
+
+    if (isset($_GET['click']) && !empty($_GET['click'])) {
+        $getclick = $_GET['click'];
+        $post->setMSPostId($getclick);
+        $post->likePost();
+    }
+
+
+
+    if (isset($_GET['delete']) && !empty($_GET['delete'])) {
+        try {
+            $deletePostId = $_GET['delete'];
+            $post->setMSPostId($deletePostId);
+            $postToDelete = $post->getSinglePost();
+            if($postToDelete[0]['user_id'] == $_SESSION['login']['userid']){
+                if($post->deletePost()){
+                    $post->deletePostImage($postToDelete[0]['post_photo']);
+                    $feedback = buildFeedbackBox("success", "De post is verwijderd.");
+                    header("Location: profile.php?user=". $username);
+                }
+            }else{
+                $feedback = buildFeedbackBox("danger", "je kan enkel posts wissen die je zelf geplaatst hebt.");
+            }
+
+        } catch (Exception $e) {
+            $feedback = buildFeedbackBox("danger", $e->getMessage());
+        }
+    }
+
+
+    if (isset($_GET['flag']) && !empty($_GET['flag'])) {
+        try {
+            $flagPostId = $_GET['flag'];
+            $post->setMSPostId($flagPostId);
+            $postToFlag = $post->getSinglePost();
+            if($post->checkIfUserAlreadyFlagged()){
+                if($post->flagPost()){
+                    $post->addUsersWhoFlagged();
+                    $feedback = buildFeedbackBox("success", "Bedankt! De post is gerapporteerd.");
+                    //header('Location: index.php');
+                }
+            }
+        } catch (Exception $e) {
+            $feedback = buildFeedbackBox("danger", $e->getMessage());
+        }
+    }
+
+
+    if(!empty($_POST['commentPostId']) && !empty($_POST['commentDescription']))    {
+        $comment->setMSComment($_POST['commentDescription']);
+        $comment->setMIUserId($_SESSION['login']['userid']);
+        $comment->setMIPostId($_POST['commentPostId']);
+        $comment->postComment();
+    }
+
+
+
+}
+else{
+    header('Location: /imdstagram/error/404.php');
+}
+
+
 
 ?><!doctype html>
 <html lang="nl">
@@ -138,17 +248,20 @@ include_once('../inc/feedbackbox.inc.php');
     <div class="well">
         <div class="tab-content">
             <div class="tab-pane fade in active" id="tab1">
+                <p class="fb"><?php echo !empty($feedback) ? $feedback : ''?></p>
                 <div class="row img-list">
                     <?php foreach($userPosts as $userPost): ?>
                         <?php $userPost['post_description'] = htmlspecialchars($userPost['post_description']); ?>
                         <div class="col-xs-12 col-sm-4 col-md-4">
 
-                                <a href="/imdstagram/img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" data-toggle="lightbox" data-gallery="multiimages" data-title="<?php echo "<a><img  class='img-circle img-circle-detail' src='/imdstagram/img/uploads/profile-pictures/". htmlspecialchars($user->profilePictureOnProfile()) ."'></a>" . "</a>"  . "<a href='/imdstagram/explore/profile.php?user=".  htmlspecialchars($_GET['user']) ."'>" . htmlspecialchars($_GET['user']) . "</a>"; ?>" data-footer="<?php echo $post->hashtag_links(htmlspecialchars($userPost['post_description'])); ?>" class="thumbnail picturelist">
-                                    <img src="/imdstagram/img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" class="img-responsive <?php echo $userPost['photo_effect']; ?>">
-                                </a>
+                            <a href="/imdstagram/detail.php?profile=<?php echo htmlspecialchars($username) ?>&postid=<?php echo $userPost['post_id'] ?>"
+                               data-toggle="lightbox"
+                               data-gallery="multiimages"
+                               class="thumbnail picturelist">
+                                <img src="/imdstagram/img/uploads/post-pictures/<?php echo $userPost['post_photo']; ?>" class="img-responsive <?php echo $userPost['photo_effect']; ?>">
+                            </a>
                             </div>
                     <?php endforeach ?>
-                   <p class="fb"><?php echo !empty($feedback) ? $feedback : ''?></p>
                 </div>
             </div>
             <div class="tab-pane fade in" id="tab2">
