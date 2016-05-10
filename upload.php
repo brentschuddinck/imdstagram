@@ -82,6 +82,7 @@ if (!empty($_POST['description']) && !empty($_FILES['postPhoto']['name'])) {
                                 }
                             }
                             $feedback = buildFeedbackBox("success", "Je foto is geplaatst! <a href='/imdstagram/index.php'>Bekijk het resultaat</a>.");
+                            header('Location: index.php');
 
                         }else{
                             $feedback = buildFeedbackBox("danger", "er is iets misgelopen bij het plaatsen van je post. Onze excuses voor het ongemak. Probeer het later opnieuw.");
