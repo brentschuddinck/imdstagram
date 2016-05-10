@@ -35,7 +35,7 @@ if (isset($_GET['delete']) && !empty($_GET['delete'])) {
             if($post->deletePost()){
                 $post->deletePostImage($postToDelete[0]['post_photo']);
                 $feedback = buildFeedbackBox("success", "De post is verwijderd.");
-                header("Location: location.php?location=". $location);
+                header("Location: index.php");
             }
         }else{
             $feedback = buildFeedbackBox("danger", "je kan enkel posts wissen die je zelf geplaatst hebt.");
