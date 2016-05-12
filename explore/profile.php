@@ -33,16 +33,6 @@ if (isset($_GET['user']) && !empty($_GET['user'])) {
         header('Location: /imdstagram/error/404.php');
     }
 
-
-
-
-
-
-
-
-
-
-
     $post->setMSUsernamePosts($username);
     $userPosts = $post->getPostsForEachUser();
 
@@ -90,10 +80,6 @@ if (isset($_GET['user']) && !empty($_GET['user'])) {
         $followingfb = 'Je volgt nog niemand.';
     }
 
-
-
-
-
     //welk profiel opvragen?
     //als querystring user bestaat en de waarde hiervan verschillende is van de gebruikersnaam van de ingelogde gebruiker (sessie), dan wordt een ander profiel bekeken
     if(isset($_GET['user']) && $_GET['user'] != $_SESSION['login']['username']){
@@ -106,28 +92,6 @@ if (isset($_GET['user']) && !empty($_GET['user'])) {
     }else{
         $pageTitle = "Mijn profiel";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     if (isset($_POST['btnLikePicture'])) {
         $post->likePost();

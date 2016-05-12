@@ -17,6 +17,7 @@ if(!empty($_POST)){
 
         $response['name'] = $username;
         $response['profileImg'] = $profilepicture;
+        $response['postId'] = $currentPostId;
 
         $response['status'] = "working";
     }catch (Exception $e){

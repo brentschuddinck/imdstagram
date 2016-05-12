@@ -19,7 +19,7 @@ $(document).ready(function(){
         var link = $(this);
         var postId = link.data('id');
 
-        var commentbad = $('#commentDescription').val();
+        var commentbad = $('#commentDescription' + postId).val();
         var comment = escapeHtml(commentbad);
 
         //ajax call
@@ -31,9 +31,10 @@ $(document).ready(function(){
                    var userImg = response.profileImg;
 
 
-                    $('#commentDescription').val(" ");
+
+                    $('#commentDescription' + postId).val("");
                     var element = " <div class='box-footer box-comments'><div class='box-comment'><a href='explore/profile.php?user=" + userName + "'><img class='img-circle img-sm' src='img/uploads/profile-pictures/" + userImg + "' alt='User Image'><div class='comment-text'> <span class='username'>" + userName +  "</a> <span class='text-muted pull-right'>zojuist</span>" + comment + "</div> </div> </div>"
-                    $('#allComments').append(element);
+                    $('#commentId' + postId).append(element);
                 }
             });
         }

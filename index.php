@@ -154,10 +154,11 @@ if(!empty($_POST['commentPostId']) && !empty($_POST['commentDescription']))    {
                     <span
                         class="pull-right text-muted showLikes"><?php echo $post->showLikes(); ?><?php echo $post->showLikes() == 1 ? ' like' : ' likes' ?> </span>
             </div>
-            <div id="allComments">
-                <?php foreach( $postComments as $postComment){ ?>
+            <div id="commentId<?php echo $showPost['post_id']; ?>">
+            <?php foreach( $postComments as $postComment){ ?>
                 <div class="box-footer box-comments">
-                    <div class="box-comment">
+
+                <div class="box-comment">
                         <a href="explore/profile.php?user=<?php echo $postComment['username']; ?>">
                             <img class="img-circle img-sm"
                                  src="img/uploads/profile-pictures/<?php echo $postComment['profile_picture']; ?>"
@@ -170,8 +171,10 @@ if(!empty($_POST['commentPostId']) && !empty($_POST['commentDescription']))    {
                     </div>
                 </div>
             </div>
-            <?php } ?>
+
+    <?php } ?>
         </div>
+
         <div class="box-footer">
             <form action="" method="post">
                 <img class="img-responsive img-circle img-sm"
@@ -179,7 +182,7 @@ if(!empty($_POST['commentPostId']) && !empty($_POST['commentDescription']))    {
                      alt="Alt Text">
                 <div class="img-push">
                     <input type="hidden" name="commentPostId" value="<?php echo $showPost['post_id'] ?>">
-                    <input id="commentDescription" type="text" name="commentDescription" class="form-control input-sm" placeholder="Schrijf een reactie...">
+                    <input id="commentDescription<?php echo $showPost['post_id'] ?>" required="Je comment bevat nog geen tekst." type="text" name="commentDescription" class="form-control input-sm" placeholder="Schrijf een reactie...">
                     <button data-id="<?php echo $showPost['post_id'] ?>" name="submit" class="btn btn-success green comment"><i
                             class="reply"></i>Reageer
                     </button>
