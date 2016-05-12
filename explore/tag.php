@@ -5,6 +5,8 @@ include_once('../classes/Validation.class.php');
 include_once('../classes/Search.class.php');
 include_once('../classes/Post.class.php');
 include_once('../classes/User.class.php');
+include_once('../classes/Comment.class.php');
+
 
 
 
@@ -95,6 +97,7 @@ if (isset($_GET['tag']) && !empty($_GET['tag'])) {
 
 
     if(!empty($_POST['commentPostId']) && !empty($_POST['commentDescription']))    {
+        $comment = new Comment();
         $comment->setMSComment($_POST['commentDescription']);
         $comment->setMIUserId($_SESSION['login']['userid']);
         $comment->setMIPostId($_POST['commentPostId']);

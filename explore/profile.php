@@ -2,6 +2,7 @@
 include_once('../inc/sessiecontrole.inc.php');
 include_once('../classes/Post.class.php');
 include_once('../classes/User.class.php');
+include_once('../classes/Comment.class.php');
 include_once('../inc/feedbackbox.inc.php');
 include_once('../classes/Search.class.php');
 include_once('../classes/Validation.class.php');
@@ -145,6 +146,7 @@ if (isset($_GET['user']) && !empty($_GET['user'])) {
 
 
     if(!empty($_POST['commentPostId']) && !empty($_POST['commentDescription']))    {
+        $comment = new Comment();
         $comment->setMSComment($_POST['commentDescription']);
         $comment->setMIUserId($_SESSION['login']['userid']);
         $comment->setMIPostId($_POST['commentPostId']);

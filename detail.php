@@ -97,7 +97,7 @@ if (!empty($_POST['commentPostId']) && !empty($_POST['commentDescription'])) {
                         <span
                             class="description"><?php echo $post->timePosted($showPost['post_date']); ?> <?php echo !empty($showPost['post_location']) ? '-' : '' ?>
                             <span
-                                class="<?php echo !empty($showPost['post_location']) ? 'fa fa-map-marker' : '' ?>"><?php echo " <a href='explore/location.php?location=" . htmlspecialchars($showPost['post_location']) . "'>" . htmlspecialchars($showPost['post_location']) . "</a>"; ?></span></span>
+                                class="<?php echo !empty($showPost['post_location']) ? 'fa fa-map-marker' : '' ?>"><?php echo " <a href='/imdstagram/explore/location.php?location=" . htmlspecialchars($showPost['post_location']) . "'>" . htmlspecialchars($showPost['post_location']) . "</a>"; ?></span></span>
                 </div>
                 <div class="box-tools">
                     <div
@@ -126,7 +126,7 @@ if (!empty($_POST['commentPostId']) && !empty($_POST['commentDescription'])) {
                     <span
                         class="pull-right text-muted showLikes"><?php echo $post->showLikes(); ?><?php echo $post->showLikes() == 1 ? ' like' : ' likes' ?> </span>
             </div>
-            <div id="allComments">
+            <div id="commentId<?php echo $showPost['post_id']; ?>">
                 <?php foreach ($postComments as $postComment){ ?>
                 <div class="box-footer box-comments">
                     <div class="box-comment">
@@ -145,14 +145,14 @@ if (!empty($_POST['commentPostId']) && !empty($_POST['commentDescription'])) {
             </div>
             <?php } ?>
         </div>
-        <!--<div class="box-footer">
+        <div class="box-footer">
             <form action="" method="post">
                 <img class="img-responsive img-circle img-sm"
                      src="/imdstagram/img/uploads/profile-pictures/<?php echo $_SESSION['login']['profilepicture']; ?>"
                      alt="Alt Text">
                 <div class="img-push">
                     <input type="hidden" name="commentPostId" value="<?php echo $showPost['post_id'] ?>">
-                    <input id="commentDescription" type="text" name="commentDescription" class="form-control input-sm"
+                    <input id="commentDescription<?php echo $showPost['post_id'] ?>" type="text" name="commentDescription" class="form-control input-sm"
                            placeholder="Schrijf een reactie...">
                     <button data-id="<?php echo $showPost['post_id'] ?>" name="submit"
                             class="btn btn-success green comment"><i
@@ -161,7 +161,7 @@ if (!empty($_POST['commentPostId']) && !empty($_POST['commentDescription'])) {
                     <div class="clearfix"></div>
                 </div>
             </form>
-        </div>-->
+        </div>
     </div>
     <?php endforeach ?>
     <?php /*if (count($showPosts) > 2) :*/ ?>
