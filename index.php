@@ -64,7 +64,7 @@ if (isset($_GET['flag']) && !empty($_GET['flag'])) {
 }
 
 
-if(!empty($_POST['commentPostId']) && !empty($_POST['commentDescription']))    {
+if(isset($_POST['commentPostId']) && isset($_POST['commentDescription']) && !empty($_POST['commentPostId']) && !empty($_POST['commentDescription'])) {
     $comment->setMSComment($_POST['commentDescription']);
     $comment->setMIUserId($_SESSION['login']['userid']);
     $comment->setMIPostId($_POST['commentPostId']);
