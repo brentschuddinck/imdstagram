@@ -1,0 +1,6 @@
+{
+  "name": "Imdstagram",
+  "tagline": "",
+  "body": "# IMDstagram\r\nIMDstagram is een applicatie bedoelt voor studenten Interactive Multimedia Design (IMD) aan de Thomas More hogeschool. De applicatie heeft als doel om inspirerende afbeeldingen onder de studenten uit te wisselen. De applicatie werkt zoals het concept van Instagram.\r\n\r\n## Applicatie runnen\r\nDe applicatie verwacht gestart te worden vanaf de map imdstagram in de hoofdmap van de lokale webserver (bijvoorbeeld /imdstagram in de htdocs map).\r\n\r\n## Projectleden\r\nDit project is gemaakt door Brent Schuddinck, Ben Witters en Daphné Van Belle.",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
