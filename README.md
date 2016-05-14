@@ -1,6 +1,9 @@
 # IMDstagram
 IMDstagram is een applicatie bedoelt voor studenten Interactive Multimedia Design (IMD) aan de Thomas More hogeschool. De applicatie heeft als doel om inspirerende afbeeldingen en video's onder de studenten uit te wisselen. De applicatie werkt zoals het concept van Instagram.
 
+## Applicatie running
+De applicatie verwacht gestart te worden vanaf de map imdstagram in de hoofdmap van de lokale webserver (bijvoorbeeld /imdstagram in de htdocs map). In de applicatie werd voor het gemak vaak gelinkt naar /imdstagram/... in plaats van telkens ../../../.... te moeten doen. Voordeel hier van dat links in bijvoorbeeld een include file niet aangepast moeten worden naargelang hun plaats in de file structuur.
+
 ## Connecteren met online database
 - Om gemakkelijk te werken, werd gekozen om meteen een online database te gebruiken.
 - url online database : http://178.62.241.17/phpmyadmin
