@@ -2,9 +2,8 @@
 IMDstagram is een applicatie bedoelt voor studenten Interactive Multimedia Design (IMD) aan de Thomas More hogeschool. De applicatie heeft als doel om inspirerende afbeeldingen en video's onder de studenten uit te wisselen. De applicatie werkt zoals het concept van Instagram.
 
 ## Connecteren met online database
-- Om gemakkelijk te werken, werd gekozen om meteen een online database te gebruiken. Om connectie te maken via PDO:
-$dbconnection = new PDO("mysql:host=178.62.241.17; dbname=imdstagram", "imdstagram", "[lavfte{gqwedzsrjme7xsmXU");
-- url database : http://178.62.241.17/phpmyadmin
+- Om gemakkelijk te werken, werd gekozen om meteen een online database te gebruiken.
+- url online database : http://178.62.241.17/phpmyadmin
 
 ## Conventies
 - OOP programmeren
@@ -18,7 +17,7 @@ $dbconnection = new PDO("mysql:host=178.62.241.17; dbname=imdstagram", "imdstagr
 ## Features verdelen
 - Brent: 1, 3, 4, 7, 10, 16, level 4 (delete account and all related information)
 - Ben: 2, 5, 8, 9, 11, 12, 13, 14, 17
-- Daphné: [oorspronkelijk: 3 (Brent gedaan), 6, 9(Ben gedaan), 12(Ben gedaan), 15, level 4]. Daphné heeft geen enkele feature uitgewerkt, gecommit, of doorgestuurd (2 mei 2016).
+- Daphné: [oorspronkelijk: 3 (Brent gedaan), 6, 9(Ben gedaan), 12(Ben gedaan), 15, level 4]. Daphné heeft geen enkele feature uitgewerkt, gecommit, of doorgestuurd.
 
 ## Nieuwe PHP file aanmaken
 - Helemaal bovenaan sessiecontrole.php includen op elke standaard PHP pagina.
@@ -33,4 +32,4 @@ Ik denk dat het een goed idee dat wanenner de gebruiker ingelogd wordt, er eenma
 - $_SESSION['login']['private'] //accountstatus ophalen 0 = openbaar, 1 = private
 
 ## Feedback tonen via zelf gemaakte feedbackbox
-In het document inc/feedbackbox.inc.php staat uileg hoe je op een heel gemakkelijke manier coole error/succesboodschappen kan tonen. Ik heb de cases zelf geschreven om herhalingen tegen te gaan bij het forumeren van errorberichten.
+In het document inc/feedbackbox.inc.php staat uileg hoe je op een heel gemakkelijke manier error/succesboodschappen kan tonen. Ik heb de cases zelf geschreven om herhalingen tegen te gaan bij het forumeren van errorberichten.
