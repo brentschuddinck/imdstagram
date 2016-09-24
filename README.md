@@ -37,5 +37,6 @@ IMDstagram is een applicatie bedoelt voor studenten Interactive Multimedia Desig
 - Account kan verwijderd worden
 
 ## Features verdelen
+De volgorde van uitgewerkte features hieronder is gebaseerd op het scopebestand van het project, niet in volgorde van de opgesomde features van hierboven.
 - Brent: 1, 3, 4, 6, 7, 10, 16, level 4 (delete account and all related information)
 - Ben: 2, 5, 8, 9, 11, 12, 13, 14, 17
