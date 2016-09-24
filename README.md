@@ -7,7 +7,7 @@ IMDstagram is een applicatie bedoelt voor studenten Interactive Multimedia Desig
 - Membervariabelen: $m_typeNaam, ...
 - Getters en setters worden automatisch gegenereerd
 - PDO
-- htmlspecialchars() voor OUTPUT, INPUT niet extra beveiligen zit in PDO
+- htmlspecialchars()
 - classes gebruiken
 
 ## Features verdelen
