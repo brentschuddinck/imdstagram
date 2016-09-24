@@ -10,6 +10,32 @@ IMDstagram is een applicatie bedoelt voor studenten Interactive Multimedia Desig
 - htmlspecialchars()
 - classes gebruiken
 
+## Feature list
+- Account aanmaken met bcrypt wachtwoord
+- Inloggen op een veilige manier
+- Uitloggen
+- Profiel en instellingen aanpassen
+- Foto posten met beschrijving
+- Na inloggen 20 meest recente foto's van je vriendelijst weergeven
+- Meer foto's laden AJAX
+- Zoekfunctie
+- Foto liken AJAX
+- Commentaar achterlaten op foto via AJAX
+- Bescherming tegen XSS attacks
+- Foto markering als ongepast
+- Eigen foto's verwijderen, niet die van iemand anders
+- Doorklikken op een username met detailinformatie
+- Bijhouden wanneer een foto werd opgeladen in de databank
+- Private account optie
+- Indien private, enkel followers kunnen de foto's van deze persoon zien nadat een vriendschapsverzoek verstuurd en goedgekeurd is
+- Vriendschapsverzoek versturen
+- Volgers goedkeuren of afwijzen
+- Inloggen via Facebook (nog niet toegevoegd)
+- Foto uploaden met filters (CSSgram)
+- Foto weergeven in de juiste filter
+- Locatie/stad automatisch bewaren waar foto werd opgeladen (html5 geolocation)
+- Account kan verwijderd worden
+
 ## Features verdelen
 - Brent: 1, 3, 4, 6, 7, 10, 16, level 4 (delete account and all related information)
 - Ben: 2, 5, 8, 9, 11, 12, 13, 14, 17
